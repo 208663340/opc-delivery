@@ -1,0 +1,41 @@
+name: Skill checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: skill-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run tool behavior tests
+        run: python3 scripts/test_delivery_tools.py
+      - name: Check local documentation links
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          missing = []
+          for document in Path('.').rglob('*.md'):
+              for link in re.findall(r'\]\(([^)]+)\)', document.read_text(encoding='utf-8')):
+                  if '://' not in link and not (document.parent / link.split('#')[0]).exists():
+                      missing.append(f'{document}: {link}')
+          if missing:
+              raise SystemExit('\n'.join(missing))
+          print('All local Markdown links resolve.')
+          PY

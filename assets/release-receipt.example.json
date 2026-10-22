@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "claim": "build_verified",
+  "release": {
+    "commit": null,
+    "artifact_digest": null,
+    "environment": "staging"
+  },
+  "rollback_plan": null,
+  "checks": [
+    {
+      "id": "required-tests",
+      "kind": "test",
+      "status": "not_run",
+      "commit": null,
+      "scope": null,
+      "evidence": null
+    },
+    {
+      "id": "artifact-build",
+      "kind": "build",
+      "status": "not_run",
+      "commit": null,
+      "artifact_digest": null,
+      "scope": null,
+      "evidence": null
+    }
+  ]
+}
