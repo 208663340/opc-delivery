@@ -1,0 +1,35 @@
+{
+  "name": "opc-delivery",
+  "version": "0.2.0",
+  "description": "Evidence-driven product delivery skills with a zero-dependency installer",
+  "type": "module",
+  "bin": {
+    "opc-delivery": "bin/opc-delivery.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "bin/",
+    "SKILL.md",
+    "CONTRIBUTING.md",
+    "agents/",
+    "assets/",
+    "references/",
+    "skills/",
+    "scripts/",
+    "docs/"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "prepublishOnly": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/208663340/opc-delivery.git"
+  },
+  "homepage": "https://github.com/208663340/opc-delivery#readme",
+  "bugs": "https://github.com/208663340/opc-delivery/issues",
+  "keywords": ["agent-skills", "codex", "product-delivery", "opc"],
+  "license": "UNLICENSED"
+}

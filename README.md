@@ -5,7 +5,8 @@
 A practical Agent Skill for independent product delivery.
 
 [![CI](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml/badge.svg)](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml)
-![Version](https://img.shields.io/badge/version-0.1.0-2563eb)
+![Version](https://img.shields.io/badge/version-0.2.0-2563eb)
+![Node](https://img.shields.io/badge/installer-Node.js%20%E2%89%A520-339933)
 ![Python](https://img.shields.io/badge/tools-Python%20stdlib-3776ab)
 
 OPC Delivery 帮助独立开发者与 Agent 协作完成需求判断、开发、测试、发布和排障。它从项目当前阶段进入，找到影响下一步决策的关键未知，复用已有工具，把目标推进为可验证的结果。
@@ -24,7 +25,47 @@ OPC Delivery 帮助独立开发者与 Agent 协作完成需求判断、开发、
 
 ## 快速开始
 
-将仓库目录作为一个完整 Skill 放入你的 Agent 使用的技能目录。以下以 Codex 的个人目录为例：
+### 用 npm 安装
+
+需要 Node.js 20 或更新版本。当前可以从 GitHub 安装 CLI，然后安装技能包：
+
+```bash
+npm install -g github:208663340/opc-delivery
+opc-delivery install
+```
+
+默认将主 Skill 和全部 27 项配套能力放入 `${CODEX_HOME:-~/.codex}/skills/opc-delivery`。需要其他 Agent 的技能目录或项目内安装时，使用 `--dir` 指定技能根目录：
+
+```bash
+opc-delivery install --dir .agents/skills
+opc-delivery install --dir .agents/skills --dry-run
+opc-delivery list
+```
+
+目录已存在时默认退出并保留内容。确认要更新时运行 `opc-delivery install --force`；旧目录会完整保存在同一技能根目录下的 `.opc-delivery-backup-*`，成功后输出备份位置。`--dry-run` 不写入任何文件。
+
+npm 的包安装阶段只安装 CLI；写入技能目录由显式的 `opc-delivery install` 执行。包内没有第三方 Node 依赖，也不在安装阶段执行 Python 工具。
+
+本版本发布到 npm registry 后，还可使用：
+
+```bash
+npx opc-delivery install
+# 或全局安装 CLI 后使用：
+npm install -g opc-delivery
+opc-delivery install
+```
+
+发布前可从源码生成并安装本地 tarball：
+
+```bash
+npm pack
+npm install -g ./opc-delivery-0.2.0.tgz
+opc-delivery install --dry-run
+```
+
+### 直接复制 Skill
+
+也可以将仓库目录作为一个完整 Skill 放入你的 Agent 使用的技能目录。以下以 Codex 的个人目录为例：
 
 ```bash
 OPC_SKILL_ROOT="${CODEX_HOME:-$HOME/.codex}/skills"
@@ -36,7 +77,7 @@ git clone https://github.com/208663340/opc-delivery.git "$OPC_SKILL_ROOT/opc-del
 
 仓库中已附带 27 项从本机技能库收录的配套 Skill，包含各自的规则、参考和已有许可文件。完整克隆本仓库即可一起取得，OPC Delivery 会沿推荐表的本地路径按需读取。它们不需要为了被读取而再次联网下载；部分专业任务所需的浏览器、外部文档或框架依赖仍按实际环境使用。
 
-这些内置目录由 OPC Delivery 路由，不会仅因嵌套在本仓库中就为每项创建独立的全局入口。需要单独使用某项时，可将 `skills/<名称>/` 完整放入所用 Agent 的技能目录，先保留已有同名内容。
+这些内置目录由 OPC Delivery 按路径路由，各 Agent 对嵌套 Skill 的发现方式可能不同。需要单独安装某项时，可将 `skills/<名称>/` 完整放入所用 Agent 的技能目录，先保留已有同名内容。
 
 调用：
 
@@ -104,6 +145,7 @@ python3 scripts/check_release_receipt.py /path/to/release-receipt.json
 - **结构与链接检查**：技能格式有效，内部相对引用可解析。
 - **专业 Skill 推荐增量验证**：核对 18 项候选的源文件；完成一次旧版检索对照与两个更新后的隔离任务，详见 [推荐能力验证记录](docs/validation-skill-recommendations.md)。
 - **本地 Skill 收录验证**：27 项、140 个原有文件；核对入口、目录完整性与 SHA-256，验证内部链接可解析。仅修正一份生成文档中的三处相对链接，详见同一验证记录。
+- **npm 安装器验证**：Node 20 / 26 的 11 项测试通过，覆盖预览、备份更新、路径及安装边界；实际 `npm pack` 后离线安装 tarball 并执行 CLI，详见 [0.2.0 npm 验证记录](docs/validation-npm-0.2.0.md)。
 
 详见 [0.1.0 验证记录](docs/validation-0.1.0.md)。这些结果不替代你自己的生产验证，也不构成效率提升或商业效果承诺。
 
@@ -111,12 +153,16 @@ python3 scripts/check_release_receipt.py /path/to/release-receipt.json
 
 ```bash
 python3 scripts/test_delivery_tools.py
+npm test
 ```
 
 ## 文件导航
 
 ```text
 SKILL.md                         入口与阶段判断
+package.json                     npm 包元数据、CLI 入口与发布文件清单
+bin/opc-delivery.mjs              零依赖 CLI：install、list、help、version
+test/                            CLI 文件系统与真实 npm tarball 安装验证
 agents/openai.yaml               Codex 展示与默认调用提示
 references/
   discovery.md                   需求证据与最小验证
@@ -132,6 +178,7 @@ skills/                          27 项本地技能快照及其规则、参考�
   manifest.json                  来源、源文件与打包校验值、本地调整
 docs/validation-0.1.0.md          已完成的验证及其边界
 docs/validation-skill-recommendations.md  推荐能力增量验证
+docs/validation-npm-0.2.0.md      npm CLI、打包与安装验证
 ```
 
 ## 改进这个 Skill
@@ -141,3 +188,5 @@ docs/validation-skill-recommendations.md  推荐能力增量验证
 ## 许可
 
 当前仓库尚未指定开源许可证。
+
+npm 元数据中的 `UNLICENSED` 保留这一现状；配套 Skill 中的原有许可文件随包保留。

@@ -2,7 +2,7 @@
 name: opc-delivery
 description: 面向独立开发者的产品交付协作：将想法转成可验证的最小产品，协调现有项目的开发、测试与发布，或排查阻碍交付的线上故障。用户要求端到端推进、OPC 交付、发布准备或跨阶段排障时使用；普通单文件修改无需主动套用完整流程。
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # OPC Delivery

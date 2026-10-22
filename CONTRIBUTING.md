@@ -19,7 +19,11 @@
 
 ```bash
 python3 scripts/test_delivery_tools.py
+npm ci --ignore-scripts
+npm test
 ```
+
+npm CLI 保持零依赖、无安装生命周期写入。安装器测试使用真实临时文件系统，打包测试必须从实际 tarball 安装并运行命令，不能仅检查 `package.json` 文本。正式发布前运行 `npm publish --dry-run` 检查发布清单；实际发布需要相应的 npm 登录和授权。
 
 新增脚本行为应有针对实际边界的回归测试。流程有实质变化时，按 [评测说明](references/evaluation.md) 做独立任务验证，记录实际结果与未覆盖范围。
 
