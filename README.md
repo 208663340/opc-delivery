@@ -5,7 +5,7 @@
 A practical Agent Skill for independent product delivery.
 
 [![CI](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml/badge.svg)](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml)
-![Version](https://img.shields.io/badge/version-0.2.0-2563eb)
+![Version](https://img.shields.io/badge/version-0.3.0-2563eb)
 ![Node](https://img.shields.io/badge/installer-Node.js%20%E2%89%A520-339933)
 ![Python](https://img.shields.io/badge/tools-Python%20stdlib-3776ab)
 
@@ -34,7 +34,7 @@ npm install -g github:208663340/opc-delivery
 opc-delivery install
 ```
 
-默认将主 Skill 和全部 27 项配套能力放入 `${CODEX_HOME:-~/.codex}/skills/opc-delivery`。需要其他 Agent 的技能目录或项目内安装时，使用 `--dir` 指定技能根目录：
+默认将主 Skill 和全部 30 项配套能力放入 `${CODEX_HOME:-~/.codex}/skills/opc-delivery`。需要其他 Agent 的技能目录或项目内安装时，使用 `--dir` 指定技能根目录：
 
 ```bash
 opc-delivery install --dir .agents/skills
@@ -59,7 +59,7 @@ opc-delivery install
 
 ```bash
 npm pack
-npm install -g ./opc-delivery-0.2.0.tgz
+npm install -g ./opc-delivery-0.3.0.tgz
 opc-delivery install --dry-run
 ```
 
@@ -75,7 +75,7 @@ git clone https://github.com/208663340/opc-delivery.git "$OPC_SKILL_ROOT/opc-del
 
 已有同名目录时，先保留原有内容，再按你的技能管理方式更新。也可以从 [Releases](https://github.com/208663340/opc-delivery/releases) 下载版本包。
 
-仓库中已附带 27 项从本机技能库收录的配套 Skill，包含各自的规则、参考和已有许可文件。完整克隆本仓库即可一起取得，OPC Delivery 会沿推荐表的本地路径按需读取。它们不需要为了被读取而再次联网下载；部分专业任务所需的浏览器、外部文档或框架依赖仍按实际环境使用。
+仓库中已附带 30 项配套 Skill：27 项从本机技能库收录，保留各自的规则、参考和已有许可文件；另有 3 项本项目编写的用户研究、原型验证与部署运维技能及其模板。完整克隆本仓库即可一起取得，OPC Delivery 会沿推荐表的本地路径按需读取。它们不需要为了被读取而再次联网下载；部分专业任务所需的浏览器、外部文档或框架依赖仍按实际环境使用。
 
 这些内置目录由 OPC Delivery 按路径路由，各 Agent 对嵌套 Skill 的发现方式可能不同。需要单独安装某项时，可将 `skills/<名称>/` 完整放入所用 Agent 的技能目录，先保留已有同名内容。
 
@@ -106,11 +106,19 @@ $opc-delivery 检查这个版本是否具备发布条件，推进已授权的部
 
 ## 按当前问题补充专业 Skill
 
-内置 [专业 Skill 推荐](references/skill-recommendations.md)，覆盖 UI/UX 设计、前端开发、后端开发、Agent 开发、产品设计与分析、Bug 修复和工程基础。18 项主要推荐和 9 项 Agent / Python 配套能力均已收录到 `skills/`，表中技能名称直接打开本地 `SKILL.md`，并保留上游来源、选择时机与应交回的验证证据。
+内置 [专业 Skill 推荐](references/skill-recommendations.md)，覆盖 UI/UX 设计、前端开发、后端开发、Agent 开发、产品设计与分析、Bug 修复和工程基础。21 项主要推荐和 9 项 Agent / Python 配套能力均已收录到 `skills/`，表中技能名称直接打开本地 `SKILL.md`，并保留上游来源、选择时机与应交回的验证证据。
 
 例如，视觉改版可参考 `frontend-design`，React 请求瀑布可参考 `vercel-react-best-practices`，根因未知时可参考 `systematic-debugging`。Agent 专题按项目实际框架选择；自研循环先走现有可靠性审查。完整名单与来源以推荐参考为准。
 
-先读取选中项的实际说明，再按需加载其规则和参考；专业结果回到当前任务的验收与证据记录。目录、来源、文件校验值及打包调整见 [技能快照清单](skills/manifest.json)。
+新增三项可直接使用的专业能力：
+
+| Skill | 适用问题与配套材料 |
+| --- | --- |
+| [user-research](skills/user-research/SKILL.md) | 用户分群、访谈与需求证据；附研究简报、中性提纲方法与证据记录模板 |
+| [prototype-validation](skills/prototype-validation/SKILL.md) | 原型范围、任务测试与迭代；附主持方法、观察表、结果计数与复测模板 |
+| [deployment-operations](skills/deployment-operations/SKILL.md) | 发布、监控值守与恢复；附兼容性检查、告警与发布/恢复/交接手册 |
+
+先读取选中项的实际说明，再按需加载其规则和参考；专业结果回到当前任务的验收与证据记录。目录、来源、文件校验值及打包调整见 [技能来源与文件清单](skills/manifest.json)。
 
 ## 两个可直接运行的工具
 
@@ -145,7 +153,9 @@ python3 scripts/check_release_receipt.py /path/to/release-receipt.json
 - **结构与链接检查**：技能格式有效，内部相对引用可解析。
 - **专业 Skill 推荐增量验证**：核对 18 项候选的源文件；完成一次旧版检索对照与两个更新后的隔离任务，详见 [推荐能力验证记录](docs/validation-skill-recommendations.md)。
 - **本地 Skill 收录验证**：27 项、140 个原有文件；核对入口、目录完整性与 SHA-256，验证内部链接可解析。仅修正一份生成文档中的三处相对链接，详见同一验证记录。
-- **npm 安装器验证**：Node 20 / 26 的 11 项测试通过，覆盖预览、备份更新、路径及安装边界；实际 `npm pack` 后离线安装 tarball 并执行 CLI，详见 [0.2.0 npm 验证记录](docs/validation-npm-0.2.0.md)。
+- **0.2.0 npm 安装器验证**：Node 20 / 26 的 11 项测试通过，覆盖预览、备份更新、路径及安装边界；实际 `npm pack` 后离线安装 tarball 并执行 CLI，详见 [0.2.0 npm 验证记录](docs/validation-npm-0.2.0.md)。
+
+- **0.3.0 三项专业能力验证**：同输入的旧版检索对照与三项新版独立案例通过；30 项、150 个技能文件哈希一致，Node 20 / 26 的 12 项安装测试、22 项 Python 测试与 npm 发布预演通过，详见 [专业能力验证记录](docs/validation-specialists-0.3.0.md)。未执行真实用户研究或生产运维。
 
 详见 [0.1.0 验证记录](docs/validation-0.1.0.md)。这些结果不替代你自己的生产验证，也不构成效率提升或商业效果承诺。
 
@@ -174,11 +184,12 @@ references/
   evaluation.md                  技能维护与行为评测
 scripts/                         只读检查器、证据检查器及测试
 assets/                          项目接入与发布证据模板
-skills/                          27 项本地技能快照及其规则、参考与许可文件
+skills/                          30 项配套技能及其方法、模板、参考与已有许可文件
   manifest.json                  来源、源文件与打包校验值、本地调整
 docs/validation-0.1.0.md          已完成的验证及其边界
 docs/validation-skill-recommendations.md  推荐能力增量验证
 docs/validation-npm-0.2.0.md      npm CLI、打包与安装验证
+docs/validation-specialists-0.3.0.md  三项专业能力的对照与安装验证
 ```
 
 ## 改进这个 Skill

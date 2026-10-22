@@ -2,7 +2,7 @@
 name: opc-delivery
 description: 面向独立开发者的产品交付协作：将想法转成可验证的最小产品，协调现有项目的开发、测试与发布，或排查阻碍交付的线上故障。用户要求端到端推进、OPC 交付、发布准备或跨阶段排障时使用；普通单文件修改无需主动套用完整流程。
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # OPC Delivery
@@ -39,14 +39,17 @@ python3 <本技能目录>/scripts/inspect_project.py <项目目录>
 | 当前最关键的问题 | 读取 | 这一阶段要取得的证据 |
 | --- | --- | --- |
 | 谁需要、为何需要、先做什么 | [discovery.md](references/discovery.md) | 问题证据、最小验证、继续或停止条件 |
+| 访谈与用户需求证据如何取得 | [user-research](skills/user-research/SKILL.md) | 研究问题、中性访谈、可追溯发现与反例 |
+| 原型是否可理解、任务是否能完成 | [prototype-validation](skills/prototype-validation/SKILL.md) | 任务脚本、真实观察、完成计数与迭代依据 |
 | 需求明确，如何实现与拆分 | [development.md](references/development.md) | 验收样例、影响面、代码与回归验证 |
 | 是否正确，故障在哪里 | [verification.md](references/verification.md) | 可复现行为、根因、修复前后对照 |
 | 长任务、Agent、Tools 是否可靠 | [reliability-review.md](references/reliability-review.md) | 生命周期、恢复、副作用与资源边界的证据 |
 | 怎样发布、验证与回退 | [release.md](references/release.md) | 源码到产物到环境的对应关系及业务冒烟 |
+| 怎样渐进发布、监控值守与故障恢复 | [deployment-operations](skills/deployment-operations/SKILL.md) | 兼容性、停止条件、恢复证据与运维交接 |
 
 参考按需读取。已有结果可复用；当新证据推翻假设时返回相关步骤。小任务可以一次完成定位、修改和验证，无需额外写计划、profile 或发布凭证。
 
-需要 UI/UX 设计、前端、后端、Agent、产品设计与分析、Bug 修复或工程基础能力时，按 [专业 Skill 推荐](references/skill-recommendations.md) 选择当前问题对应的候选。`skills/` 内附 27 项本地技能快照，推荐表直接链接其 `SKILL.md`，只读取当前需要的项及其引用。核对实际说明、工具与版本；使用其他已安装版本时明确来源。专业 Skill 的结果回到当前任务的验收与证据记录。
+需要 UI/UX 设计、前端、后端、Agent、产品设计与分析、Bug 修复或工程基础能力时，按 [专业 Skill 推荐](references/skill-recommendations.md) 选择当前问题对应的候选。`skills/` 内附 30 项配套技能（27 项本地快照与 3 项本项目编写的专业技能），推荐表直接链接其 `SKILL.md`，只读取当前需要的项及其引用。核对实际说明、工具与版本；使用其他已安装版本时明确来源。专业 Skill 的结果回到当前任务的验收与证据记录。
 
 ## 3. 在现有项目里执行
 

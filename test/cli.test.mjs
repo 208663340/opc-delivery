@@ -1,13 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const cli = join(root, 'bin/opc-delivery.mjs');
+const bundle = JSON.parse(readFileSync(join(root, 'skills/manifest.json'), 'utf8'));
 
 function sandbox(t) {
   const directory = mkdtempSync(join(tmpdir(), 'opc-cli-test-'));
@@ -28,10 +29,10 @@ test('installs the complete bundle into a destination containing spaces', t => {
   const result = run(['install', '--dir', destination], directory);
   assert.equal(result.status, 0, result.stderr);
   const installed = join(destination, 'opc-delivery');
-  for (const file of ['SKILL.md', 'references/skill-recommendations.md', 'scripts/inspect_project.py', 'skills/frontend-design/LICENSE.txt', 'skills/python-testing/references/pytest.md']) {
+  for (const file of ['SKILL.md', 'references/skill-recommendations.md', 'scripts/inspect_project.py', 'skills/frontend-design/LICENSE.txt', 'skills/python-testing/references/pytest.md', 'skills/user-research/assets/research-brief.md', 'skills/prototype-validation/assets/usability-test.md', 'skills/deployment-operations/assets/operations-runbook.md']) {
     assert.equal(readFileSync(join(installed, file), 'utf8'), readFileSync(join(root, file), 'utf8'));
   }
-  assert.equal(readdirSync(join(installed, 'skills')).filter(name => existsSync(join(installed, 'skills', name, 'SKILL.md'))).length, 27);
+  assert.equal(readdirSync(join(installed, 'skills')).filter(name => existsSync(join(installed, 'skills', name, 'SKILL.md'))).length, bundle.skills.length);
   assert.equal(existsSync(join(installed, 'test')), false);
   assert.equal(existsSync(join(installed, 'node_modules')), false);
 });
@@ -41,6 +42,25 @@ test('uses CODEX_HOME for the default install location', t => {
   const result = run(['install'], directory);
   assert.equal(result.status, 0, result.stderr);
   assert.equal(existsSync(join(directory, 'codex/skills/opc-delivery/SKILL.md')), true);
+});
+
+test('CLI summaries follow the bundled manifest instead of a fixed skill count', t => {
+  const directory = sandbox(t);
+  const fixture = join(directory, 'package');
+  mkdirSync(join(fixture, 'bin'), { recursive: true });
+  cpSync(cli, join(fixture, 'bin/opc-delivery.mjs'));
+  writeFileSync(join(fixture, 'package.json'), JSON.stringify({ name: 'opc-delivery', version: '0.0.0-test' }));
+  for (const name of ['SKILL.md', 'README.md', 'CONTRIBUTING.md']) writeFileSync(join(fixture, name), 'fixture');
+  for (const name of ['agents', 'assets', 'references', 'skills', 'scripts', 'docs']) mkdirSync(join(fixture, name));
+  const skills = [
+    { name: 'first-specialist', category: 'research', role: 'primary' },
+    { name: 'second-specialist', category: 'operations', role: 'primary' },
+  ];
+  writeFileSync(join(fixture, 'skills/manifest.json'), JSON.stringify({ skills }));
+  const result = spawnSync(process.execPath, [join(fixture, 'bin/opc-delivery.mjs'), 'install', '--dir', join(directory, 'target'), '--dry-run'], { encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /with 2 companion skills/);
+  assert.equal(existsSync(join(directory, 'target')), false);
 });
 
 test('dry-run reports the destination without creating it', t => {

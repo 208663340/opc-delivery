@@ -1,6 +1,6 @@
 # 专业 Skill 推荐：按当前问题选择
 
-OPC Delivery 负责推进交付；需要某个领域的方法时，再选择相应的专业 Skill。`skills/` 已附带 27 项本地技能快照：下方 18 项主要推荐，加上 9 项 Agent 与 Python 配套能力。表中的技能名称链接本包文件，作者链接保留上游来源。按问题查阅，不要求为一个任务加载所有分类。
+OPC Delivery 负责推进交付；需要某个领域的方法时，再选择相应的专业 Skill。`skills/` 已附带 30 项配套技能：下方 21 项主要推荐，加上 9 项 Agent 与 Python 配套能力。其中 27 项为本地快照，用户研究、原型验证与部署运维 3 项由本项目编写并附专用模板。表中的技能名称链接本包文件，作者链接保留上游来源。按问题查阅，不要求为一个任务加载所有分类。
 
 ## 如何选用
 
@@ -19,6 +19,7 @@ OPC Delivery 负责推进交付；需要某个领域的方法时，再选择相�
 | --- | --- | --- |
 | [frontend-design](../skills/frontend-design/SKILL.md) · [Anthropic](https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md) | 新建页面或改版，需要确定视觉方向、字体、配色、布局与交互呈现 | 与产品和现有设计系统一致的界面；关键视口截图与主路径演示 |
 | [web-design-guidelines](../skills/web-design-guidelines/SKILL.md) · [Vercel](https://github.com/vercel-labs/agent-skills/blob/main/skills/web-design-guidelines/SKILL.md) | 已有 UI 需要检查键盘操作、焦点、表单、可访问性和 Web 交互规范 | 可定位到代码的发现、修复与操作验证；需要联网读取最新规则时说明实际取得的规则版本 |
+| [prototype-validation](../skills/prototype-validation/SKILL.md) · 本项目 | 原型保真度、可用性任务、真人观察与迭代判断 | 原型范围、任务脚本、观察表、独立/受助/失败计数与证据；不把演示当付费验证 |
 
 视觉设计、界面规范检查与用户研究解决不同问题。流程是否满足用户需求先回到 [需求判断](discovery.md)；已有品牌、设计稿和组件库作为设计输入。
 
@@ -77,6 +78,7 @@ FastAPI 材料提到的 Python 专题也已附带：
 
 | 候选与来源 | 何时选择 | 交回的结果与证据 |
 | --- | --- | --- |
+| [user-research](../skills/user-research/SKILL.md) · 本项目 | 需要规划访谈、识别用户分群、分析需求与相反证据 | 研究简报、中性提纲、证据账本与可支持的决定；样本边界和待验证项明确 |
 | [market-research](../skills/market-research/SKILL.md) · [ECC 社区](https://github.com/affaan-m/ECC/blob/main/skills/market-research/SKILL.md) | 关键未知在市场、竞品、用户替代方案或供应商，需要外部研究支持取舍 | 可追溯来源、日期、事实与推断，以及会改变决策的结论 |
 | [prd](../skills/prd/SKILL.md) · [GitHub 社区集合](https://github.com/github/awesome-copilot/blob/main/skills/prd/SKILL.md) | 用户要求 PRD，或复杂功能需要统一范围、用户故事、验收与风险 | 可执行的需求规格、待验证假设及验收条件 |
 
@@ -98,12 +100,13 @@ FastAPI 材料提到的 Python 专题也已附带：
 | [using-git-worktrees](../skills/using-git-worktrees/SKILL.md) · [Superpowers](https://github.com/obra/superpowers/blob/main/skills/using-git-worktrees/SKILL.md) | 两个功能需要隔离，或当前工作区已有不相关修改 | 已有或新建隔离工作区的路径、基准、分支与改动归属；先检查已有隔离 |
 | [verification-before-completion](../skills/verification-before-completion/SKILL.md) · [Superpowers](https://github.com/obra/superpowers/blob/main/skills/verification-before-completion/SKILL.md) | 即将声明修复、测试或交付完成 | 当前版本实际运行的验证、结果与覆盖边界 |
 | [requesting-code-review](../skills/requesting-code-review/SKILL.md) · [Superpowers](https://github.com/obra/superpowers/blob/main/skills/requesting-code-review/SKILL.md) | 重要功能完成、复杂修复或合并前需要独立评审 | 明确的 diff、验收与风险、评审发现及处理结果；按环境与授权使用评审能力 |
+| [deployment-operations](../skills/deployment-operations/SKILL.md) · 本项目 | 发布准备、渐进放量、监控值守、故障恢复或备份演练 | 同版本发布证据、应用/配置/schema/数据兼容判断、停止条件、恢复与交接手册 |
 
 CI/CD、容器、数据库和部署优先复用项目现有入口；需要额外专题时按实际工具寻找对应 Skill。工作区隔离、评审和发布分别依当前任务的工具与授权推进。
 
 ## 清单之外与来源维护
 
-本清单的上游源文件和声明范围于 **2026-10-22** 核对；包内内容取自用户本机已安装的快照，可能与上游最新文件不同。完整目录、来源、源文件与打包文件的 SHA-256 及本地调整见 [manifest.json](../skills/manifest.json)。所有原有参考文件与许可文件一起保留；Vercel 生成文档中的三处相对链接做了路径修正并记录。打包不代表所有 Skill 已做行为评测或兼容当前环境，来源身份不替代适用性判断。
+本清单的上游源文件和声明范围于 **2026-10-22** 核对；27 项包内内容取自用户本机已安装的快照，可能与上游最新文件不同；新增 3 项为本项目编写，方法参考与核对日期列在各自 references 中，不标为上游导入。完整目录、来源、源文件与打包文件的 SHA-256 及本地调整见 [manifest.json](../skills/manifest.json)。所有原有参考文件与许可文件一起保留；Vercel 生成文档中的三处相对链接做了路径修正并记录。打包不代表所有 Skill 已做行为评测或兼容当前环境，来源身份不替代适用性判断。
 
 未覆盖的技术栈先检索本会话技能目录；环境有技能发现工具时再用精确任务与技术栈查找，例如 `Vue accessibility`、`PostgreSQL migration`。推荐外部项前读取真实 `SKILL.md`，核对名称、范围、依赖和调用方式，给出可访问来源。找不到或无法核对时说明缺口并继续完成可做部分，不补造名称或安装状态。
 

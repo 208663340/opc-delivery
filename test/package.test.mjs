@@ -1,12 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const bundle = JSON.parse(readFileSync(join(root, 'skills/manifest.json'), 'utf8'));
 
 test('the actual npm tarball installs a working CLI and complete skills without install-time home writes', t => {
   const directory = mkdtempSync(join(tmpdir(), 'opc-package-test-'));
@@ -27,11 +29,11 @@ test('the actual npm tarball installs a working CLI and complete skills without 
 
   const [packed] = JSON.parse(npm(['pack', '--offline', '--ignore-scripts', '--json', '--pack-destination', directory], root));
   const paths = new Set(packed.files.map(file => file.path));
-  for (const path of ['bin/opc-delivery.mjs', 'package.json', 'SKILL.md', 'references/skill-recommendations.md', 'scripts/inspect_project.py', 'skills/frontend-design/LICENSE.txt', 'skills/python-testing/references/pytest.md']) {
+  for (const path of ['bin/opc-delivery.mjs', 'package.json', 'SKILL.md', 'references/skill-recommendations.md', 'scripts/inspect_project.py', 'skills/frontend-design/LICENSE.txt', 'skills/python-testing/references/pytest.md', 'skills/user-research/assets/evidence-notes.md', 'skills/prototype-validation/assets/usability-test.md', 'skills/deployment-operations/assets/operations-runbook.md']) {
     assert.ok(paths.has(path), `Missing packed file: ${path}`);
   }
   assert.equal([...paths].some(path => path.startsWith('test/') || path.startsWith('node_modules/') || path.endsWith('.tgz')), false);
-  assert.equal([...paths].filter(path => /^skills\/[^/]+\/SKILL.md$/.test(path)).length, 27);
+  assert.equal([...paths].filter(path => /^skills\/[^/]+\/SKILL.md$/.test(path)).length, bundle.skills.length);
 
   const project = join(directory, 'consumer project');
   mkdirSync(project);
@@ -44,7 +46,14 @@ test('the actual npm tarball installs a working CLI and complete skills without 
   assert.equal(readFileSync(join(installed, 'SKILL.md'), 'utf8'), readFileSync(join(root, 'SKILL.md'), 'utf8'));
   assert.equal(readFileSync(join(installed, 'skills/manifest.json'), 'utf8'), readFileSync(join(root, 'skills/manifest.json'), 'utf8'));
   assert.equal(readFileSync(join(installed, 'skills/frontend-design/LICENSE.txt'), 'utf8'), readFileSync(join(root, 'skills/frontend-design/LICENSE.txt'), 'utf8'));
+  for (const skill of bundle.skills) {
+    for (const [path, expected] of Object.entries(skill.files)) {
+      const file = join(installed, 'skills', skill.name, path);
+      assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'), expected, `Installed snapshot mismatch: ${skill.name}/${path}`);
+    }
+  }
   const listed = npm(['exec', '--offline', '--', 'opc-delivery', 'list'], project);
   assert.match(listed, /python-sqlalchemy/);
   assert.match(listed, /deep-agents-memory/);
+  for (const name of ['user-research', 'prototype-validation', 'deployment-operations']) assert.ok(listed.includes(name));
 });

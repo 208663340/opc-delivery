@@ -7,6 +7,7 @@ import { parseArgs } from 'node:util';
 
 const packageRoot = realpathSync(resolve(dirname(fileURLToPath(import.meta.url)), '..'));
 const metadata = JSON.parse(readFileSync(join(packageRoot, 'package.json'), 'utf8'));
+const companionSkills = JSON.parse(readFileSync(join(packageRoot, 'skills/manifest.json'), 'utf8')).skills;
 const payload = ['SKILL.md', 'README.md', 'CONTRIBUTING.md', 'agents', 'assets', 'references', 'skills', 'scripts', 'docs'];
 const help = `OPC Delivery ${metadata.version}
 
@@ -21,7 +22,7 @@ Default destination: CODEX_HOME/skills/opc-delivery, or ~/.codex/skills/opc-deli
 --dry-run   Show the destination without writing files.
 --force     Back up an existing installation before replacing it.
 
-The bundle includes 27 companion skills. Installation is explicit;
+The bundle includes ${companionSkills.length} companion skills. Installation is explicit;
 npm install only installs this CLI. Python tools require Python 3.
 `;
 
@@ -60,7 +61,7 @@ function install(values) {
     if (!existsSync(join(packageRoot, name))) throw new Error(`The package is incomplete: missing ${name}`);
   }
   if (values['dry-run']) {
-    console.log(`Would install OPC Delivery ${metadata.version} with 27 companion skills to ${destination}`);
+    console.log(`Would install OPC Delivery ${metadata.version} with ${companionSkills.length} companion skills to ${destination}`);
     if (existing) console.log('The existing directory would be preserved in a backup.');
     return;
   }
@@ -87,7 +88,7 @@ function install(values) {
   } finally {
     rmSync(staging, { recursive: true, force: true });
   }
-  console.log(`Installed OPC Delivery ${metadata.version} with 27 companion skills to ${destination}`);
+  console.log(`Installed OPC Delivery ${metadata.version} with ${companionSkills.length} companion skills to ${destination}`);
   if (backup) console.log(`Previous installation preserved at ${backup}`);
   console.log('The skill is available to your agent on its next skill refresh or session.');
 }
@@ -108,8 +109,7 @@ try {
   else if (positionals.length === 0 && Object.keys(values).length === 0) console.log(help);
   else if (positionals.length === 1 && positionals[0] === 'install') install(values);
   else if (positionals.length === 1 && positionals[0] === 'list' && Object.keys(values).length === 0) {
-    const manifest = JSON.parse(readFileSync(join(packageRoot, 'skills/manifest.json'), 'utf8'));
-    for (const skill of manifest.skills) console.log(`${skill.name}\t${skill.category}\t${skill.role}`);
+    for (const skill of companionSkills) console.log(`${skill.name}\t${skill.category}\t${skill.role}`);
   } else throw new Error('Unknown command or options. Run opc-delivery --help.');
 } catch (error) {
   console.error(`opc-delivery: ${error.message}`);

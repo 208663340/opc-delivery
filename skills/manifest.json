@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "snapshot_date": "2026-10-22",
-  "description": "27 local Skill snapshots: 18 primary recommendations and 9 supporting topics. SHA-256 values describe files bundled in this repository; source hashes preserve the imported local snapshots.",
+  "description": "30 companion Skills: 27 local snapshots and 3 project-authored specialists; 21 primary recommendations and 9 supporting topics. File SHA-256 values describe bundled files; imported snapshots retain source hashes.",
   "skills": [
     {
       "name": "frontend-design",
@@ -726,6 +726,58 @@
         "references/mocking.md": "0e2cf1859fc4cb381c09dcb29a228914d19aaa8573447e8c07d67b0defc742c8",
         "references/pytest.md": "f7a3172ebcd0a43b2aefad42add451657af41a270272086a29978dbcdce756c4"
       }
+    },
+    {
+      "name": "user-research",
+      "category": "product",
+      "role": "primary",
+      "entrypoint": "user-research/SKILL.md",
+      "files": {
+        "SKILL.md": "c0942fe7c2d0f93e6b0e53c813ad273bd229f84f6f30f969d5fb4c6a98041e38",
+        "assets/evidence-notes.md": "5f1e8016becc46fdf391f99af5bfd013842816ef6dda9799e4c60821f52d4069",
+        "assets/research-brief.md": "4f019db664061e6c3d1f8aacadb8f71648c251eec00185aea1c04ccf665ff8a8",
+        "references/interview-and-synthesis.md": "b2aee3e0fd1cfd62e389a8740df754c27c9e47c30c9d0daae4fa468c9b13259e"
+      },
+      "license_files": [],
+      "declared_license": "UNLICENSED (repository has no specified open-source license)",
+      "upstream_url": null,
+      "source_kind": "project-authored",
+      "source_url": "https://github.com/208663340/opc-delivery/tree/main/skills/user-research",
+      "local_changes": []
+    },
+    {
+      "name": "prototype-validation",
+      "category": "ui-ux",
+      "role": "primary",
+      "entrypoint": "prototype-validation/SKILL.md",
+      "files": {
+        "SKILL.md": "519a117496061780e6af39629939de4f2197cc7468bf0e3c13686421bca8ef7a",
+        "assets/usability-test.md": "7b6c88f917978d6d3448d70e8be6f7953ed2a5dd0895e46591d2e3de81f4cff8",
+        "references/task-testing.md": "9469fa60a6a13c7893ad9753f3278a8ef97768ea8760d7f4c1ef4ab438292a05"
+      },
+      "license_files": [],
+      "declared_license": "UNLICENSED (repository has no specified open-source license)",
+      "upstream_url": null,
+      "source_kind": "project-authored",
+      "source_url": "https://github.com/208663340/opc-delivery/tree/main/skills/prototype-validation",
+      "local_changes": []
+    },
+    {
+      "name": "deployment-operations",
+      "category": "engineering",
+      "role": "primary",
+      "entrypoint": "deployment-operations/SKILL.md",
+      "files": {
+        "SKILL.md": "d0c5521acd16cc14a0cb73e238f30166a7d6dbaee06e2cc473fdfaa5573b9df8",
+        "assets/operations-runbook.md": "f1b5e5d0d4c133b8edcb27d038ab93e0469a124e45b362972d09dbc1dbbd8d64",
+        "references/rollout-and-recovery.md": "44f2fb94474eb7f566f947660f9e314cc22d3cf6ee448338dce7a6850800b48a"
+      },
+      "license_files": [],
+      "declared_license": "UNLICENSED (repository has no specified open-source license)",
+      "upstream_url": null,
+      "source_kind": "project-authored",
+      "source_url": "https://github.com/208663340/opc-delivery/tree/main/skills/deployment-operations",
+      "local_changes": []
     }
   ]
 }
