@@ -50,9 +50,17 @@
 - 主 Skill 与三项新 Skill 的 frontmatter 校验通过；所有内部 Markdown 相对链接可解析。
 - manifest 的 30 项入口与 150 个 Skill 文件逐一核对 SHA-256，并核对实际文件集合；原 27 项快照未改变。
 - 新增数量回归用 2 项技能的独立包夹具测试：旧 CLI 失败，修改后通过。该测试避免未来增加技能时继续显示旧数量。
-- `npm test`：Node 26.5.0 上 12/12；Node 20.20.2 上 12/12。包括真实 `npm pack` → 离线安装 tarball → `npm exec` 安装技能，核对全部 Skill 文件哈希与三项新技能的模板。
+- `npm test`：Node 26.5.0 上 13/13；Node 20.20.2 上 13/13。包括真实 `npm pack` → 离线安装 tarball → `npm exec` 安装技能，核对全部 Skill 文件哈希与三项新技能的模板。
 - `python3 scripts/test_delivery_tools.py`：22/22。
 - `npm publish --dry-run --offline`：通过，使用临时可写 npm cache；无实际 registry 发布。初次使用个人 cache 因沙箱写入限制失败，更换临时 cache 后通过，无需修改个人 cache 权限。
+
+## Windows 换行回归修复
+
+首次推送 `7c549cb` 后，Ubuntu Node 20/24 和工具检查通过，Windows Node 24 在完整快照校验处失败：`frontend-design/LICENSE.txt` 的实际哈希为 `eb3d7b5485466acbd81f2b496f595ab637d2792e268206b27d99e793bdb67549`，与源文件 LF 转 CRLF 后的哈希完全相同。此前只比较源目录与安装目录，无法发现 Git checkout 已经改变源文件字节。
+
+新增真实 Git checkout 回归：将技能文件以 `core.autocrlf=false` 放入临时索引，再用 `core.autocrlf=true` 检出，验证全部快照文件。修复前复现同一哈希失败；新增 `.gitattributes` 的 `skills/** -text` 后通过，保留快照的确切字节，不放宽或重算 manifest 校验值。CLI 仍无第三方运行依赖，开发验证环境需要 Git。
+
+公开 GitHub 提交的 npm 安装也已完成：实际取得 CLI 0.3.0，安装并核对 30 项技能与全部 150 个文件。该验证使用公开提交，不是 registry 发布。
 
 ## 证明边界
 

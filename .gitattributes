@@ -1,0 +1,2 @@
+# Preserve bundled snapshot bytes so manifest SHA-256 values work on every OS.
+skills/** -text

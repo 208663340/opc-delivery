@@ -2,13 +2,36 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const bundle = JSON.parse(readFileSync(join(root, 'skills/manifest.json'), 'utf8'));
+
+test('Git checkouts preserve snapshot bytes even with Windows CRLF conversion enabled', t => {
+  const directory = mkdtempSync(join(tmpdir(), 'opc-checkout-test-'));
+  t.after(() => rmSync(directory, { recursive: true, force: true }));
+  cpSync(join(root, 'skills'), join(directory, 'skills'), { recursive: true });
+  if (existsSync(join(root, '.gitattributes'))) cpSync(join(root, '.gitattributes'), join(directory, '.gitattributes'));
+  function git(args) {
+    const result = spawnSync('git', ['-c', 'core.attributesFile=' + join(directory, 'no-global-attributes'), '-c', 'core.fsmonitor=false', ...args], {
+      cwd: directory, encoding: 'utf8', timeout: 30_000,
+    });
+    assert.equal(result.status, 0, result.stderr || String(result.error));
+  }
+  git(['init', '--quiet']);
+  git(['-c', 'core.autocrlf=false', 'add', '--', '.']);
+  rmSync(join(directory, 'skills'), { recursive: true });
+  git(['-c', 'core.autocrlf=true', 'checkout-index', '--all', '--force']);
+  for (const skill of bundle.skills) {
+    for (const [path, expected] of Object.entries(skill.files)) {
+      const file = join(directory, 'skills', skill.name, path);
+      assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'), expected, `Checkout changed snapshot: ${skill.name}/${path}`);
+    }
+  }
+});
 
 test('the actual npm tarball installs a working CLI and complete skills without install-time home writes', t => {
   const directory = mkdtempSync(join(tmpdir(), 'opc-package-test-'));
