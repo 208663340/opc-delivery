@@ -34,6 +34,10 @@ git clone https://github.com/208663340/opc-delivery.git "$OPC_SKILL_ROOT/opc-del
 
 已有同名目录时，先保留原有内容，再按你的技能管理方式更新。也可以从 [Releases](https://github.com/208663340/opc-delivery/releases) 下载版本包。
 
+仓库中已附带 27 项从本机技能库收录的配套 Skill，包含各自的规则、参考和已有许可文件。完整克隆本仓库即可一起取得，OPC Delivery 会沿推荐表的本地路径按需读取。它们不需要为了被读取而再次联网下载；部分专业任务所需的浏览器、外部文档或框架依赖仍按实际环境使用。
+
+这些内置目录由 OPC Delivery 路由，不会仅因嵌套在本仓库中就为每项创建独立的全局入口。需要单独使用某项时，可将 `skills/<名称>/` 完整放入所用 Agent 的技能目录，先保留已有同名内容。
+
 调用：
 
 ```text
@@ -58,6 +62,14 @@ $opc-delivery 检查这个版本是否具备发布条件，推进已授权的部
 **从已有能力开始。** 检查项目约束、工具、连接和已完成的授权。项目架构与凭据留在项目及其安全存储中，技能适配现有技术栈。
 
 **结论对应证据。** 区分推断、复现、修复、测试、部署与业务验证；记录实际覆盖范围。跨会话工作复用已有主记录，保留可继续执行的上下文。
+
+## 按当前问题补充专业 Skill
+
+内置 [专业 Skill 推荐](references/skill-recommendations.md)，覆盖 UI/UX 设计、前端开发、后端开发、Agent 开发、产品设计与分析、Bug 修复和工程基础。18 项主要推荐和 9 项 Agent / Python 配套能力均已收录到 `skills/`，表中技能名称直接打开本地 `SKILL.md`，并保留上游来源、选择时机与应交回的验证证据。
+
+例如，视觉改版可参考 `frontend-design`，React 请求瀑布可参考 `vercel-react-best-practices`，根因未知时可参考 `systematic-debugging`。Agent 专题按项目实际框架选择；自研循环先走现有可靠性审查。完整名单与来源以推荐参考为准。
+
+先读取选中项的实际说明，再按需加载其规则和参考；专业结果回到当前任务的验收与证据记录。目录、来源、文件校验值及打包调整见 [技能快照清单](skills/manifest.json)。
 
 ## 两个可直接运行的工具
 
@@ -90,6 +102,8 @@ python3 scripts/check_release_receipt.py /path/to/release-receipt.json
 - **22 项脚本测试**：涵盖版本与环境错配、缺失证据、未运行测试、输入异常、文件边界和自定义 Git filter。
 - **3 个独立隔离任务**：从模糊想法交付 CSV 原型；修复空异常消息并保留业务规则；识别与原始日志冲突的发布声明。
 - **结构与链接检查**：技能格式有效，内部相对引用可解析。
+- **专业 Skill 推荐增量验证**：核对 18 项候选的源文件；完成一次旧版检索对照与两个更新后的隔离任务，详见 [推荐能力验证记录](docs/validation-skill-recommendations.md)。
+- **本地 Skill 收录验证**：27 项、140 个原有文件；核对入口、目录完整性与 SHA-256，验证内部链接可解析。仅修正一份生成文档中的三处相对链接，详见同一验证记录。
 
 详见 [0.1.0 验证记录](docs/validation-0.1.0.md)。这些结果不替代你自己的生产验证，也不构成效率提升或商业效果承诺。
 
@@ -110,10 +124,14 @@ references/
   verification.md                根因定位与回归
   reliability-review.md          Agent 长任务、Trace 与 Tools
   release.md                     构建、发布与回退
+  skill-recommendations.md        七个领域的可选 Skill、来源与选用条件
   evaluation.md                  技能维护与行为评测
 scripts/                         只读检查器、证据检查器及测试
 assets/                          项目接入与发布证据模板
+skills/                          27 项本地技能快照及其规则、参考与许可文件
+  manifest.json                  来源、源文件与打包校验值、本地调整
 docs/validation-0.1.0.md          已完成的验证及其边界
+docs/validation-skill-recommendations.md  推荐能力增量验证
 ```
 
 ## 改进这个 Skill
