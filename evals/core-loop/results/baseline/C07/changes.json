@@ -1,0 +1,14 @@
+{
+  "artifact.txt": {
+    "before_sha256": null,
+    "after_sha256": "aa2130180f2ff80f9ef32c4eb5508983f4996020bb22e113f9e0f950c154ead3"
+  },
+  "build.json": {
+    "before_sha256": null,
+    "after_sha256": "f4afe47a7d88b636849b47e6c9a687db8aa43d4ac732c1d70be5056ab34a377d"
+  },
+  "task.md": {
+    "before_sha256": "477cf6883a5cf47b03e6202d66c979f147f2760a679ead845e59c0bba21e12d8",
+    "after_sha256": "25b509689599a80adf8c0e76453b7eb440338324b6d609da17d386b19b2761bc"
+  }
+}

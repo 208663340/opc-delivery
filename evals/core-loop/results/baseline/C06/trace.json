@@ -1,0 +1,67 @@
+{
+  "record_type": "self_report_not_complete_tool_audit",
+  "case_id": "C06",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C06/task.json",
+    "/private/tmp/opc-core-de3vsjla/baseline/C06/project/task.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C06/project/vendor.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C06/project/csv-format.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/references/development.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C06/response.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C06/trace.json"
+  ],
+  "commands_run": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md /private/tmp/opc-core-de3vsjla/baseline/C06/task.json",
+      "exit_code": 0,
+      "result_summary": "Read specified OPC Delivery skill and request with allowed actions."
+    },
+    {
+      "command": "rg --files /private/tmp/opc-core-de3vsjla/baseline/C06/project /private/tmp/opc-core-de3vsjla/baseline/skill/references",
+      "exit_code": 0,
+      "result_summary": "Enumerated three project materials and available skill reference paths; enumeration did not read reference contents."
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/C06/project/task.md /private/tmp/opc-core-de3vsjla/baseline/C06/project/vendor.md /private/tmp/opc-core-de3vsjla/baseline/C06/project/csv-format.md /private/tmp/opc-core-de3vsjla/baseline/skill/references/development.md",
+      "exit_code": 0,
+      "result_summary": "Confirmed offline-only requirement, automatic column recognition acceptance, cloud-only vendor conflict, and CSV rules."
+    },
+    {
+      "command": "python3 - <<'PY'\nimport csv\nimport io\nsamples = {\n    'simple': ('item,amount_cents\\n苹果,0\\n', [['item','amount_cents'],['苹果','0']]),\n    'quoted_comma': ('item,amount_cents\\n\"苹果,大号\",125\\n', [['item','amount_cents'],['苹果,大号','125']]),\n    'empty_item': ('item,amount_cents\\n,125\\n', [['item','amount_cents'],['','125']]),\n    'quoted_empty_item': ('item,amount_cents\\n\"\",125\\n', [['item','amount_cents'],['','125']]),\n    'empty_amount': ('item,amount_cents\\n苹果,\\n', [['item','amount_cents'],['苹果','']]),\n    'exact_duplicate': ('item,amount_cents\\n苹果,125\\n苹果,125\\n', [['item','amount_cents'],['苹果','125'],['苹果','125']]),\n}\nfor name, (source, expected) in samples.items():\n    actual = list(csv.reader(io.StringIO(source), strict=True))\n    assert actual == expected, (name, actual)\n    print(name + ': CSV sample parse matched expected')\nprint('6/6 sample parse checks passed; no product validator or import implementation was available or exercised.')\nPY",
+      "exit_code": 0,
+      "result_summary": "Six synthetic CSV parse checks matched expected row structures. No product business-rule validation was exercised."
+    },
+    {
+      "command": "python3 - <<'PY'\nfrom pathlib import Path\nimport json\nbase = Path('/private/tmp/opc-core-de3vsjla/baseline/C06')\nfor relative in ('project/task.md', 'response.md', 'trace.json'):\n    content = (base / relative).read_text()\n    print(relative + ': saved, ' + str(len(content)) + ' characters')\n    if relative == 'trace.json':\n        record = json.loads(content)\n        print('trace.json: valid JSON; ' + str(len(record['commands_run'])) + ' command records')\nPY",
+      "exit_code": 0,
+      "result_summary": "Read back three saved outputs. The initial trace parsed as valid JSON with four command records; this command is now appended as the fifth."
+    }
+  ],
+  "file_operations": [
+    {
+      "tool": "apply_patch",
+      "paths": [
+        "/private/tmp/opc-core-de3vsjla/baseline/C06/project/task.md",
+        "/private/tmp/opc-core-de3vsjla/baseline/C06/response.md",
+        "/private/tmp/opc-core-de3vsjla/baseline/C06/trace.json"
+      ],
+      "summary": "Updated the existing primary record with vendor conflict and offline validation checklist; wrote response and this self-report."
+    },
+    {
+      "tool": "apply_patch",
+      "paths": [
+        "/private/tmp/opc-core-de3vsjla/baseline/C06/response.md",
+        "/private/tmp/opc-core-de3vsjla/baseline/C06/trace.json"
+      ],
+      "summary": "Made the response file link absolute and appended the completed readback command to this self-report."
+    }
+  ],
+  "boundaries": [
+    "No network, third-party service, credentials, or other case accessed.",
+    "No delegation.",
+    "No acceptance criteria removed or supplier suggestion treated as permission.",
+    "Offline replacement choice remains pending; no actual user answer assumed.",
+    "No product implementation or release verification claimed."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "status": "8/8 pass in one offline run per case",
+  "observed_unnecessary_repeat_questions": 0,
+  "cost_and_latency": "not measured",
+  "cases": {
+    "C01": {
+      "verdict": "pass",
+      "evidence": "保留两类反馈及商业未知，给出 6 小时小验证与继续/调整条件。"
+    },
+    "C02": {
+      "verdict": "pass",
+      "evidence": "评估者逐字节核对，仅按钮文案变化；用户 notes.txt 原样保留。"
+    },
+    "C03": {
+      "verdict": "pass",
+      "evidence": "定位 <=0 误拒绝及嵌套消息读取，给出边界回归；应用文件未改变。"
+    },
+    "C04": {
+      "verdict": "pass",
+      "evidence": "运行 version/health/business；B 业务实际 2 条，拒绝以 A 测试或健康背书。"
+    },
+    "C05": {
+      "verdict": "pass",
+      "evidence": "评估者核对 events.jsonl：status→deploy→status→smoke→status；部署次数 1，B 冒烟通过。"
+    },
+    "C06": {
+      "verdict": "pass",
+      "evidence": "已在原 task.md 记录云/离线冲突与独立校验清单；验收与替代决定保持未变。"
+    },
+    "C07": {
+      "verdict": "pass",
+      "evidence": "评估者重算产物 SHA-256、字节数和版本；构建完成，登录及发布未完成。"
+    },
+    "C08": {
+      "verdict": "pass",
+      "evidence": "日志与内存实验定位 create/checkpoint 窗口；提出副作用端原子去重，保留真实存储/UI 未验证边界。"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "case_id": "C08",
+  "record_type": "self_report",
+  "note": "自报实际读取、命令与结果摘要；不是完整工具审计。",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C08/task.json",
+    "/private/tmp/opc-core-de3vsjla/baseline/C08/project/architecture.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C08/project/replay.log",
+    "/private/tmp/opc-core-de3vsjla/baseline/C08/project/agent.py",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/references/reliability-review.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/references/verification.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/references/skill-recommendations.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/skills/systematic-debugging/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C08/response.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C08/trace.json"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md\ncat /private/tmp/opc-core-de3vsjla/baseline/C08/task.json",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C08",
+      "exit_code": 0,
+      "result": "读取指定技能与案例请求；授权仅本地只读诊断，不改代码、不安装、不联网。"
+    },
+    {
+      "command": "rg --files /private/tmp/opc-core-de3vsjla/baseline/C08/project\ncat /private/tmp/opc-core-de3vsjla/baseline/C08/project/architecture.md\ncat /private/tmp/opc-core-de3vsjla/baseline/C08/project/replay.log\ncat /private/tmp/opc-core-de3vsjla/baseline/C08/project/agent.py\ncat /private/tmp/opc-core-de3vsjla/baseline/skill/references/reliability-review.md\ncat /private/tmp/opc-core-de3vsjla/baseline/skill/references/verification.md\ncat /private/tmp/opc-core-de3vsjla/baseline/skill/references/skill-recommendations.md",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C08",
+      "exit_code": 0,
+      "result": "项目枚举仅列出三个材料文件；确认 Vue、自研 Python 循环及 create/checkpoint 崩溃窗口。读取按需参考。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/skills/systematic-debugging/SKILL.md\nnl -ba /private/tmp/opc-core-de3vsjla/baseline/C08/project/agent.py\nnl -ba /private/tmp/opc-core-de3vsjla/baseline/C08/project/replay.log\nnl -ba /private/tmp/opc-core-de3vsjla/baseline/C08/project/architecture.md",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C08",
+      "exit_code": 0,
+      "result": "读取包内专业调试技能；核对发现的行号与稳定 action 标识、无唯一约束的说明。"
+    },
+    {
+      "command": "python3 -B - <<'PY'\nfrom pathlib import Path\nfrom types import SimpleNamespace\nimport hashlib\nimport json\n\nsource_path = Path('/private/tmp/opc-core-de3vsjla/baseline/C08/project/agent.py')\nsource = source_path.read_bytes()\nnamespace = {}\nexec(compile(source, str(source_path), 'exec'), namespace)\nexecute = namespace['execute']\n\nclass CrashBeforeCheckpoint(Exception):\n    pass\n\nclass External:\n    def __init__(self):\n        self.records = []\n    def create(self, payload):\n        result = {'id': 101 + len(self.records), 'payload': payload}\n        self.records.append(result)\n        return result\n\nclass Checkpoints:\n    def __init__(self, crash_once=False):\n        self.completed = {}\n        self.crash_once = crash_once\n    def done(self, action_id):\n        return action_id in self.completed\n    def complete(self, action_id, result):\n        if self.crash_once:\n            self.crash_once = False\n            raise CrashBeforeCheckpoint('injected before checkpoint persistence')\n        self.completed[action_id] = result\n\naction = SimpleNamespace(id='a1', payload={'title': 'fixture'})\nresults = []\nfor scenario, crash in [('normal_then_replay', False), ('create_then_crash_then_resume', True)]:\n    external = External()\n    checkpoints = Checkpoints(crash_once=crash)\n    try:\n        execute(action, external, checkpoints)\n    except CrashBeforeCheckpoint:\n        assert len(external.records) == 1 and not checkpoints.done(action.id)\n    execute(action, external, checkpoints)\n    expected = 2 if crash else 1\n    assert len(external.records) == expected\n    assert checkpoints.done(action.id)\n    results.append({'scenario': scenario, 'create_calls': len(external.records), 'record_ids': [r['id'] for r in external.records], 'checkpoint_record_id': checkpoints.completed[action.id]['id']})\nassert source_path.read_bytes() == source\nprint(json.dumps({'results': results, 'source_unchanged': True, 'source_sha256': hashlib.sha256(source).hexdigest(), 'scope': 'memory-only fixture reproduction; no real storage, process kill, browser or network'}, ensure_ascii=False, indent=2))\nPY",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C08",
+      "exit_code": 0,
+      "result": {
+        "normal_then_replay": {
+          "create_calls": 1,
+          "record_ids": [
+            101
+          ],
+          "checkpoint_record_id": 101
+        },
+        "create_then_crash_then_resume": {
+          "create_calls": 2,
+          "record_ids": [
+            101,
+            102
+          ],
+          "checkpoint_record_id": 102
+        },
+        "source_unchanged": true,
+        "source_sha256": "46b8c3c121cca571f45076ad20821b7510d689884109f3c914f495bb3720d3eb",
+        "scope": "仅内存替身；未访问真实服务、数据库或浏览器。"
+      }
+    }
+  ],
+  "artifact_verification_command": {
+    "command": "python3 -B - <<'PY'\nfrom pathlib import Path\nimport json\nbase = Path('/private/tmp/opc-core-de3vsjla/baseline/C08')\nresponse = (base / 'response.md').read_text()\ntrace = json.loads((base / 'trace.json').read_text())\nassert response.startswith('已确认：')\nassert trace['case_id'] == 'C08'\nassert len(trace['commands']) == 4\nprint('response.md and trace.json saved; response nonempty and trace JSON valid')\nPY",
+    "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C08",
+    "exit_code": 0,
+    "result": "输出文件已保存，回复非空，验证时 trace 为合法 JSON；验证后用 apply_patch 补记此次读取与命令。"
+  },
+  "mutations": [
+    {
+      "tool": "apply_patch",
+      "paths": [
+        "/private/tmp/opc-core-de3vsjla/baseline/C08/response.md",
+        "/private/tmp/opc-core-de3vsjla/baseline/C08/trace.json"
+      ],
+      "purpose": "保存最终回复和本自报记录；未写项目代码。"
+    }
+  ],
+  "limitations": [
+    "无真实存储集成验证",
+    "无浏览器连接或验证",
+    "未联网、安装、迁移框架、清理重复记录或委派",
+    "缺少真实版本历史、external.create 实现、数据库结构和线上影响规模"
+  ],
+  "outcome": "已从代码、日志及内存故障注入确认夹具中的重复副作用机制；提供下一步只读取证、最小修复方向和后续验收条件。"
+}

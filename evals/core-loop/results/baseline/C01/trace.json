@@ -1,0 +1,48 @@
+{
+  "case_id": "C01",
+  "record_type": "执行者自报记录，不是完整工具审计；inline script 用摘要表示。",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C01/task.json",
+    "/private/tmp/opc-core-de3vsjla/baseline/C01/project/feedback.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/references/discovery.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/skills/user-research/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/skills/prototype-validation/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/skills/user-research/references/interview-and-synthesis.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/skills/prototype-validation/references/task-testing.md"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md /private/tmp/opc-core-de3vsjla/baseline/C01/task.json",
+      "result": "exit 0；读取指定技能与 C01 请求和允许范围。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/C01/project/feedback.md /private/tmp/opc-core-de3vsjla/baseline/skill/references/discovery.md",
+      "result": "exit 0；读取两条反馈、创始人设想和需求判断方法。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/skills/user-research/SKILL.md /private/tmp/opc-core-de3vsjla/baseline/skill/skills/prototype-validation/SKILL.md",
+      "result": "exit 0；读取研究与原型验证技能。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/skills/user-research/references/interview-and-synthesis.md /private/tmp/opc-core-de3vsjla/baseline/skill/skills/prototype-validation/references/task-testing.md",
+      "result": "exit 0；读取证据分析与任务测试方法。"
+    },
+    {
+      "command": "python3 - (inline script)",
+      "script_summary": "用 pathlib 写 response.md；构造自报 trace；确认回复存在、字符数及所列读取范围；写 trace.json 并打印结果。",
+      "result": "生成 response.md 与 trace.json；未修改 project 或 skill。"
+    }
+  ],
+  "files_written": [
+    "/private/tmp/opc-core-de3vsjla/baseline/C01/response.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C01/trace.json"
+  ],
+  "validation": {
+    "response_written": true,
+    "response_characters": 2475,
+    "actual_user_research_sessions": 0,
+    "actual_prototypes_created": 0
+  },
+  "scope_summary": "仅本地读取本案例材料和指定技能引用，未联网、联系用户、部署、调用真实服务、委派或修改项目；提供计划和待决定问题。"
+}

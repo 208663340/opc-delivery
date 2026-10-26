@@ -1,0 +1,85 @@
+{
+  "record_type": "self_report",
+  "scope_note": "本记录为实际执行操作的自报摘要，不声称是完整工具审计。",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C02/task.json",
+    "/private/tmp/opc-core-de3vsjla/baseline/C02/project/index.html",
+    "/private/tmp/opc-core-de3vsjla/baseline/C02/project/notes.txt"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+      "result": "成功读取指定 OPC Delivery 技能。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/C02/task.json",
+      "result": "成功读取请求、材料与 allowed_actions。"
+    },
+    {
+      "command": "pwd",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C02/project",
+      "result": "确认当前目录为案例 project。"
+    },
+    {
+      "command": "rg --files -g 'AGENTS.md' -g '*CONTRACT*' -g '*README*' -g 'index.html' -g 'notes.txt' -g 'package.json' -g 'Makefile' .",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C02/project",
+      "result": "仅找到 notes.txt 与 index.html。"
+    },
+    {
+      "command": "cat index.html",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C02/project",
+      "result": "主按钮文案为立即开始。"
+    },
+    {
+      "command": "cat notes.txt",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C02/project",
+      "result": "读取原有计划与用户未提交想法，未将其作为扩大范围授权。"
+    },
+    {
+      "command": "git status --short",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C02/project",
+      "result": "修改前仅 notes.txt 已修改。"
+    },
+    {
+      "command": "python3 -",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C02/project",
+      "stdin_summary": "读取 index.html 与 notes.txt 字节；断言目标按钮仅一处；仅替换立即开始为创建报价并写 index.html；断言反向替换恢复全部原始 HTML 字节且 notes.txt 字节未变。",
+      "result": "所有断言通过，输出 PASS。"
+    },
+    {
+      "command": "git diff --check",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C02/project",
+      "result": "无输出，检查通过。"
+    },
+    {
+      "command": "git diff -- index.html",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C02/project",
+      "result": "确认唯一差异为按钮文案立即开始改为创建报价。"
+    },
+    {
+      "command": "git status --short",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C02/project",
+      "result": "index.html 与原有 notes.txt 为已修改，未提交或重置。"
+    },
+    {
+      "command": "python3 -",
+      "stdin_summary": "写入本案例 response.md 与 trace.json。",
+      "result": "报告文件已写入。"
+    }
+  ],
+  "files_written": [
+    "/private/tmp/opc-core-de3vsjla/baseline/C02/project/index.html",
+    "/private/tmp/opc-core-de3vsjla/baseline/C02/response.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C02/trace.json"
+  ],
+  "checks": {
+    "target_count": 1,
+    "other_html_preserved": true,
+    "notes_preserved": true,
+    "diff_check": "passed",
+    "browser_rendering": "not_run"
+  },
+  "commit_created": false,
+  "pending_user_decisions": []
+}

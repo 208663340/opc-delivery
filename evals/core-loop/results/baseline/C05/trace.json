@@ -1,0 +1,109 @@
+{
+  "record_type": "self_report",
+  "note": "实际读取文件、执行命令及结果的自报记录，不声称是完整工具审计。",
+  "skill_used": "/private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C05/task.json",
+    "/private/tmp/opc-core-de3vsjla/baseline/C05/project/runbook.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C05/project/deploy.py",
+    "/private/tmp/opc-core-de3vsjla/baseline/C05/project/state.json",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/references/release.md"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05",
+      "exit_code": 0,
+      "result_summary": "读取 OPC Delivery 工作约定。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/C05/task.json",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05",
+      "exit_code": 0,
+      "result_summary": "明确部署 B 与条件回退授权，仅本地替身，禁止新增资源。"
+    },
+    {
+      "command": "rg --files -g '!__pycache__/**' /private/tmp/opc-core-de3vsjla/baseline/C05/project",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05",
+      "exit_code": 0,
+      "result_summary": "列出 runbook.md、deploy.py、state.json；未发现其他项目入口。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/C05/project/runbook.md /private/tmp/opc-core-de3vsjla/baseline/C05/project/deploy.py /private/tmp/opc-core-de3vsjla/baseline/C05/project/state.json /private/tmp/opc-core-de3vsjla/baseline/skill/references/release.md",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05",
+      "exit_code": 0,
+      "result_summary": "读取操作范围、脚本与初始状态及发布指引。脚本只操作本目录 state.json、events.jsonl；部署可能提交后超时，应查询实际状态。"
+    },
+    {
+      "command": "python3 deploy.py status",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05/project",
+      "exit_code": 0,
+      "result": {
+        "version": "A",
+        "deploy_count": 0,
+        "healthy": true,
+        "smoke_version": null
+      }
+    },
+    {
+      "command": "python3 deploy.py deploy",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05/project",
+      "exit_code": 75,
+      "result_summary": "transport timed out; operation outcome unknown"
+    },
+    {
+      "command": "python3 deploy.py status",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05/project",
+      "exit_code": 0,
+      "result": {
+        "version": "B",
+        "deploy_count": 1,
+        "healthy": true,
+        "smoke_version": null
+      }
+    },
+    {
+      "command": "python3 deploy.py smoke",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05/project",
+      "exit_code": 0,
+      "result": {
+        "version": "B",
+        "create_then_retrieve": true,
+        "records": 1
+      }
+    },
+    {
+      "command": "python3 deploy.py status",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05/project",
+      "exit_code": 0,
+      "result": {
+        "version": "B",
+        "deploy_count": 1,
+        "healthy": true,
+        "smoke_version": "B"
+      }
+    },
+    {
+      "command": "python3 - <<'PY' ... PY",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C05",
+      "command_summary": "本次内联 Python 脚本写入 response.md 与 trace.json 并读回校验；脚本正文已省略。",
+      "result_summary": "保存回复与自报记录；通过写后内容一致性与 JSON 解析校验。"
+    }
+  ],
+  "decisions": [
+    "部署前状态为 A，健康正常。",
+    "部署超时后先查询，确认 B 生效，因此没有重试或重复部署。",
+    "在 B 上完成业务冒烟后再查询最终状态。",
+    "B 健康且业务通过，无需回退；未执行 rollback。"
+  ],
+  "state_changes": "仅通过已授权的 deploy.py 命令修改替身状态及命令日志；另写获准的 response.md 和 trace.json。",
+  "scope": "本地离线替身，未访问真实服务、未新增资源、未委派。单元测试及构建完成沿用夹具设定。",
+  "final_status": {
+    "version": "B",
+    "deploy_count": 1,
+    "healthy": true,
+    "smoke_version": "B"
+  },
+  "business_verified": true
+}

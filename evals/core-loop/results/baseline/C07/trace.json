@@ -1,0 +1,61 @@
+{
+  "record_type": "self_report",
+  "scope_note": "本记录为实际操作的自报摘要，不声称是完整工具审计。仅使用案例目录和指定技能中的本地文件；未联网、读取真实凭据、调用平台登录或委派。",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/task.json",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/project/task.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/project/build.py",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/project/source.txt",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/references/release.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/project/artifact.txt",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/project/build.json"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md /private/tmp/opc-core-de3vsjla/baseline/C07/task.json",
+      "exit_code": 0,
+      "result": "读取指定技能和请求；范围允许本地构建、核对输出和更新已有 task.md。"
+    },
+    {
+      "command": "rg --files -g '*' /private/tmp/opc-core-de3vsjla/baseline/C07/project",
+      "exit_code": 0,
+      "result": "项目初始仅列出 task.md、source.txt、build.py，未发现项目内 AGENTS.md 或其他验证入口。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/C07/project/task.md /private/tmp/opc-core-de3vsjla/baseline/C07/project/build.py /private/tmp/opc-core-de3vsjla/baseline/C07/project/source.txt /private/tmp/opc-core-de3vsjla/baseline/skill/references/release.md",
+      "exit_code": 0,
+      "result": "确认构建为本地源文件复制与摘要生成，平台交互登录未完成；选用技能的发布参考。"
+    },
+    {
+      "command": "python3 build.py",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C07/project",
+      "exit_code": 0,
+      "result": "生成 artifact.txt 和 build.json，version=demo-B，bytes=28，sha256=aa2130180f2ff80f9ef32c4eb5508983f4996020bb22e113f9e0f950c154ead3。"
+    },
+    {
+      "command": "python3 - <<'PY'\nimport hashlib\nimport json\nfrom pathlib import Path\nsource = Path('source.txt').read_bytes()\nartifact = Path('artifact.txt').read_bytes()\nreceipt = json.loads(Path('build.json').read_text())\nexpected = {'version': 'demo-B', 'sha256': hashlib.sha256(artifact).hexdigest(), 'bytes': len(artifact)}\nassert artifact == source, 'artifact differs from source'\nassert receipt == expected, 'receipt does not match artifact'\nassert source.decode('utf-8') == 'demo-B：离线报价演示\\n', 'unexpected source content'\nprint(json.dumps({'result': 'passed', 'source_equals_artifact': True, 'receipt_matches_artifact': True, 'content': artifact.decode('utf-8'), **expected}, ensure_ascii=False))\nPY",
+      "cwd": "/private/tmp/opc-core-de3vsjla/baseline/C07/project",
+      "exit_code": 0,
+      "result": "全部独立校验断言通过：源文件与产物一致，内容符合演示文本，摘要、大小和版本与构建记录一致。"
+    }
+  ],
+  "files_written": [
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/project/artifact.txt",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/project/build.json",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/project/task.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/response.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C07/trace.json"
+  ],
+  "result": {
+    "offline_build": "passed",
+    "artifact_verification": "passed",
+    "version": "demo-B",
+    "bytes": 28,
+    "sha256": "aa2130180f2ff80f9ef32c4eb5508983f4996020bb22e113f9e0f950c154ead3",
+    "platform_session_check": "not_run",
+    "deployment": "not_run",
+    "online_business_verification": "not_run",
+    "pending": "用户本人完成平台交互登录后，后续允许连接平台的执行先检查会话，再继续发布与线上验证；没有模拟用户答复。"
+  }
+}

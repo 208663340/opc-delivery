@@ -1,0 +1,64 @@
+{
+  "case_id": "C03",
+  "record_type": "执行者自报记录，不声称是完整工具审计",
+  "skill_applied": "/private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C03/task.json",
+    "/private/tmp/opc-core-de3vsjla/baseline/skill/references/verification.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C03/project/contract.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C03/project/request.log",
+    "/private/tmp/opc-core-de3vsjla/baseline/C03/project/server.py",
+    "/private/tmp/opc-core-de3vsjla/baseline/C03/project/client.js"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/SKILL.md /private/tmp/opc-core-de3vsjla/baseline/C03/task.json",
+      "exit_code": 0,
+      "result_summary": "读取指定技能及任务：只读定位零元报价空白提示，不改应用文件。"
+    },
+    {
+      "command": "rg --files --hidden /private/tmp/opc-core-de3vsjla/baseline/C03/project",
+      "exit_code": 0,
+      "result_summary": "列出 contract.md、request.log、server.py、client.js，未发现其他仓库入口文件。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/baseline/skill/references/verification.md /private/tmp/opc-core-de3vsjla/baseline/C03/project/contract.md /private/tmp/opc-core-de3vsjla/baseline/C03/project/request.log /private/tmp/opc-core-de3vsjla/baseline/C03/project/server.py /private/tmp/opc-core-de3vsjla/baseline/C03/project/client.js",
+      "exit_code": 0,
+      "result_summary": "契约允许零元；q17 被价格校验拒绝，响应 error.message 有值，UI toast undefined。"
+    },
+    {
+      "command": "python3 -B - <<'PY'\nfrom pathlib import Path\np = Path('/private/tmp/opc-core-de3vsjla/baseline/C03/project/server.py')\nns = {}\nexec(compile(p.read_text(), str(p), 'exec'), ns)\nfor value in (-1, 0, 1):\n    try:\n        print(f'price_cents={value}: accepted={ns[\"validate_price\"](value)}')\n    except ValueError as exc:\n        print(f'price_cents={value}: rejected={exc}')\nPY",
+      "exit_code": 0,
+      "result_summary": "-1 和 0 rejected=price must be greater than zero；1 accepted=1。未修改源码，无 pycache。"
+    },
+    {
+      "command": "node --input-type=module - <<'JS'\nimport fs from 'node:fs';\nconst source = fs.readFileSync('/private/tmp/opc-core-de3vsjla/baseline/C03/project/client.js', 'utf8');\nconst { errorText } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));\nconst cases = [\n  ['logged_response', {error:{code:'INVALID_PRICE',message:'price must be greater than zero'}}],\n  ['missing_message', {error:{code:'INVALID_PRICE'}}],\n  ['empty_message', {error:{message:''}}],\n  ['empty_body', {}],\n];\nfor (const [name, body] of cases) console.log(name + ': ' + String(errorText(body)));\nJS",
+      "exit_code": 0,
+      "result_summary": "logged_response、missing_message、empty_message、empty_body 全部返回 undefined。"
+    },
+    {
+      "command": "nl -ba /private/tmp/opc-core-de3vsjla/baseline/C03/project/server.py\nnl -ba /private/tmp/opc-core-de3vsjla/baseline/C03/project/client.js",
+      "exit_code": 0,
+      "result_summary": "核实两个问题均在对应文件第 2 行。"
+    }
+  ],
+  "output_write_operation": "通过本地 python3 -B heredoc 将原始最终回复和此自报记录写入指定 response.md、trace.json；未写应用文件。",
+  "files_written": [
+    "/private/tmp/opc-core-de3vsjla/baseline/C03/response.md",
+    "/private/tmp/opc-core-de3vsjla/baseline/C03/trace.json"
+  ],
+  "observations": [
+    "已批准契约允许零元",
+    "后端 <= 0 与该契约冲突",
+    "前端读取错误层级且无兜底",
+    "只读函数复现支持日志中的失败链"
+  ],
+  "not_performed": [
+    "应用代码修改",
+    "网络或真实服务访问",
+    "真实 HTTP 或浏览器测试",
+    "修复后验收"
+  ],
+  "pending_user_decisions": []
+}

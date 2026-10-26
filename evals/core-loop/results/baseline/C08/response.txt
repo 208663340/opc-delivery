@@ -1,0 +1,24 @@
+已确认：在给定材料中，重复记录来自“工具写入成功、checkpoint 尚未落盘”的崩溃窗口。恢复机制会重跑未完成 action，而创建记录的一侧缺少持久化幂等保障。本次没有改代码。
+
+本次使用包内的 [systematic-debugging](/private/tmp/opc-core-de3vsjla/baseline/skill/skills/systematic-debugging/SKILL.md) 及 [Agent 可靠性审查](/private/tmp/opc-core-de3vsjla/baseline/skill/references/reliability-review.md)，沿恢复与副作用边界定位。项目是 Vue 加自研 Python 循环，这些方法可直接适用，无需安装外部技能或引入其他框架。
+
+证据相互吻合：
+
+- [replay.log:1](/private/tmp/opc-core-de3vsjla/baseline/C08/project/replay.log:1)：同一个 `run=r1 action=a1` 先创建 101，checkpoint 前崩溃，恢复后又创建 102。
+- [agent.py:2](/private/tmp/opc-core-de3vsjla/baseline/C08/project/agent.py:2)：只检查 checkpoint；第 4 行创建记录，第 5 行保存完成状态，两步之间存在故障窗口。创建调用未显式传递 action 标识。
+- [architecture.md:3](/private/tmp/opc-core-de3vsjla/baseline/C08/project/architecture.md:3)：恢复时 run/action 标识保持，共享存储目前没有 action_id 唯一约束。已有稳定标识尚未在副作用端形成去重保障。
+
+我对原始 `execute` 做了两个内存替身实验，命令退出码为 0：
+
+| 场景 | 实际创建次数 | 最终 checkpoint |
+|---|---:|---|
+| 正常完成后再次执行 | 1 | 指向 101 |
+| 创建后、保存 checkpoint 前注入异常，再恢复 | 2 | 指向 102 |
+
+这复现了日志中的因果链，也说明 checkpoint 检查只能挡住已保存完成状态的重放。后一个场景违反“同一逻辑 action 至多产生一条业务记录”的目标，并让 checkpoint 只保留后一次记录引用。
+
+下一步先查看现有 `external.create` 实现、共享存储表结构和事务边界，并确认 action_id 的唯一范围。最小修复方向是在实际写入端使用稳定幂等键，例如按作用域确定的 `(run_id, action_id)`，原子地创建或返回已有记录；重试取得同一记录后再补齐 checkpoint。若已有幂等接口，应优先复用。仅先查询再插入挡不住并发，也不能把 checkpoint 提前标为完成，否则崩溃可能变成漏执行。
+
+后续获得实现与变更授权后，验收应覆盖：写入前失败、写入后 checkpoint 前失败、正常完成后重放、两个 worker 并发执行、写入成功但响应丢失。每种场景都检查真实存储中只有一条记录、恢复得到同一记录 ID、checkpoint 最终引用它；不能只断言工具返回成功。
+
+当前仅确认夹具中的缺陷机制。实验未使用真实存储或真实进程崩溃，没有浏览器验证；材料也未提供版本历史、存储实现或线上重复量，不能据此承诺线上修复效果。未修改项目、安装依赖、联网、迁移框架或处理已有重复数据。

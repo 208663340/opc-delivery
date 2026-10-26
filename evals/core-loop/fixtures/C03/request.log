@@ -1,0 +1,4 @@
+request=q17 POST /quotes body={"price_cents":0}
+request=q17 validate_price rejected: price must be greater than zero
+request=q17 HTTP 422 body={"error":{"code":"INVALID_PRICE","message":"price must be greater than zero"}}
+request=q17 UI toast text=undefined

@@ -1,0 +1,5 @@
+run=r1 action=a1 external.create -> record=101
+run=r1 action=a1 worker crash before checkpoint
+run=r1 action=a1 resume incomplete action
+run=r1 action=a1 external.create -> record=102
+run=r1 action=a1 checkpoint completed

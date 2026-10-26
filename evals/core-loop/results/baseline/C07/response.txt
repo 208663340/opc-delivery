@@ -1,0 +1,5 @@
+离线准备已完成：构建生成的 [artifact.txt](/private/tmp/opc-core-de3vsjla/baseline/C07/project/artifact.txt) 为 **demo-B、28 字节**，与源文件逐字节一致；重新计算的 SHA-256 与 [build.json](/private/tmp/opc-core-de3vsjla/baseline/C07/project/build.json) 匹配。
+
+版本、摘要、校验证据和后续步骤已补入原有 [task.md](/private/tmp/opc-core-de3vsjla/baseline/C07/project/task.md)。
+
+平台登录尚未完成，部署与线上业务验证均未执行。你完成交互登录后，下一步先检查平台会话状态，再继续发布和演示业务验证。
