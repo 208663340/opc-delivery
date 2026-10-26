@@ -1,0 +1,12 @@
+{
+  "case": "H02",
+  "changes": [
+    {
+      "path": "delivery.md",
+      "before": "01ba64defffd49179d6ea30b5f14a44cdcbb61704ae986a64adf4b675ca1b771",
+      "after": "d9440f14fc92d66fb1f1a3ea1518e4d7cf1691175f1a50a168ff073afe2d096f",
+      "saved_as": "changed/delivery.md.txt"
+    }
+  ],
+  "skill_unchanged": true
+}

@@ -1,0 +1,9 @@
+今天结论：**不扩全量，按既定约定维持 10% 覆盖**。已更新已有 [delivery.md](/private/tmp/opc-handoff-candidate-2-20261026/H02/project/delivery.md)，保留原验收门槛并写明负责人、恢复命令与复核条件。
+
+- 当前本地只读工具返回 B/prod、运行两天，未满足 7 个完整自然日；已有通过冒烟属于 A/staging，不能证明 B/prod 业务通过。
+- CSV 的 4 条记录全为 A/staging 内部用户，且没有注册及精确时间证据。生产真实用户数、激活率、错误率均无法据此计算，不能称为 100% 激活。
+- 已核对 metrics 3.2.0 的实际接口；生产事件读取退出 3，明确缺少 `events:read:prod`。登录有效不代表该权限已具备。
+
+下一步由发布维护者补 B/prod 业务冒烟，数据管理员核实并恢复只读事件能力；恢复后运行 `python3 tools/metrics.py status --env prod` 和 `python3 tools/metrics.py events --env prod`。待成熟窗口及至少 30 名真实用户数据齐备，再按激活率 ≥60%、关键任务错误率 ≤1% 等原条件交产品负责人决定覆盖。
+
+本次完成的是离线材料与本地合成工具检查，未联网核验真实生产、部署、扩量、改权限或发送消息。执行记录已保存为 [trace.json](/private/tmp/opc-handoff-candidate-2-20261026/H02/trace.json)，属于自报记录，不是完整工具审计。

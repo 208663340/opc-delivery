@@ -1,0 +1,9 @@
+已完成本地核对并更新 [delivery.md](/private/tmp/opc-handoff-candidate-1-20261026/H03/project/delivery.md)。**INC-17 目前不能关闭。**
+
+- `python3 check.py` 退出码为 **1**。当前 r8 常规请求为 1 笔 charge，但超时重试中同一幂等键 `order-17` 对应 `c101`、`c102` 两笔，关联线索为 `queue-delivery-2`。
+- r7 的旧证据只覆盖常规请求，不能支持 r8 关闭。脚本输出的是固定离线观测；本次未执行真实支付，也未证明根因或生产现状。
+- 下一步由支付模块定位并修复超时重试路径，交回同一修复候选的两类回归证据。通过后，发布维护者接续原流程补齐生产版本业务验证；客服使用已有私有工单完成订单核对及获准处置。三项关闭条件齐全后再关闭。
+
+记录已包含具体恢复步骤、负责人、证据边界及可转交客服的结论。今晚未重启发布流程，未联系客户或执行退款、部署，也无需客服重复提供已有信息。
+
+回复保存在 [response.md](/private/tmp/opc-handoff-candidate-1-20261026/H03/response.md)；自报执行记录保存在 [trace.json](/private/tmp/opc-handoff-candidate-1-20261026/H03/trace.json)，该记录不是完整工具审计。

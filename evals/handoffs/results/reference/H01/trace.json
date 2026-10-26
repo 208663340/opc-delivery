@@ -1,0 +1,70 @@
+{
+  "case_id": "H01",
+  "record_type": "self_reported_execution_summary",
+  "scope_note": "本记录自报读取文件、命令概要与结果，不是完整工具审计。",
+  "read_files": [
+    "/private/tmp/opc-handoff-reference-20261026/H01/task.json",
+    "/private/tmp/opc-handoff-reference-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-reference-20261026/skill/references/handoff-examples.md",
+    "/private/tmp/opc-handoff-reference-20261026/skill/references/specialist-integration.md",
+    "/private/tmp/opc-handoff-reference-20261026/H01/project/delivery.md",
+    "/private/tmp/opc-handoff-reference-20261026/H01/project/research.md",
+    "/private/tmp/opc-handoff-reference-20261026/H01/project/prototype.md"
+  ],
+  "commands": [
+    {
+      "entrypoint": "exec_command",
+      "command": "cat H01/task.json skill/SKILL.md skill/references/handoff-examples.md",
+      "notation": "Paths abbreviated here; absolute paths are listed in read_files.",
+      "result": "Exit 0; read task, allowed_actions, skill v0.6.0 and required handoff example."
+    },
+    {
+      "entrypoint": "exec_command",
+      "command": "rg --files -g '!node_modules' -g '!\\.git' /private/tmp/opc-handoff-reference-20261026/H01/project",
+      "result": "Exit 0; found delivery.md, research.md, prototype.md."
+    },
+    {
+      "entrypoint": "exec_command",
+      "command": "cat H01/project/delivery.md H01/project/research.md H01/project/prototype.md skill/references/specialist-integration.md",
+      "notation": "Paths abbreviated; absolute paths in read_files.",
+      "result": "Exit 0; read evidence, limits, existing ownership and handoff guidance."
+    },
+    {
+      "entrypoint": "exec_command",
+      "command": "python3 - <<'PY' [inline document-writing program] PY",
+      "program_summary": "Path.write_text replaced project/delivery.md, preserving original goal, budget and owner assignments; added evidence assessment, two-evening schedule, script, observation template and resume branches.",
+      "result": "Exit 0; delivery.md updated; no separate test document needed."
+    },
+    {
+      "entrypoint": "exec_command",
+      "command": "python3 - <<'PY' [inline document-verification program] PY",
+      "program_summary": "Asserted original target prefix, referenced file existence, required handoff phrases, and exact research.md / prototype.md contents from initial reads; printed delivery.md for review.",
+      "result": "Exit 0; all document assertions passed. No clickable prototype or participant test executed."
+    },
+    {
+      "entrypoint": "exec_command",
+      "command": "python3 - <<'PY' [inline response-and-trace saving program] PY",
+      "program_summary": "Saved final case response.md and this self-reported trace.json; read both back and asserted response equality and JSON readability.",
+      "result": "See completion output from this command; records saved and read-back assertions passed if command exits 0."
+    }
+  ],
+  "written_files": [
+    "/private/tmp/opc-handoff-reference-20261026/H01/project/delivery.md",
+    "/private/tmp/opc-handoff-reference-20261026/H01/response.md",
+    "/private/tmp/opc-handoff-reference-20261026/H01/trace.json"
+  ],
+  "verification_scope": "Document and source-preservation checks only; no human validation, prototype click test or product test.",
+  "not_performed": [
+    "network access",
+    "delegation",
+    "participant outreach",
+    "product creation or release",
+    "payment implementation",
+    "reading other cases, grading material or other skills"
+  ],
+  "remaining_conditions": [
+    "Research owner supplies actual participant arrangements.",
+    "Design owner supplies v2 clickable artifact, revision and mock scenario.",
+    "Delivery owner checks returned observations by version and cohort."
+  ]
+}

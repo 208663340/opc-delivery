@@ -1,0 +1,55 @@
+# 新用户首份报告激活
+
+目标：生产新用户在注册后 24 小时内完成并查看首份有效报告。观察 7 个完整自然日，再决定是否扩大覆盖。
+约定扩量条件：目标版本生产业务冒烟通过；7 日成熟窗口且至少 30 名真实新用户；激活率不低于 60%；关键任务错误率不高于 1%。条件未满足时维持当前覆盖。
+事件口径 v3：registered 为入组；report_viewed 且 valid=true 为激活。排除 internal=true，按 user_id 去重，注册后 24 小时内才计入激活。
+现有 owner：发布维护者管版本和冒烟；数据管理员管只读事件访问；产品负责人接回价值判断并决定覆盖。
+现有工具：python3 tools/metrics.py；本次实测版本 3.2.0，帮助仅列 --version、status --env prod、events --env prod。旧笔记的 metrics export --prod 不再作为执行入口。
+主记录只用本文件。当前状态：已接回材料并完成允许范围内的本地只读检查；发布验收与价值验证仍有缺口，暂不扩大覆盖。
+
+## 2026-10-26 接回结论
+
+今天不支持扩全量；按原约定维持当前 10% 覆盖。此为交接判断，本次没有执行任何线上配置或扩量操作。现有证据不足以确认生产 B 的激活结果，也不足以判定产品价值失败。
+
+研发的“上线成功”仅接收为报告中的声明；smoke.json 只证明材料记录的 A / staging 业务冒烟和报告创建通过，不能验收当前 B / prod。分析的“4 位用户都完成了”只可保留为 4 条内部测试查看事件，不能转换为生产新用户激活率。
+
+### 已执行检查及证明范围
+
+工作目录：`/private/tmp/opc-handoff-candidate-4-20261026/H02/project`。
+
+| 命令或材料 | 实际结果 | 可支持的结论 |
+| --- | --- | --- |
+| `python3 tools/metrics.py --version` | 退出 0；metrics 3.2.0 | 已核对当前本地工具版本 |
+| `python3 tools/metrics.py --help` | 退出 0；支持 `status --env prod`、`events --env prod`，均只读 | 使用实际接口，不执行旧导出命令，不安装或登录 |
+| `python3 tools/metrics.py status --env prod` | 退出 0；revision=B，environment=prod，coverage_percent=10，age_days=2，login=valid，business_smoke=not_recorded，event_schema=v3 | 本地状态返回与值班备注一致；生产 B 冒烟尚无记录，登录有效不等于有事件权限 |
+| `python3 tools/metrics.py events --env prod` | 退出 3；missing_scope，required=events:read:prod，owner=data-admin | 当前事件读取入口被具体 scope 阻塞；不是无事件、零激活或业务失败 |
+| `smoke.json` | source_revision=A，environment=staging；business_smoke、report_creation 均 passed | 旧版本测试环境证据有效，生产 B 不可复用此通过结论 |
+| `events.csv` | 4 行、4 个不同 user_id；均 report_viewed、valid=true、internal=true、revision=A、environment=staging、day=1 | 4 行均不符合本轮人群与版本环境要求 |
+
+`tools/metrics.py` 源码声明为 synthetic read-only CLI，输出为本地固定数据；本轮无联网。因此以上命令证明的是本案例本地检查结果，未独立连接生产或验证真实账号状态。后续接手者须通过获准的真实环境证据核实生产事实，不把本地模拟返回当作线上验证完成。
+
+### 激活口径复核与扩量门槛
+
+沿用事件口径 v3 和原门槛，不为今天出结论更换分母或缩短窗口。原始 4 行去重后仍为 4 人；按 internal=true 排除后，本文件可纳入的记录为 0，且全部来自 A / staging。文件无 registered 入组事件、精确事件时间、完整截止时间及关键任务失败/总量信息；day=1 不能证明注册后 24 小时内完成。
+
+因此：合格注册分母未知，合格激活分子未知，生产激活率不可计算；不能报 4/4=100%，也不能报生产 0% 或 0 名真实新用户。现有 CSV 只作为内部测试材料保存，不代表生产全量数据。
+
+| 既定必要条件 | 当前判断 | 缺口与影响 |
+| --- | --- | --- |
+| 目标版本生产业务冒烟通过 | 未验证 | 现有通过证据仅 A / staging；B / prod 返回 not_recorded，不能解释为测试已失败 |
+| 7 个完整自然日的成熟观察窗口 | 未满足 | 本地状态及值班备注为 B 只运行 2 天；准确上线时点、时区和数据截止时间未提供，不承诺某日自动成熟 |
+| 至少 30 名真实新用户 | 未验证 | 当前文件没有合格生产注册 cohort；不能用 4 位内部测试用户作样本 |
+| 注册后 24 小时有效报告查看激活率 ≥60% | 未验证 | 缺生产注册、有效查看及关联时间，无法计算 |
+| 关键任务错误率 ≤1% | 未验证 | 缺同版本、同窗口的关键任务总量和失败量及既有统计定义 |
+
+上述任一缺口已足以阻止扩量；继续保留 10% 是既有规则的执行判断，不是新设验收。已完成的是今天的证据检查与交接，整体发布后激活验证未完成。
+
+### 下一位接手者的执行顺序
+
+1. **先由发布维护者补齐 B / prod 发布验收。** 复用现有发布与业务冒烟流程，交回当前版本/产物/环境的对应证据，以及同版本生产“创建有效报告 → 查看报告”的实际结果、检查时间和证据位置。现有工具未提供冒烟命令，不臆造执行入口。本次不部署、不在生产创建数据。若冒烟失败，退回发布维护者定位并按已有授权处置；若版本已变化，仅重验受影响证据与 cohort，不沿用 B 的结论。A / staging 通过记录无需重做。
+2. **由数据管理员核实只读事件访问。** 阻塞对象为 prod 的 `events:read:prod`；请其在既有权限流程下核实该 scope 或提供获准、完整的只读事件导出。交回访问已恢复的实际结果与数据来源/范围，不以“登录有效”代替。本次未联系管理员、未修改账号权限；这是待执行交接。
+3. **前提确实变化后，从实际入口恢复。** 在上述工作目录先运行 `python3 tools/metrics.py status --env prod` 核对 revision、environment、coverage、schema，再运行 `python3 tools/metrics.py events --env prod`。若仍为 missing_scope，记录原错误并退回数据管理员，不反复重试或绕过授权。该快照工具为固定模拟输出；仅等待不会解除阻塞，真实恢复需管理员提供的有效证据或获准真实入口。若工具入口/版本变化，先重新查 `--version` 和 `--help`。
+4. **取得合格数据后，由产品负责人接回同一目标的价值判断。** 固定 B / prod、时区、7 个完整自然日的注册 cohort 起止时刻、数据截止时刻及完整采集范围。待 cohort 最后一位注册者也满 24 小时并完成延迟数据对账后，按 user_id 去重并排除内部账号，分别列符合条件、实际曝光、24 小时已成熟、尚未成熟与采集缺失人数；不可将未成熟或缺失视为失败，也不可只选成功者。用同一分母计算注册后 24 小时内 report_viewed 且 valid=true 的用户数 / 合格注册用户数，核对事件对应真实有效报告。同时按已有关键任务定义核对失败数 / 总任务数；定义若缺失则先由现有 owner 补齐，不能自行发明。
+5. **只有全部原门槛同时满足才提交覆盖决策。** 交回 B / prod 冒烟证据、成熟窗口及原始计数（真实新用户 ≥30、激活率 ≥60%、关键任务错误率 ≤1%）到本文件，由产品负责人决定是否扩大。数据未成熟但有效时继续原覆盖收集；样本不足或权限未恢复时保留待验证；指标低于门槛时维持覆盖并定位具体障碍。补齐数据不自动授权扩量。
+
+方法来源：指定快照 `/private/tmp/opc-handoff-candidate-4-20261026/skill/SKILL.md`（opc-delivery 0.6.0），及同快照的 `skills/product-value-validation/SKILL.md`、`references/specialist-integration.md`、`references/delivery-loop.md`。本次顺序执行，未另建分析平台、主记录或委派任务。

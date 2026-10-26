@@ -1,0 +1,13 @@
+OPC Delivery 0.6.0 初步独立评审
+基准：26b6f58ebd447a79df436b0035df8e203f347f09
+范围：/private/tmp/opc-absorb-HLdOns，只读项目；未联网，未读取其他仓库，未重跑已经通过且未受代码变化影响的测试。
+
+可行动问题：当前无发现。
+
+已审阅：CONTRIBUTING.md、全部已跟踪 diff、SKILL.md、references/specialist-integration.md、references/handoff-examples.md、assets/project-profile.md、设计/验证说明与 package/lock 版本和 files 边界。新增要求保留现有 owner、用户范围、验收及授权；方法、工具可用性、实际结果与模拟身份的边界明确；不强制委派或平行状态系统。
+
+证据抽查：完整读取冻结 README/cases/rubric/prepare；人工读取 baseline H01/H03、baseline H02-5 与 candidate H02-1/H02-2 的最终主记录，另抽查 H02 的原始回复、自报 trace 和 changes。已独立核对 15 项冻结输入、32 项/160 个配套文件、12 份已收集的初始哈希及最终差异哈希，未发现输入/差异不一致。baseline 技能哈希与基准 git 内容吻合。candidate 唯一与当前内容不同的快照文件是 project-profile.md；主 Agent 已说明是相对链接转 GitHub URL，并承诺最终报告记录，未要求机械重复模型评测。
+
+工程证据：Python 日志显示 22 项通过；npm 首次发布预演日志显示 13 项测试通过后缓存 EPERM，第二份预演成功且明确 dry-run。发布清单包含新增交接参考和文档，不包含 evals。版本 0.6.0 在入口、README、package 与 lock 中一致；manifest 未变。上述为日志审查而非独立重跑。
+
+局限：H01/H03 候选仍在收集中，最终得分与最终报告尚待复核；此结论不是完整候选通过。未复核联网来源的当前内容或外部系统，来源表只按本地文本审查。自报 trace 不能证明完整运行工具行为、模型配置或 OS 级隔离；现有报告已明示主要限制，未宣称质量/效率提升。

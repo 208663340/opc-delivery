@@ -1,0 +1,90 @@
+{
+  "case_id": "H01",
+  "record_type": "self_report",
+  "scope_note": "这是执行者自报读取文件、运行命令及结果，不是完整工具审计。",
+  "tools_used": [
+    "functions.exec",
+    "exec_command"
+  ],
+  "tool_invocations": {
+    "functions.exec": 6,
+    "exec_command": 6
+  },
+  "read_files": [
+    "/private/tmp/opc-handoff-baseline-1-20261026/H01/task.json",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/H01/project/delivery.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/H01/project/research.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/H01/project/prototype.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/references/specialist-integration.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/skills/prototype-validation/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/skills/prototype-validation/references/task-testing.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/skills/user-research/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/skills/user-research/references/interview-and-synthesis.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/references/delivery-loop.md"
+  ],
+  "commands": [
+    {
+      "sequence": 1,
+      "command_summary": "cat H01/task.json and skill/SKILL.md",
+      "result": "exit 0; read request, allowed actions, entry skill"
+    },
+    {
+      "sequence": 2,
+      "command_summary": "rg --files H01/project; cat specialist-integration.md and prototype-validation/SKILL.md",
+      "result": "exit 0; found only delivery.md, research.md, prototype.md; read handoff and validation methods"
+    },
+    {
+      "sequence": 3,
+      "command_summary": "cat project/delivery.md, research.md, prototype.md; cat task-testing.md and user-research/SKILL.md",
+      "result": "exit 0; read original goal, interview evidence, prototype limits and task method"
+    },
+    {
+      "sequence": 4,
+      "command_summary": "cat interview-and-synthesis.md and delivery-loop.md",
+      "result": "exit 0; read evidence synthesis and continuation methods"
+    },
+    {
+      "sequence": 5,
+      "command_summary": "python3 heredoc using pathlib to replace project/delivery.md with the integrated handoff and validation plan",
+      "result": "exit 0; preserved goal, owners and scope; added evidence adjudication, two-evening plan, test script, result criteria and recovery conditions"
+    },
+    {
+      "sequence": 6,
+      "command_summary": "python3 heredoc checks document content, file references, schedule arithmetic and project inventory; writes response.md and trace.json",
+      "result": "all document checks passed; response and self-report saved"
+    }
+  ],
+  "modified_files": [
+    "/private/tmp/opc-handoff-baseline-1-20261026/H01/project/delivery.md"
+  ],
+  "created_files": [
+    "/private/tmp/opc-handoff-baseline-1-20261026/H01/response.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/H01/trace.json"
+  ],
+  "validation": {
+    "original_goal_and_budget_preserved": true,
+    "owners_preserved": true,
+    "research_sources_resolve": true,
+    "observations_not_fabricated": true,
+    "schedule_each_evening_120_minutes": true,
+    "session_script_25_minutes": true,
+    "evidence_return_conditions_present": true,
+    "no_parallel_project_record": true
+  },
+  "limits": [
+    "No network",
+    "No delegation",
+    "No contact or recruitment",
+    "No live prototype interaction",
+    "No real participants or usability observations",
+    "No product creation or publication"
+  ],
+  "unexecuted": [
+    "Frozen clickable prototype readiness check",
+    "Recruitment and appointment scheduling",
+    "Human task tests",
+    "Any production or payment validation"
+  ],
+  "outcome": "Handoff and executable test preparation completed; empirical validation pending external inputs."
+}

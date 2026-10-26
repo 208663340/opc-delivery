@@ -5,7 +5,7 @@
 A practical Agent Skill for independent product delivery.
 
 [![CI](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml/badge.svg)](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml)
-![Version](https://img.shields.io/badge/version-0.5.0-2563eb)
+![Version](https://img.shields.io/badge/version-0.6.0-2563eb)
 ![Node](https://img.shields.io/badge/installer-Node.js%20%E2%89%A520-339933)
 ![Python](https://img.shields.io/badge/tools-Python%20stdlib-3776ab)
 
@@ -61,7 +61,7 @@ opc-delivery install
 
 ```bash
 npm pack
-npm install -g ./opc-delivery-0.5.0.tgz
+npm install -g ./opc-delivery-0.6.0.tgz
 opc-delivery install --dry-run
 ```
 
@@ -110,6 +110,12 @@ $opc-delivery 检查这个版本是否具备发布条件，推进已授权的部
 | 工具与材料 | 复用目标项目工具；本包提供检查器、模板、来源清单与安装器 |
 
 主入口协调工作，专业技能提供方法，项目保留自己的数据 owner、架构和发布事实。必要规则在入口中，复杂细节按需读取；长任务复用一个主记录。整体设计与 P1/P2 后续缺口见 [设计文档](docs/skills-system-design.md)。
+
+### 把专业结果交到下一步
+
+[专业接入约定](references/specialist-integration.md) 提供当前动作的能力检查、最小任务说明与接回/退回/恢复方式；[三条完整案例](references/handoff-examples.md) 展示研究到原型、发布到价值验证、客服反馈到修复与效果复核。交接沿用现有验收和主记录，列明缺哪条证据、由哪个现有职责补齐、之后从哪里继续。
+
+工具检查区分方法可读、入口可运行、目标操作有权限和实际结果已验证。需要长期复用的入口可以记入 [项目接入模板](assets/project-profile.md)，实际命令按当前工具版本核对。所有案例都是合成示范，不提供项目授权或通用业务阈值，也不要求安装 ORCA 或启用多 Agent。
 
 ## 按当前问题补充专业 Skill
 
@@ -170,6 +176,8 @@ python3 scripts/check_release_receipt.py /path/to/release-receipt.json
 
 - **0.5.0 产品价值与 Agent 评测**：4 个固定案例中新版均通过，补齐旧版评测材料遗漏的任务保留集；其余案例新旧均通过。新增方法与模板、既有安装/工具测试及证据边界见 [第二阶段验证记录](docs/validation-value-agent-0.5.0.md)，不代表真实用户价值或生产模型性能已验证。
 
+- **0.6.0 专业交接与恢复**：三类场景中新旧版各七次执行均通过；另一次指定案例页的应用检查通过。新增三条交接示范和能力入口说明，未测出判断质量或效率改善；原始产物、来源与打包验证见 [交接验证记录](docs/validation-handoffs-0.6.0.md)。
+
 详见 [0.1.0 验证记录](docs/validation-0.1.0.md)。这些结果不替代你自己的生产验证，也不构成效率提升或商业效果承诺。
 
 本地运行工具测试：
@@ -190,6 +198,7 @@ agents/openai.yaml               Codex 展示与默认调用提示
 references/
   delivery-loop.md               下一动作、推进/返回/等待/结束与恢复
   specialist-integration.md      专业方法输入输出、来源、工具依赖与冲突
+  handoff-examples.md            研究/原型、发布/价值、客服/修复三条交接及恢复示范
   discovery.md                   需求证据与最小验证
   development.md                 实现与职责边界
   verification.md                根因定位与回归
@@ -208,6 +217,8 @@ docs/validation-specialists-0.3.0.md  三项专业能力的对照与安装验证
 docs/skills-system-design.md     整体设计与后续补缺顺序
 docs/validation-core-loop.md     核心机制同题对照及验证边界
 docs/validation-value-agent-0.5.0.md  产品价值与 Agent 评测对照
+docs/validation-handoffs-0.6.0.md  专业交接、能力检查与恢复对照
+evals/handoffs/                  交接合成输入、重复执行与原始记录（不随 npm 安装）
 evals/value-agent/               第二阶段合成场景、夹具与原始记录（不随 npm 安装）
 evals/core-loop/                 开发用合成场景、隔离夹具与原始记录（不随 npm 安装）
 ```

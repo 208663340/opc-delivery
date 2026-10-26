@@ -1,0 +1,116 @@
+{
+  "case_id": "H02",
+  "record_type": "自报执行记录，不是完整工具审计",
+  "date": "2026-10-26",
+  "scope": "仅本案例与指定技能快照；无网络、无委派；仅更新项目 delivery.md 及本案例 response.md、trace.json",
+  "files_read": [
+    "/private/tmp/opc-handoff-candidate-3-20261026/H02/task.json",
+    "/private/tmp/opc-handoff-candidate-3-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-candidate-3-20261026/skill/skills/product-value-validation/SKILL.md",
+    "/private/tmp/opc-handoff-candidate-3-20261026/skill/references/delivery-loop.md",
+    "/private/tmp/opc-handoff-candidate-3-20261026/skill/references/specialist-integration.md",
+    "/private/tmp/opc-handoff-candidate-3-20261026/H02/project/delivery.md",
+    "/private/tmp/opc-handoff-candidate-3-20261026/H02/project/reports.md",
+    "/private/tmp/opc-handoff-candidate-3-20261026/H02/project/smoke.json",
+    "/private/tmp/opc-handoff-candidate-3-20261026/H02/project/events.csv",
+    "/private/tmp/opc-handoff-candidate-3-20261026/H02/project/tools/metrics.py",
+    "/private/tmp/opc-handoff-candidate-3-20261026/skill/skills/product-value-validation/assets/value-scorecard.md",
+    "/private/tmp/opc-handoff-candidate-3-20261026/skill/skills/product-value-validation/references/measurement-and-experiments.md",
+    "/private/tmp/opc-handoff-candidate-3-20261026/skill/references/release.md"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-3-20261026/H02/task.json\ncat /private/tmp/opc-handoff-candidate-3-20261026/skill/SKILL.md",
+      "exit_code": 0,
+      "result": "读取任务请求、allowed_actions 和指定 OPC Delivery 0.6.0 技能"
+    },
+    {
+      "command": "rg --files /private/tmp/opc-handoff-candidate-3-20261026/H02/project\ncat /private/tmp/opc-handoff-candidate-3-20261026/skill/skills/product-value-validation/SKILL.md\ncat /private/tmp/opc-handoff-candidate-3-20261026/skill/references/delivery-loop.md\ncat /private/tmp/opc-handoff-candidate-3-20261026/skill/references/specialist-integration.md",
+      "exit_code": 0,
+      "result": "项目列出 delivery.md、reports.md、smoke.json、events.csv、tools/metrics.py；读取产品价值验证及交接参考"
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-3-20261026/H02/project/delivery.md\ncat /private/tmp/opc-handoff-candidate-3-20261026/H02/project/reports.md\ncat /private/tmp/opc-handoff-candidate-3-20261026/H02/project/smoke.json\ncat /private/tmp/opc-handoff-candidate-3-20261026/H02/project/events.csv\ncat /private/tmp/opc-handoff-candidate-3-20261026/H02/project/tools/metrics.py\ncat /private/tmp/opc-handoff-candidate-3-20261026/skill/skills/product-value-validation/assets/value-scorecard.md\ncat /private/tmp/opc-handoff-candidate-3-20261026/skill/skills/product-value-validation/references/measurement-and-experiments.md",
+      "exit_code": 0,
+      "result": "读取现有目标、阈值和角色；A/staging 冒烟及 4 名内部 A/staging 用户；CLI 源码标明 synthetic/no network；读取价值测量参考"
+    },
+    {
+      "command": "python3 tools/metrics.py --version",
+      "working_directory": "/private/tmp/opc-handoff-candidate-3-20261026/H02/project",
+      "exit_code": 0,
+      "stdout": "metrics 3.2.0\n"
+    },
+    {
+      "command": "python3 tools/metrics.py --help",
+      "working_directory": "/private/tmp/opc-handoff-candidate-3-20261026/H02/project",
+      "exit_code": 0,
+      "stdout": "metrics 3.2.0\nUsage: --version | status --env prod | events --env prod\nAll commands are read-only; no install/login/write commands.\n"
+    },
+    {
+      "command": "python3 tools/metrics.py status --env prod",
+      "working_directory": "/private/tmp/opc-handoff-candidate-3-20261026/H02/project",
+      "exit_code": 0,
+      "stdout": "{\"revision\": \"B\", \"environment\": \"prod\", \"coverage_percent\": 10, \"age_days\": 2, \"login\": \"valid\", \"business_smoke\": \"not_recorded\", \"event_schema\": \"v3\"}\n"
+    },
+    {
+      "command": "python3 tools/metrics.py events --env prod",
+      "working_directory": "/private/tmp/opc-handoff-candidate-3-20261026/H02/project",
+      "exit_code": 3,
+      "stdout": "{\"error\": \"missing_scope\", \"required\": \"events:read:prod\", \"environment\": \"prod\", \"owner\": \"data-admin\"}\n"
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-3-20261026/skill/references/release.md",
+      "exit_code": 0,
+      "result": "读取发布证据与授权边界参考"
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-3-20261026/H02/project/delivery.md",
+      "exit_code": 0,
+      "result": "修改后全文回读；原目标及阈值保留，新增证据接收、未验证条件、命令结果、owner 与恢复步骤"
+    }
+  ],
+  "file_edits": [
+    {
+      "tool": "apply_patch",
+      "path": "/private/tmp/opc-handoff-candidate-3-20261026/H02/project/delivery.md",
+      "result": "已成功应用并全文回读；更新现有唯一主记录"
+    },
+    {
+      "tool": "apply_patch",
+      "path": "/private/tmp/opc-handoff-candidate-3-20261026/H02/response.md",
+      "purpose": "保存面向原请求的最终回复"
+    },
+    {
+      "tool": "apply_patch",
+      "path": "/private/tmp/opc-handoff-candidate-3-20261026/H02/trace.json",
+      "purpose": "保存此自报记录"
+    }
+  ],
+  "findings": {
+    "decision": "按原规则维持 10%，不支持今天全量",
+    "production_check_limit": "CLI 实际本地运行，返回合成状态，不等于实时生产验证",
+    "reused_smoke": "A/staging passed，仅适用于原版本环境",
+    "excluded_attachment_users": 4,
+    "production_activation_rate": "unknown",
+    "production_error_rate": "unknown",
+    "blocker": "events:read:prod scope missing；B/prod 冒烟未记录；运行 2 天未满足 7 日成熟窗口",
+    "next_owners": [
+      "发布维护者补 B/prod 业务冒烟",
+      "数据管理员核实只读 scope 或提供可信生产导出",
+      "价值验证接手者复核原口径，产品负责人接回覆盖决定"
+    ]
+  },
+  "not_performed": [
+    "联网",
+    "安装工具",
+    "部署",
+    "扩量",
+    "权限变更",
+    "发消息",
+    "委派",
+    "线上冒烟",
+    "真实生产事件分析",
+    "其他项目文件修改"
+  ],
+  "verification": "delivery.md 已回读核对；仅文档变更，未新增或运行软件测试。"
+}

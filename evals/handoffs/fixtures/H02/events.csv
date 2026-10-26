@@ -1,0 +1,5 @@
+user_id,event,valid,internal,revision,environment,day
+staff1,report_viewed,true,true,A,staging,1
+staff2,report_viewed,true,true,A,staging,1
+staff3,report_viewed,true,true,A,staging,1
+staff4,report_viewed,true,true,A,staging,1

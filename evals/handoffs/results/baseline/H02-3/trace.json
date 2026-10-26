@@ -1,0 +1,58 @@
+{
+  "case_id": "H02",
+  "record_type": "self_reported_execution_record",
+  "scope_note": "自报读取、命令与结果，不是完整工具审计。仅使用本案例与指定技能快照；未联网、委派、安装、部署、扩量、更改权限或发送消息。",
+  "files_read": [
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/task.json",
+    "/private/tmp/opc-handoff-baseline-3-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/project/delivery.md",
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/project/reports.md",
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/project/smoke.json",
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/project/tools/metrics.py",
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/project/events.csv",
+    "/private/tmp/opc-handoff-baseline-3-20261026/skill/skills/product-value-validation/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-3-20261026/skill/references/specialist-integration.md",
+    "/private/tmp/opc-handoff-baseline-3-20261026/skill/references/release.md",
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/response.md",
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/trace.json"
+  ],
+  "discovery": {
+    "command": "rg --files -g '*' /private/tmp/opc-handoff-baseline-3-20261026/H02/project /private/tmp/opc-handoff-baseline-3-20261026/skill/skills/product-value-validation /private/tmp/opc-handoff-baseline-3-20261026/skill/references",
+    "result": "列出案例文件和指定技能相关文件路径；未见案例 AGENTS.md 或架构契约。只读取 files_read 中列出的内容。",
+    "exit_code": 0
+  },
+  "read_commands": [
+    "cat /private/tmp/opc-handoff-baseline-3-20261026/H02/task.json /private/tmp/opc-handoff-baseline-3-20261026/skill/SKILL.md",
+    "cat /private/tmp/opc-handoff-baseline-3-20261026/H02/project/delivery.md /private/tmp/opc-handoff-baseline-3-20261026/H02/project/reports.md /private/tmp/opc-handoff-baseline-3-20261026/H02/project/smoke.json /private/tmp/opc-handoff-baseline-3-20261026/H02/project/tools/metrics.py /private/tmp/opc-handoff-baseline-3-20261026/skill/skills/product-value-validation/SKILL.md /private/tmp/opc-handoff-baseline-3-20261026/skill/references/specialist-integration.md",
+    "cat /private/tmp/opc-handoff-baseline-3-20261026/H02/project/events.csv /private/tmp/opc-handoff-baseline-3-20261026/skill/references/release.md"
+  ],
+  "read_results": "以上 cat 命令退出码均为 0，实际材料已核对。",
+  "metrics_cwd": "/private/tmp/opc-handoff-baseline-3-20261026/H02/project",
+  "metrics_commands": [
+    {"command": "python3 tools/metrics.py --version", "exit_code": 0, "result": "metrics 3.2.0"},
+    {"command": "python3 tools/metrics.py --help", "exit_code": 0, "result": "Usage: --version | status --env prod | events --env prod; all commands read-only"},
+    {"command": "python3 tools/metrics.py status --env prod", "exit_code": 0, "result": {"revision": "B", "environment": "prod", "coverage_percent": 10, "age_days": 2, "login": "valid", "business_smoke": "not_recorded", "event_schema": "v3"}},
+    {"command": "python3 tools/metrics.py events --env prod", "exit_code": 3, "result": {"error": "missing_scope", "required": "events:read:prod", "environment": "prod", "owner": "data-admin"}}
+  ],
+  "assessment": {
+    "decision": "不扩量，沿用现有条件维持 10% 覆盖；未执行任何覆盖变更",
+    "csv_raw_rows": 4,
+    "csv_excluded_internal_rows": 4,
+    "csv_eligible_production_rows": 0,
+    "production_activation_rate": "unknown",
+    "production_task_error_rate": "unknown",
+    "overall_activation_validation": "incomplete",
+    "evidence_limit": "本地模拟 CLI 与案例材料，不是新增线上实测"
+  },
+  "writes": [
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/project/delivery.md",
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/response.md",
+    "/private/tmp/opc-handoff-baseline-3-20261026/H02/trace.json"
+  ],
+  "write_method": "apply_patch；保留原有目标、门槛、事件口径和 owner，更新主记录当前状态并附接手证据与后续操作；另外保存原始最终回复与本自报记录",
+  "verification": {
+    "command": "cat /private/tmp/opc-handoff-baseline-3-20261026/H02/project/delivery.md /private/tmp/opc-handoff-baseline-3-20261026/H02/response.md /private/tmp/opc-handoff-baseline-3-20261026/H02/trace.json",
+    "exit_code": 0,
+    "result": "已读回三个文件，确认已保存结论、命令结果及交接步骤。随后仅将 delivery.md 顶部旧工具笔记更新为已复核，并在本记录加入本次读回信息。未将读回检查称作线上验证。"
+  }
+}

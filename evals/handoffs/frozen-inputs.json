@@ -1,0 +1,17 @@
+{
+  "cases.json": "6c92fe742100939175c2003d3421ea95cf54609c7bce810992ef0d43299acaa3",
+  "rubric.md": "2964eb77d68fe11511da7450a26a91e4a0494d1619a37388a451d530feabc868",
+  "prepare.py": "f8da921c8d3f7fe09211b5311570b45c64eae115b0816fbe9b25aafac2a40201",
+  "README.md": "df58a77f2f5661c522695956075fdc647a6d667bdaa16f4664dbe16af55831e7",
+  "fixtures/H01/delivery.md": "da8e5385a00ef622330fd32f7d044e73bb9366fb2dbd372be7127094997473ff",
+  "fixtures/H01/prototype.md": "f69d2a3e9aad7fc5ea58de690211a7632e2cd21b1c4c71c9fb272f4e1e93e2c1",
+  "fixtures/H01/research.md": "1620eb085eb0bb00cb223b7f1ce8fdbbeef752386f6c5e62e6c362ccb31a1b8f",
+  "fixtures/H02/delivery.md": "01ba64defffd49179d6ea30b5f14a44cdcbb61704ae986a64adf4b675ca1b771",
+  "fixtures/H02/events.csv": "bc88662ffc1054d02d2d35a6980b2fd45db192336c8fc4828fe9ab964c8178d6",
+  "fixtures/H02/reports.md": "c93a764664bc5d167a69ea38ff3c1809c50235e8c8bba8dd3fcb046f286f3d40",
+  "fixtures/H02/smoke.json": "691078971e09d4c9f3859fa0fc4c37a1e1d8469fdc4fd5b780bea2df363100b1",
+  "fixtures/H02/tools/metrics.py": "0c910f6add4cfebe937a9a10d568c153143a0b673bc391460f93b7cd3dd0ef7c",
+  "fixtures/H03/check.py": "c05396d5cac702def489221a4a270f0f4180d904fec5213c62455e5a9d423fc3",
+  "fixtures/H03/delivery.md": "7d821226e8a5fcb3c7e76bb3584a96e35009e14adb4957ce26d337cf23531bd7",
+  "fixtures/H03/old-check.json": "e5d075b5101a27f3d7c9d1c758519400454fb9f7dbcfdcfeb93c8aa8af4b4d6c"
+}

@@ -38,6 +38,8 @@ python3 <本技能目录>/scripts/test_delivery_tools.py
 
 产品价值与通用 Agent 评测的固定材料、评分规则和原始输出见仓库 [value-agent 案例](https://github.com/208663340/opc-delivery/tree/main/evals/value-agent)；结果见 [0.5.0 验证记录](../docs/validation-value-agent-0.5.0.md)。这些是技能维护的离线案例，不是实际用户留存或生产模型基准。
 
+专业交接的材料与重复执行说明见仓库 [handoffs 案例](https://github.com/208663340/opc-delivery/tree/main/evals/handoffs)，结果见 [0.6.0 验证记录](../docs/validation-handoffs-0.6.0.md)。检查研究到原型、发布到价值验证、客服到修复验收的实际交接；包括旧版本证据、当前工具语法、操作权限缺失、退回与恢复条件。评分看可执行产物和行为，不要求套用案例中的标题、角色名称或阈值。
+
 ## 观察维度
 
 - 是否识别了真正关键未知，并采取能改变决策的动作。

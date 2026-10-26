@@ -1,0 +1,34 @@
+{
+  "case_id": "H02",
+  "description": "本轮自报读取文件、运行命令和结果；不是完整工具审计。",
+  "read_files": [
+    "/private/tmp/opc-handoff-baseline-2-20261026/H02/task.json",
+    "/private/tmp/opc-handoff-baseline-2-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-2-20261026/skill/skills/product-value-validation/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-2-20261026/skill/references/specialist-integration.md",
+    "/private/tmp/opc-handoff-baseline-2-20261026/skill/references/delivery-loop.md",
+    "/private/tmp/opc-handoff-baseline-2-20261026/H02/project/delivery.md",
+    "/private/tmp/opc-handoff-baseline-2-20261026/H02/project/reports.md",
+    "/private/tmp/opc-handoff-baseline-2-20261026/H02/project/smoke.json",
+    "/private/tmp/opc-handoff-baseline-2-20261026/H02/project/tools/metrics.py",
+    "/private/tmp/opc-handoff-baseline-2-20261026/H02/project/events.csv"
+  ],
+  "commands": [
+    {"command":"cat /private/tmp/opc-handoff-baseline-2-20261026/H02/task.json /private/tmp/opc-handoff-baseline-2-20261026/skill/SKILL.md", "exit_code":0, "result":"读取请求、操作边界与指定入口技能"},
+    {"command":"rg --files -g '!__pycache__/**' .", "cwd":"H02/project", "exit_code":0, "result":"发现五个项目文件，无项目 AGENTS 或其他入口"},
+    {"command":"cat skills/product-value-validation/SKILL.md references/specialist-integration.md references/delivery-loop.md", "cwd":"skill", "exit_code":0, "result":"读取指定快照内所需方法"},
+    {"command":"cat delivery.md reports.md smoke.json tools/metrics.py events.csv", "cwd":"H02/project", "exit_code":0, "result":"读取主记录、交接、冒烟、CLI 源码及完整 CSV"},
+    {"command":"python3 tools/metrics.py --help", "cwd":"H02/project", "exit_code":0, "result":"metrics 3.2.0；支持 --version、status --env prod、events --env prod，均为只读"},
+    {"command":"python3 tools/metrics.py status --env prod", "cwd":"H02/project", "exit_code":0, "result":{"revision":"B","environment":"prod","coverage_percent":10,"age_days":2,"login":"valid","business_smoke":"not_recorded","event_schema":"v3"}},
+    {"command":"python3 tools/metrics.py events --env prod", "cwd":"H02/project", "exit_code":3, "result":{"error":"missing_scope","required":"events:read:prod","environment":"prod","owner":"data-admin"}},
+    {"command":"cat > delivery.md; cat > ../response.md; cat > ../trace.json（各自使用带引号的 heredoc；摘要表示）", "cwd":"H02/project", "result":"保存已有主记录更新、最终回复与本自报记录"}
+  ],
+  "written_files": [
+    "/private/tmp/opc-handoff-baseline-2-20261026/H02/project/delivery.md",
+    "/private/tmp/opc-handoff-baseline-2-20261026/H02/response.md",
+    "/private/tmp/opc-handoff-baseline-2-20261026/H02/trace.json"
+  ],
+  "readback_verification": {"commands": ["sed -i 更新 response.md 的 delivery.md 链接为绝对路径", "cat delivery.md ../response.md ../trace.json"], "cwd": "H02/project", "exit_code": 0, "result": "已回读三份输出；原门槛、实际 CLI 结果、不扩量结论与 owner 后续步骤均已保存。仅文本回读，未声明 JSON 校验器已运行。"},
+  "decision": "不扩量，维持现有 B/prod/10%；激活验证未完成",
+  "limits": ["仅案例离线材料和 synthetic CLI", "无网络、安装、部署、扩量、账号权限修改、消息或委派", "缺 B/prod 冒烟、只读生产事件权限、成熟窗口与有效样本", "未向真实用户发问，未假定任何批准"]
+}

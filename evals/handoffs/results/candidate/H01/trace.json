@@ -1,0 +1,65 @@
+{
+  "case_id": "H01",
+  "record_kind": "self_reported_execution_trace",
+  "disclaimer": "这是自报的文件读取、命令与结果摘要，不是完整工具审计。",
+  "read_files": [
+    "/private/tmp/opc-handoff-candidate-1-20261026/H01/task.json",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/references/specialist-integration.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/skills/prototype-validation/SKILL.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H01/project/delivery.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H01/project/research.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H01/project/prototype.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/skills/prototype-validation/references/task-testing.md"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-1-20261026/H01/task.json\ncat /private/tmp/opc-handoff-candidate-1-20261026/skill/SKILL.md",
+      "result": "exit 0; read task request, allowed actions and specified skill"
+    },
+    {
+      "command": "rg --files /private/tmp/opc-handoff-candidate-1-20261026/H01/project\ncat /private/tmp/opc-handoff-candidate-1-20261026/skill/references/specialist-integration.md\ncat /private/tmp/opc-handoff-candidate-1-20261026/skill/skills/prototype-validation/SKILL.md",
+      "result": "exit 0; found delivery.md, research.md, prototype.md and read handoff/prototype guidance"
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-1-20261026/H01/project/delivery.md\ncat /private/tmp/opc-handoff-candidate-1-20261026/H01/project/research.md\ncat /private/tmp/opc-handoff-candidate-1-20261026/H01/project/prototype.md\ncat /private/tmp/opc-handoff-candidate-1-20261026/skill/skills/prototype-validation/references/task-testing.md",
+      "result": "exit 0; read all project source materials and neutral task-testing guidance"
+    },
+    {
+      "command_summary": "python3 heredoc using pathlib.Path.write_text to update project/delivery.md",
+      "result": "exit 0; wrote 14,250 bytes; preserved original objective and owners, added evidence boundaries, schedule, script, counting rules and recovery"
+    },
+    {
+      "command_summary": "python3 heredoc reading delivery.md/research.md/prototype.md and checking original objective, owner text, source links, no-test disclosures, two-night plan and original source contents",
+      "result": "exit 0; six documentation checks passed; no usability, demand, purchase or production test executed"
+    },
+    {
+      "command_summary": "python3 heredoc writing H01/response.md and H01/trace.json, then parsing saved JSON and checking saved response",
+      "result": "artifacts saved and local serialization checks passed"
+    }
+  ],
+  "written_files": [
+    "/private/tmp/opc-handoff-candidate-1-20261026/H01/project/delivery.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H01/response.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H01/trace.json"
+  ],
+  "actual_validation": [
+    "documentation self-check only",
+    "original research.md and prototype.md contents unchanged"
+  ],
+  "not_executed": [
+    "participant recruitment/contact",
+    "real participant usability tests",
+    "prototype dry run",
+    "product creation or publication",
+    "network access",
+    "delegation"
+  ],
+  "remaining_conditions": [
+    "accessible fixed v2 prototype with confirmation semantics and reset instructions",
+    "later authorization to contact participants",
+    "eligible participants actually scheduled",
+    "real task observations and delivery-owner evidence review"
+  ],
+  "local_tool_calls_including_this_save": 6
+}

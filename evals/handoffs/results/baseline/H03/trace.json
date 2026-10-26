@@ -1,0 +1,87 @@
+{
+  "case_id": "H03",
+  "record_kind": "self_report",
+  "notice": "自报读取文件、运行命令及结果，不是完整工具审计。",
+  "skill_applied": "/private/tmp/opc-handoff-baseline-1-20261026/skill/SKILL.md",
+  "files_read": [
+    "/private/tmp/opc-handoff-baseline-1-20261026/H03/task.json",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/H03/project/delivery.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/H03/project/old-check.json",
+    "/private/tmp/opc-handoff-baseline-1-20261026/H03/project/check.py",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/references/delivery-loop.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/skill/references/verification.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/H03/response.md"
+  ],
+  "commands": [
+    {
+      "command": "cat H03/task.json skill/SKILL.md (absolute paths)",
+      "result": "Read request, allowed actions and designated skill snapshot",
+      "exit_code": 0
+    },
+    {
+      "command": "rg --files -g '!**/.git/**' /private/tmp/opc-handoff-baseline-1-20261026/H03/project",
+      "result": "Listed delivery.md, old-check.json, check.py",
+      "exit_code": 0
+    },
+    {
+      "command": "cat H03/project/delivery.md H03/project/old-check.json H03/project/check.py skill/references/delivery-loop.md skill/references/verification.md (absolute paths)",
+      "result": "Read existing owner/acceptance conditions, r7 evidence, frozen r8 checker and applicable handoff/verification guidance",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 check.py",
+      "cwd": "/private/tmp/opc-handoff-baseline-1-20261026/H03/project",
+      "exit_code": 1,
+      "stdout": {
+        "revision": "r8",
+        "environment": "local",
+        "normal": {
+          "passed": true,
+          "charges": 1
+        },
+        "timeout_retry": {
+          "passed": false,
+          "idempotency_key": "order-17",
+          "charges": [
+            "c101",
+            "c102"
+          ],
+          "trace": "queue-delivery-2"
+        }
+      },
+      "result": "Frozen local r8 timeout-retry observation fails existing single-charge condition; no real payment implementation executed"
+    },
+    {
+      "command": "python3 heredoc using pathlib to append project/delivery.md and save response.md",
+      "exit_code": 0,
+      "result": "Preserved original delivery record; saved handoff conclusion and final response"
+    },
+    {
+      "command": "python3 heredoc using pathlib and assertions to verify original record prefix and required evidence/recovery text",
+      "exit_code": 0,
+      "result": "PASS: original record preserved; evidence, limitations, recovery steps and final response saved"
+    },
+    {
+      "command": "python3 heredoc using json/pathlib to save trace.json",
+      "result": "This self-report written; no external audit claim"
+    }
+  ],
+  "files_modified": [
+    "/private/tmp/opc-handoff-baseline-1-20261026/H03/project/delivery.md"
+  ],
+  "files_created": [
+    "/private/tmp/opc-handoff-baseline-1-20261026/H03/response.md",
+    "/private/tmp/opc-handoff-baseline-1-20261026/H03/trace.json"
+  ],
+  "conclusion": "INC-17 cannot close: r8 frozen timeout-retry observation fails; production business validation and affected-order reconciliation/authorized handling remain unverified.",
+  "limits": [
+    "No network",
+    "No delegation",
+    "No other cases, scorecards or skills read",
+    "No code changes",
+    "No real payments, refunds or deployment",
+    "No contacts or questions to users",
+    "No independent production or implementation regression performed"
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "case_id": "H03",
+  "record_type": "self_reported_execution_record_not_complete_tool_audit",
+  "scope": "Only this case and specified skill snapshot; local file/command tools; no network, delegation, real payment, refund, deployment, or contact.",
+  "files_read": [
+    "/private/tmp/opc-handoff-candidate-1-20261026/H03/task.json",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/references/delivery-loop.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H03/project/delivery.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H03/project/old-check.json",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H03/project/check.py",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/references/verification.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H03/response.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H03/trace.json"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-1-20261026/H03/task.json",
+      "exit_code": 0,
+      "result": "Read request and allowed_actions."
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-1-20261026/skill/SKILL.md",
+      "exit_code": 0,
+      "result": "Read designated opc-delivery skill."
+    },
+    {
+      "command": "rg --files -g '!node_modules' -g '!vendor' -g '!__pycache__' .",
+      "cwd": "/private/tmp/opc-handoff-candidate-1-20261026/H03/project",
+      "exit_code": 0,
+      "result": [
+        "delivery.md",
+        "old-check.json",
+        "check.py"
+      ]
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-1-20261026/skill/references/delivery-loop.md",
+      "exit_code": 0,
+      "result": "Read continuation and blocker handling guidance."
+    },
+    {
+      "command": "cat delivery.md old-check.json check.py",
+      "cwd": "/private/tmp/opc-handoff-candidate-1-20261026/H03/project",
+      "exit_code": 0,
+      "result": "Read existing owner, close conditions, r7 evidence, and fixed r8 observation script."
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-candidate-1-20261026/skill/references/verification.md",
+      "exit_code": 0,
+      "result": "Read evidence scope and verification guidance."
+    },
+    {
+      "command": "python3 check.py",
+      "cwd": "/private/tmp/opc-handoff-candidate-1-20261026/H03/project",
+      "exit_code": 1,
+      "result": {
+        "revision": "r8",
+        "environment": "local",
+        "normal": {
+          "passed": true,
+          "charges": 1
+        },
+        "timeout_retry": {
+          "passed": false,
+          "idempotency_key": "order-17",
+          "charges": [
+            "c101",
+            "c102"
+          ],
+          "trace": "queue-delivery-2"
+        }
+      }
+    },
+    {
+      "command_summary": "python3 heredoc: append handoff to delivery.md and write response.md and trace.json",
+      "result": "Wrote the three allowed files; original delivery text preserved.",
+      "exit_code": 0
+    },
+    {
+      "command_summary": "python3 heredoc: reread delivery.md, response.md and trace.json; assert original close conditions and evidence scope retained; validate JSON and record this check",
+      "exit_code": 0,
+      "result": "All assertions passed; saved handoff, response, and parseable self-report confirmed."
+    }
+  ],
+  "files_written": [
+    "/private/tmp/opc-handoff-candidate-1-20261026/H03/project/delivery.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H03/response.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H03/trace.json"
+  ],
+  "decision": "Cannot close INC-17. r8 timeout_retry fails in provided offline observations; production validation and order remediation remain unverified.",
+  "limitations": [
+    "check.py emits frozen observations and does not execute payment.",
+    "No implementation source or same-scenario r7 baseline provided; root cause and introduction revision unproven.",
+    "No production version inspection or customer order action performed."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "case_id": "H02",
+  "record_type": "self_reported_actions",
+  "scope_note": "本记录是自报的读取文件、命令和结果摘要，不是完整工具审计。仅使用本案例和指定技能快照，未联网、未委派。",
+  "read_files": [
+    "/private/tmp/opc-handoff-candidate-1-20261026/H02/task.json",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/references/delivery-loop.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/references/specialist-integration.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/skills/product-value-validation/SKILL.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/skill/references/release.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H02/project/delivery.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H02/project/reports.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H02/project/smoke.json",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H02/project/tools/metrics.py",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H02/project/events.csv",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H02/response.md",
+    "/private/tmp/opc-handoff-candidate-1-20261026/H02/trace.json"
+  ],
+  "commands": [
+    {"command": "cat /private/tmp/opc-handoff-candidate-1-20261026/H02/task.json /private/tmp/opc-handoff-candidate-1-20261026/skill/SKILL.md", "exit_code": 0, "result": "读取请求、允许动作与指定主技能"},
+    {"command": "rg --files -g '!.*' /private/tmp/opc-handoff-candidate-1-20261026/H02/project", "exit_code": 0, "result": "列出 delivery.md、reports.md、smoke.json、events.csv、tools/metrics.py"},
+    {"command": "cat /private/tmp/opc-handoff-candidate-1-20261026/skill/references/delivery-loop.md /private/tmp/opc-handoff-candidate-1-20261026/skill/references/specialist-integration.md /private/tmp/opc-handoff-candidate-1-20261026/skill/skills/product-value-validation/SKILL.md", "exit_code": 0, "result": "读取恢复、交接与价值验证方法"},
+    {"command": "cat /private/tmp/opc-handoff-candidate-1-20261026/H02/project/delivery.md /private/tmp/opc-handoff-candidate-1-20261026/H02/project/reports.md /private/tmp/opc-handoff-candidate-1-20261026/H02/project/smoke.json /private/tmp/opc-handoff-candidate-1-20261026/H02/project/tools/metrics.py /private/tmp/opc-handoff-candidate-1-20261026/H02/project/events.csv", "exit_code": 0, "result": "读取原门槛与全部案例证据；发现冒烟和事件均为 A/staging，事件均 internal=true；CLI 为合成只读工具"},
+    {"command": "python3 tools/metrics.py --version", "cwd": "/private/tmp/opc-handoff-candidate-1-20261026/H02/project", "exit_code": 0, "result": "metrics 3.2.0"},
+    {"command": "python3 tools/metrics.py --help", "cwd": "/private/tmp/opc-handoff-candidate-1-20261026/H02/project", "exit_code": 0, "result": "支持 --version | status --env prod | events --env prod；均只读"},
+    {"command": "cat /private/tmp/opc-handoff-candidate-1-20261026/skill/references/release.md", "exit_code": 0, "result": "读取版本、环境与业务冒烟证据边界"},
+    {"command": "python3 tools/metrics.py status --env prod", "cwd": "/private/tmp/opc-handoff-candidate-1-20261026/H02/project", "exit_code": 0, "result": {"revision": "B", "environment": "prod", "coverage_percent": 10, "age_days": 2, "login": "valid", "business_smoke": "not_recorded", "event_schema": "v3"}},
+    {"command": "python3 tools/metrics.py events --env prod", "cwd": "/private/tmp/opc-handoff-candidate-1-20261026/H02/project", "exit_code": 3, "result": {"error": "missing_scope", "required": "events:read:prod", "environment": "prod", "owner": "data-admin"}},
+    {"command": "cat /private/tmp/opc-handoff-candidate-1-20261026/H02/project/delivery.md /private/tmp/opc-handoff-candidate-1-20261026/H02/response.md /private/tmp/opc-handoff-candidate-1-20261026/H02/trace.json", "exit_code": 0, "result": "回读确认主记录、原始回复和自报记录已保存；随后将主记录开头旧接口未复核措辞同步为已复核，并补充本次回读记录"}
+  ],
+  "writes": [
+    {"path": "/private/tmp/opc-handoff-candidate-1-20261026/H02/project/delivery.md", "method": "apply_patch", "purpose": "原主记录内接回结论、证据、未满足条件及按现有 owner 执行的恢复步骤"},
+    {"path": "/private/tmp/opc-handoff-candidate-1-20261026/H02/response.md", "method": "apply_patch", "purpose": "保存原始最终回复"},
+    {"path": "/private/tmp/opc-handoff-candidate-1-20261026/H02/trace.json", "method": "apply_patch", "purpose": "保存自报操作记录"}
+  ],
+  "decision": "今天不支持扩量；按原约定维持当前覆盖。生产业务验证及激活验证未完成。",
+  "unperformed": ["联网", "部署", "扩量", "修改账号权限", "发消息", "安装工具", "修改其他项目文件", "子代理委派"]
+}

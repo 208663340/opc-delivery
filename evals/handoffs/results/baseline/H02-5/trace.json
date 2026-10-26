@@ -1,0 +1,82 @@
+{
+  "case_id": "H02",
+  "record_type": "self_report",
+  "scope_note": "本文件是本次读取文件、运行命令及结果的自报记录，不是完整工具审计。仅访问本案例和指定技能快照；无联网、安装、委派或对外消息。",
+  "read_files": [
+    "/private/tmp/opc-handoff-baseline-5-20261026/H02/task.json",
+    "/private/tmp/opc-handoff-baseline-5-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-5-20261026/H02/project/delivery.md",
+    "/private/tmp/opc-handoff-baseline-5-20261026/H02/project/reports.md",
+    "/private/tmp/opc-handoff-baseline-5-20261026/H02/project/smoke.json",
+    "/private/tmp/opc-handoff-baseline-5-20261026/H02/project/tools/metrics.py",
+    "/private/tmp/opc-handoff-baseline-5-20261026/H02/project/events.csv",
+    "/private/tmp/opc-handoff-baseline-5-20261026/skill/skills/product-value-validation/SKILL.md",
+    "/private/tmp/opc-handoff-baseline-5-20261026/skill/references/specialist-integration.md",
+    "/private/tmp/opc-handoff-baseline-5-20261026/skill/references/delivery-loop.md",
+    "/private/tmp/opc-handoff-baseline-5-20261026/skill/references/release.md",
+    "/private/tmp/opc-handoff-baseline-5-20261026/H02/response.md"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-handoff-baseline-5-20261026/H02/task.json /private/tmp/opc-handoff-baseline-5-20261026/skill/SKILL.md",
+      "exit_code": 0,
+      "result": "读取用户请求、allowed_actions 与指定 opc-delivery 0.5.0 快照。"
+    },
+    {
+      "command": "rg --files -g '!.*' /private/tmp/opc-handoff-baseline-5-20261026/H02/project",
+      "exit_code": 0,
+      "result": "列出 delivery.md、reports.md、smoke.json、events.csv、tools/metrics.py；未发现本案例的 AGENTS.md 或架构文件。"
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-baseline-5-20261026/H02/project/delivery.md /private/tmp/opc-handoff-baseline-5-20261026/H02/project/reports.md /private/tmp/opc-handoff-baseline-5-20261026/H02/project/smoke.json /private/tmp/opc-handoff-baseline-5-20261026/H02/project/tools/metrics.py /private/tmp/opc-handoff-baseline-5-20261026/skill/skills/product-value-validation/SKILL.md /private/tmp/opc-handoff-baseline-5-20261026/skill/references/specialist-integration.md /private/tmp/opc-handoff-baseline-5-20261026/skill/references/delivery-loop.md",
+      "exit_code": 0,
+      "result": "复用原门槛和 owner；发现冒烟证据 A/staging 与目标 B/prod 不符，工具是只读离线模拟 CLI。"
+    },
+    {
+      "command": "python3 tools/metrics.py --version",
+      "cwd": "/private/tmp/opc-handoff-baseline-5-20261026/H02/project",
+      "exit_code": 0,
+      "result": "metrics 3.2.0"
+    },
+    {
+      "command": "python3 tools/metrics.py --help",
+      "cwd": "/private/tmp/opc-handoff-baseline-5-20261026/H02/project",
+      "exit_code": 0,
+      "result": "支持 --version、status --env prod、events --env prod；不使用旧 export 命令。"
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-baseline-5-20261026/H02/project/events.csv /private/tmp/opc-handoff-baseline-5-20261026/skill/references/release.md",
+      "exit_code": 0,
+      "result": "4 条记录、4 名不同用户，全部 internal=true、A/staging。没有 registered 事件或精确时间，不能计算目标 cohort 激活率。"
+    },
+    {
+      "command": "python3 tools/metrics.py status --env prod",
+      "cwd": "/private/tmp/opc-handoff-baseline-5-20261026/H02/project",
+      "exit_code": 0,
+      "result": {"revision": "B", "environment": "prod", "coverage_percent": 10, "age_days": 2, "login": "valid", "business_smoke": "not_recorded", "event_schema": "v3"}
+    },
+    {
+      "command": "python3 tools/metrics.py events --env prod",
+      "cwd": "/private/tmp/opc-handoff-baseline-5-20261026/H02/project",
+      "exit_code": 3,
+      "result": {"error": "missing_scope", "required": "events:read:prod", "environment": "prod", "owner": "data-admin"}
+    },
+    {
+      "command": "cat /private/tmp/opc-handoff-baseline-5-20261026/H02/project/delivery.md /private/tmp/opc-handoff-baseline-5-20261026/H02/response.md",
+      "exit_code": 0,
+      "result": "回读确认已保存：原有目标、阈值、owner 保留；补充当日不扩量结论、检查证据、未解决项及可执行恢复步骤；response.md 包含原始最终回复。"
+    }
+  ],
+  "writes": [
+    {"path": "/private/tmp/opc-handoff-baseline-5-20261026/H02/project/delivery.md", "method": "apply_patch", "result": "修改唯一交付主记录并回读确认。"},
+    {"path": "/private/tmp/opc-handoff-baseline-5-20261026/H02/response.md", "method": "apply_patch", "result": "保存面向案例用户的原始最终回复并回读确认。"},
+    {"path": "/private/tmp/opc-handoff-baseline-5-20261026/H02/trace.json", "method": "apply_patch", "result": "保存本自报记录。"}
+  ],
+  "decision": "维持现有 10% 覆盖，不支持全量；离线核验已完成，生产激活验证未完成。",
+  "remaining_dependencies": [
+    "发布维护者交回 B/prod 业务冒烟证据。",
+    "数据管理员核实并恢复 events:read:prod 只读访问；本次没有改权限或发送请求。",
+    "取得可信生产事件与关键任务统计，固定时区、窗口和截止时间。",
+    "7 个完整自然日及完整 24 小时 cohort 成熟，至少 30 名真实新用户，激活率和错误率均达既定阈值后，由产品负责人决定覆盖。"
+  ]
+}

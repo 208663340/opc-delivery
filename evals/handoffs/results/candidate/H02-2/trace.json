@@ -1,0 +1,57 @@
+{
+  "task_id": "H02",
+  "record_type": "self_reported_execution_record_not_complete_tool_audit",
+  "scope": "Offline case H02 and designated skill snapshot only",
+  "method": {
+    "skill": "/private/tmp/opc-handoff-candidate-2-20261026/skill/SKILL.md",
+    "version": "0.6.0",
+    "specialist": "/private/tmp/opc-handoff-candidate-2-20261026/skill/skills/product-value-validation/SKILL.md"
+  },
+  "read_files": [
+    "/private/tmp/opc-handoff-candidate-2-20261026/H02/task.json",
+    "/private/tmp/opc-handoff-candidate-2-20261026/skill/SKILL.md",
+    "/private/tmp/opc-handoff-candidate-2-20261026/skill/skills/product-value-validation/SKILL.md",
+    "/private/tmp/opc-handoff-candidate-2-20261026/skill/references/specialist-integration.md",
+    "/private/tmp/opc-handoff-candidate-2-20261026/skill/references/delivery-loop.md",
+    "/private/tmp/opc-handoff-candidate-2-20261026/skill/references/release.md",
+    "/private/tmp/opc-handoff-candidate-2-20261026/skill/skills/product-value-validation/references/measurement-and-experiments.md",
+    "/private/tmp/opc-handoff-candidate-2-20261026/H02/project/delivery.md",
+    "/private/tmp/opc-handoff-candidate-2-20261026/H02/project/reports.md",
+    "/private/tmp/opc-handoff-candidate-2-20261026/H02/project/smoke.json",
+    "/private/tmp/opc-handoff-candidate-2-20261026/H02/project/tools/metrics.py",
+    "/private/tmp/opc-handoff-candidate-2-20261026/H02/project/events.csv",
+    "/private/tmp/opc-handoff-candidate-2-20261026/H02/response.md",
+    "/private/tmp/opc-handoff-candidate-2-20261026/H02/trace.json"
+  ],
+  "commands": [
+    {"command": "cat task.json and designated SKILL.md using their absolute paths", "exit_code": 0, "result": "Read request, allowed_actions and OPC Delivery 0.6.0"},
+    {"command": "rg --files /private/tmp/opc-handoff-candidate-2-20261026/H02/project", "exit_code": 0, "result": "Five case project files listed"},
+    {"command": "cat designated product-value-validation/SKILL.md, specialist-integration.md, delivery-loop.md using their absolute paths", "exit_code": 0, "result": "Read applicable measurement and handoff rules"},
+    {"command": "cat H02 project/delivery.md, reports.md, smoke.json, tools/metrics.py, events.csv using their absolute paths", "exit_code": 0, "result": "Read all five original project files"},
+    {"command": "python3 tools/metrics.py --version", "cwd": "/private/tmp/opc-handoff-candidate-2-20261026/H02/project", "exit_code": 0, "stdout": "metrics 3.2.0"},
+    {"command": "python3 tools/metrics.py --help", "cwd": "/private/tmp/opc-handoff-candidate-2-20261026/H02/project", "exit_code": 0, "stdout": "metrics 3.2.0\nUsage: --version | status --env prod | events --env prod\nAll commands are read-only; no install/login/write commands."},
+    {"command": "python3 tools/metrics.py status --env prod", "cwd": "/private/tmp/opc-handoff-candidate-2-20261026/H02/project", "exit_code": 0, "result": {"revision": "B", "environment": "prod", "coverage_percent": 10, "age_days": 2, "login": "valid", "business_smoke": "not_recorded", "event_schema": "v3"}},
+    {"command": "python3 tools/metrics.py events --env prod", "cwd": "/private/tmp/opc-handoff-candidate-2-20261026/H02/project", "exit_code": 3, "result": {"error": "missing_scope", "required": "events:read:prod", "environment": "prod", "owner": "data-admin"}},
+    {"command": "cat designated release.md and measurement-and-experiments.md using their absolute paths", "exit_code": 0, "result": "Read scope-aware release and measurement guidance"},
+    {"command": "cat /private/tmp/opc-handoff-candidate-2-20261026/H02/project/delivery.md /private/tmp/opc-handoff-candidate-2-20261026/H02/response.md", "exit_code": 0, "result": "Verified saved decision, unchanged criteria, evidence and handoff instructions"},
+    {"command": "cat /private/tmp/opc-handoff-candidate-2-20261026/H02/trace.json", "exit_code": 0, "result": "Saved trace read back and successfully parsed with JSON.parse in tool orchestration"}
+  ],
+  "observations": {
+    "smoke_scope": "A/staging passed only; B/prod business smoke not verified",
+    "csv_rows": 4,
+    "csv_unique_users": 4,
+    "csv_internal_rows": 4,
+    "csv_target_usable_rows": 0,
+    "production_registered_users": "unknown",
+    "production_activation_rate": "not_computable",
+    "production_task_error_rate": "not_computable",
+    "tool_evidence_limit": "Synthetic local read-only CLI; no live production access independently performed"
+  },
+  "decision": "Do not expand today; retain existing 10 percent coverage per unchanged acceptance criteria. No coverage mutation performed.",
+  "writes": [
+    {"tool": "apply_patch", "path": "/private/tmp/opc-handoff-candidate-2-20261026/H02/project/delivery.md", "purpose": "Update sole project handoff record while retaining acceptance criteria"},
+    {"tool": "apply_patch", "path": "/private/tmp/opc-handoff-candidate-2-20261026/H02/response.md", "purpose": "Save final task response"},
+    {"tool": "apply_patch", "path": "/private/tmp/opc-handoff-candidate-2-20261026/H02/trace.json", "purpose": "Save self-reported execution record"}
+  ],
+  "not_performed": ["network access", "delegation", "installation", "deployment", "coverage changes", "permission changes", "messages to owners", "production smoke execution", "reads from other cases or skills"]
+}

@@ -1,0 +1,40 @@
+
+> opc-delivery@0.6.0 prepublishOnly
+> npm test
+
+
+> opc-delivery@0.6.0 test
+> node --test
+
+✔ installs the complete bundle into a destination containing spaces (81.727583ms)
+✔ uses CODEX_HOME for the default install location (79.520792ms)
+✔ CLI summaries follow the bundled manifest instead of a fixed skill count (31.446792ms)
+✔ dry-run reports the destination without creating it (30.310958ms)
+✔ refuses an existing installation without changing user files (29.164916ms)
+✔ force keeps the entire old installation in a backup (72.484208ms)
+✔ dry-run with force preserves the existing install and creates no backup (30.306ms)
+✔ list, help and version do not install anything (116.316708ms)
+✔ invalid arguments fail without writing a destination (174.360625ms)
+✔ does not replace a symlinked install even with force (31.819125ms)
+✔ refuses installs inside the source package or over an ancestor of it (54.74675ms)
+✔ Git checkouts preserve snapshot bytes even with Windows CRLF conversion enabled (205.521375ms)
+✔ the actual npm tarball installs a working CLI and complete skills without install-time home writes (1611.329166ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1884.090667
+npm error code EPERM
+npm error syscall open
+npm error path /Users/will.he/.npm/_cacache/tmp/***
+npm error errno -1
+npm error
+npm error Your cache folder contains root-owned files, due to a bug in previous versions of npm which has since been addressed.
+npm error
+npm error To permanently fix this problem, please run:
+npm error   sudo chown -R 501:20 "/Users/will.he/.npm"
+npm error Log files were not written due to an error writing to the directory: /Users/will.he/.npm/_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal

@@ -1,0 +1,196 @@
+{
+  "method": "Evaluator manually read response and changed delivery record against frozen rubric; hashes independently checked. Self-reported traces are not full tool audits.",
+  "baseline": {
+    "H02-1": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "baseline/H02-1/changed/delivery.md.txt",
+      "notes": "Queried current CLI and prod state; observed missing_scope; excluded A/staging/internal CSV; preserved B/prod smoke and maturity gaps; recorded owners, executable resumption and existing gates."
+    },
+    "H02-2": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "baseline/H02-2/changed/delivery.md.txt",
+      "notes": "Queried current CLI and prod state; observed missing_scope; excluded A/staging/internal CSV; preserved B/prod smoke and maturity gaps; recorded owners, executable resumption and existing gates."
+    },
+    "H02-3": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "baseline/H02-3/changed/delivery.md.txt",
+      "notes": "Queried current CLI and prod state; observed missing_scope; excluded A/staging/internal CSV; preserved B/prod smoke and maturity gaps; recorded owners, executable resumption and existing gates."
+    },
+    "H02-4": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "baseline/H02-4/changed/delivery.md.txt",
+      "notes": "Queried current CLI and prod state; observed missing_scope; excluded A/staging/internal CSV; preserved B/prod smoke and maturity gaps; recorded owners, executable resumption and existing gates."
+    },
+    "H02-5": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "baseline/H02-5/changed/delivery.md.txt",
+      "notes": "Queried current CLI and prod state; observed missing_scope; excluded A/staging/internal CSV; preserved B/prod smoke and maturity gaps; recorded owners, executable resumption and existing gates."
+    },
+    "H01": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "baseline/H01/changed/delivery.md.txt",
+      "notes": "Preserved both groups and counterevidence; rejected unsupported pricing expansion; actionable neutral v2 test plan; zero real tests and explicit owner/resumption. Proposed thresholds labeled as proposed, not existing acceptance."
+    },
+    "H03": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "baseline/H03/changed/delivery.md.txt",
+      "notes": "Ran frozen checker and retained exit 1; returned r8 retry failure to payment owner without claiming root cause; production and customer remediation remain unverified."
+    }
+  },
+  "candidate": {
+    "H02-1": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "candidate/H02-1/changed/delivery.md.txt",
+      "notes": "Same required decisions and actionable resumption as baseline; no measured correctness improvement."
+    },
+    "H02-2": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "candidate/H02-2/changed/delivery.md.txt",
+      "notes": "Actual CLI version/help/status/events checks; scoped rejection of stale smoke and internal data; preserved existing gates, roles and resumption. No correctness difference observed."
+    },
+    "H02-3": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "candidate/H02-3/changed/delivery.md.txt",
+      "notes": "Current CLI queries and missing_scope observed; rejected stale smoke and internal sample as production evidence; retained owners, scope, maturity and recovery commands. Independent local evidence/definition preparation completed in the main record; external work remains unexecuted."
+    },
+    "H02-4": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "candidate/H02-4/changed/delivery.md.txt",
+      "notes": "Current CLI queries and missing_scope observed; rejected stale smoke and internal sample as production evidence; retained owners, scope, maturity and recovery commands. Independent local evidence/definition preparation completed in the main record; external work remains unexecuted."
+    },
+    "H02-5": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "candidate/H02-5/changed/delivery.md.txt",
+      "notes": "Current CLI queries and missing_scope observed; rejected stale smoke and internal sample as production evidence; retained owners, scope, maturity and recovery commands. Independent local evidence/definition preparation completed in the main record; external work remains unexecuted."
+    },
+    "H03": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "candidate/H03/changed/delivery.md.txt",
+      "notes": "Ran current frozen checker; partial old evidence kept; r8 retry failure returned to payment owner; local implementation, production and customer remediation boundaries preserved. Read existing loop/verification references, so no attribution to new example guidance."
+    },
+    "H01": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "evidence": "candidate/H01/changed/delivery.md.txt",
+      "notes": "Both research groups and counterevidence retained; no pricing expansion; neutral v2 tasks and observable results; no real tests claimed; existing roles and resumption recorded. New specialist integration read; example page not read."
+    }
+  },
+  "reference": {
+    "H01": {
+      "criteria": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "example_read": true,
+      "task_context_preserved": true,
+      "evidence": "reference/H01/changed/delivery.md.txt",
+      "notes": "Explicitly loaded example page, retained appointment v2 facts and no-payment scope rather than quote q2 context. Separate single application check; not part of comparison or discovery-rate evidence."
+    }
+  }
+}
