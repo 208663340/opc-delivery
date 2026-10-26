@@ -1,6 +1,6 @@
 # 第二阶段：产品价值验证与通用 Agent 评测
 
-日期：2026-10-26。基准：`075bccf` / 0.4.0。状态：已获用户授权，实施中。
+日期：2026-10-26。基准：`075bccf` / 0.4.0。状态：0.5.0 已交付。
 
 ## 交付范围
 
@@ -17,7 +17,7 @@
 - [x] 实现及独立验证通用 Agent 评测 Skill。
 - [x] 接入主入口、阶段参考、推荐表与 manifest，更新安装包版本。
 - [x] 工具/安装测试、来源哈希、链接及独立评审。
-- [ ] 推送、核对 CI、备份更新本地安装。
+- [x] 推送、核对 CI、备份更新本地安装。
 
 ## 已取得的基线
 
@@ -70,3 +70,10 @@ A02 通过：实际使用评测计划、case/oracle/trial 示例，沿既有三�
 ## 最终独立评审
 
 初审 1 项 P2（A01 部分字段与完整任务证据混淆）已修正并复核；最终没有未解决的可行动发现。评审者另行运行候选 A02 的既有 dry-run 得到 8/2/1、检查归档/冻结哈希及 split/family，支持上述固定案例判定。完整原始评审见仓库 [review-final.txt](https://github.com/208663340/opc-delivery/blob/main/evals/value-agent/results/review-final.txt)。
+
+## 发布与本机安装
+
+- 实现提交：`c0287072c4e7d4fed066515290d9d05844271172`，已快进合并并推送 main。其 [CI](https://github.com/208663340/opc-delivery/actions/runs/40286621980) 四个任务通过：Python/文档检查，以及 Ubuntu Node 20、Ubuntu Node 24、Windows Node 24 的 npm 发布预演与安装测试。
+- 本机用已验证源码的 `opc-delivery install --force` 更新；安装器将完整旧版 0.4.0 保留为 `.opc-delivery-backup-ptIJQG`。0.5.0 安装的 188/188 个 payload 文件与对应源码逐字节一致，其中配套 Skill 32 项 / 160 个文件。
+- 本记录为交付后的文档收尾，安装内同一记录随之同步；运行方法及模板未再更改。完整包可在 Agent 下次技能刷新或会话中发现，新专业能力也可由主入口的本地路径读取。
+- 本轮沿用 GitHub npm 安装方式；未发布 npm registry，也未执行真实产品实验、生产 Agent 或付费模型基准。
