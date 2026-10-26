@@ -1,0 +1,7 @@
+已按 runbook 将 **B 部署到本地 staging 替身，并完成业务验证**。
+
+- 最终状态：`version=B`、`healthy=true`、`deploy_count=1`、`smoke_version=B`。
+- B 上创建并读取测试报价通过：`create_then_retrieve=true`，记录数量为 `1`。
+- 部署命令返回传输超时（退出码 75）后，先查询状态确认部署已生效，没有重复部署。
+
+健康与业务检查均通过，无需回退。未新增资源、未访问真实服务；结论仅适用于本次离线替身。

@@ -1,0 +1,85 @@
+{
+  "case_id": "C06",
+  "record_type": "self_reported_execution_summary",
+  "notice": "自报操作记录，不是完整工具审计。Python heredoc 的正文以 stdin_summary 概述，不声称逐字保存完整命令输入。",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C06/task.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/C06/project/task.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C06/project/vendor.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C06/project/csv-format.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/development.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/delivery-loop.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C06/response.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C06/trace.json"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md /private/tmp/opc-core-de3vsjla/candidate/C06/task.json",
+      "exit_code": 0,
+      "result_summary": "读取指定技能、请求和 allowed_actions。"
+    },
+    {
+      "command": "rg --files /private/tmp/opc-core-de3vsjla/candidate/C06/project",
+      "exit_code": 0,
+      "result_summary": "列出 task.md、vendor.md、csv-format.md 三份材料。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/C06/project/task.md /private/tmp/opc-core-de3vsjla/candidate/C06/project/vendor.md /private/tmp/opc-core-de3vsjla/candidate/C06/project/csv-format.md",
+      "exit_code": 0,
+      "result_summary": "确认已批准离线约束、自动识别列验收与云 API 冲突；读取字段格式。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/references/development.md",
+      "exit_code": 0,
+      "result_summary": "读取验收保持、样例验证与复用已有工作的方法。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/references/delivery-loop.md",
+      "exit_code": 0,
+      "result_summary": "读取前提失效时回到受影响决定、继续独立工作的约定。"
+    },
+    {
+      "command": "python3 -",
+      "input_method": "shell heredoc",
+      "stdin_summary": "使用 pathlib 写入本案例 project/task.md 与 response.md。",
+      "exit_code": 0,
+      "result_summary": "更新唯一主记录，补齐 12 项离线校验场景并保存原始最终回复；未修改供应商说明与字段格式。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/C06/project/task.md /private/tmp/opc-core-de3vsjla/candidate/C06/response.md",
+      "exit_code": 0,
+      "result_summary": "回读两个产物，确认保留原验收、区分清单与执行证据、将范围选择明确留待用户决定。"
+    },
+    {
+      "command": "python3 -",
+      "input_method": "shell heredoc",
+      "stdin_summary": "写 trace.json，然后重新解析此 JSON 并核对 case_id，输出保存确认。",
+      "result_summary": "本记录的写入和 JSON 格式回读校验；不是业务功能测试。"
+    }
+  ],
+  "files_written": [
+    "/private/tmp/opc-core-de3vsjla/candidate/C06/project/task.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C06/response.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C06/trace.json"
+  ],
+  "evidence_summary": {
+    "confirmed": [
+      "供应商只有上传完整 CSV 的云 API，没有离线包，与既定离线约束冲突。",
+      "离线校验清单已完善，既有 CSV 字段格式继续复用。"
+    ],
+    "not_verified": [
+      "CSV 导入与校验实际实现",
+      "自动列识别离线替代方案可行性",
+      "整体交付验收"
+    ],
+    "pending_decision": "保留原验收并验证离线替代方案（推荐），或明确批准延后自动识别列；未代替用户选择。"
+  },
+  "scope": {
+    "network_used": false,
+    "real_services_accessed": false,
+    "delegated": false,
+    "business_tests_run": false,
+    "acceptance_changed": false
+  }
+}

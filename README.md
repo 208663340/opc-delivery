@@ -1,11 +1,11 @@
 # OPC Delivery
 
-**让一个人，把产品推进到有证据的交付。**
+**把一个产品推进到可验证的上线。**
 
 A practical Agent Skill for independent product delivery.
 
 [![CI](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml/badge.svg)](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml)
-![Version](https://img.shields.io/badge/version-0.3.0-2563eb)
+![Version](https://img.shields.io/badge/version-0.4.0-2563eb)
 ![Node](https://img.shields.io/badge/installer-Node.js%20%E2%89%A520-339933)
 ![Python](https://img.shields.io/badge/tools-Python%20stdlib-3776ab)
 
@@ -59,7 +59,7 @@ opc-delivery install
 
 ```bash
 npm pack
-npm install -g ./opc-delivery-0.3.0.tgz
+npm install -g ./opc-delivery-0.4.0.tgz
 opc-delivery install --dry-run
 ```
 
@@ -96,13 +96,18 @@ $opc-delivery 排查这个接口的失败原因，修复并给出回归证据。
 $opc-delivery 检查这个版本是否具备发布条件，推进已授权的部署。
 ```
 
-## 三个关键设计
+## 核心方法与四层设计
 
-**按阶段加载。** [SKILL.md](SKILL.md) 负责选择入口；需求、开发、验证、可靠性审查、发布的细节分别存放。明确的功能不会被迫重新做商业调研。
+从当前事实出发：**目标条件 → 最小动作 → 证据 → 下一步**。明确的工作直接完成；事实自己查、实质取舍带建议问、行为假设用验证回答。结果改变前提时返回受影响决定，操作结果未知时先查状态，外部等待期间继续独立工作。用户只要求单项工作时，以该项结果为终点。
 
-**从已有能力开始。** 检查项目约束、工具、连接和已完成的授权。项目架构与凭据留在项目及其安全存储中，技能适配现有技术栈。
+| 层次 | 职责与入口 |
+| --- | --- |
+| 主入口 | [SKILL.md](SKILL.md) 确定当前目标、下一动作和完成声明 |
+| 交付方法 | [推进循环](references/delivery-loop.md) 处理排序、返回、等待与结束；阶段参考规定各自的证据 |
+| 专业能力 | 30 项配套技能按问题接入；[交接约定](references/specialist-integration.md) 统一目标、事实、范围、证据与未解问题 |
+| 工具与材料 | 复用目标项目工具；本包提供检查器、模板、来源清单与安装器 |
 
-**结论对应证据。** 区分推断、复现、修复、测试、部署与业务验证；记录实际覆盖范围。跨会话工作复用已有主记录，保留可继续执行的上下文。
+主入口协调工作，专业技能提供方法，项目保留自己的数据 owner、架构和发布事实。必要规则在入口中，复杂细节按需读取；长任务复用一个主记录。整体设计与 P1/P2 后续缺口见 [设计文档](docs/skills-system-design.md)。
 
 ## 按当前问题补充专业 Skill
 
@@ -110,7 +115,7 @@ $opc-delivery 检查这个版本是否具备发布条件，推进已授权的部
 
 例如，视觉改版可参考 `frontend-design`，React 请求瀑布可参考 `vercel-react-best-practices`，根因未知时可参考 `systematic-debugging`。Agent 专题按项目实际框架选择；自研循环先走现有可靠性审查。完整名单与来源以推荐参考为准。
 
-新增三项可直接使用的专业能力：
+其中三项本项目编写的专业能力：
 
 | Skill | 适用问题与配套材料 |
 | --- | --- |
@@ -157,6 +162,8 @@ python3 scripts/check_release_receipt.py /path/to/release-receipt.json
 
 - **0.3.0 三项专业能力验证**：同输入的旧版检索对照与三项新版独立案例通过；30 项、150 个技能文件哈希一致，Node 20 / 26 的 13 项安装测试、22 项 Python 测试与 npm 发布预演通过，详见 [专业能力验证记录](docs/validation-specialists-0.3.0.md)。未执行真实用户研究或生产运维。
 
+- **0.4.0 核心机制对照**：8 个固定案例的旧版与候选各一次独立执行，双方均通过；这轮未测出质量或效率提升，详见 [核心机制验证记录](docs/validation-core-loop.md)。
+
 详见 [0.1.0 验证记录](docs/validation-0.1.0.md)。这些结果不替代你自己的生产验证，也不构成效率提升或商业效果承诺。
 
 本地运行工具测试：
@@ -175,6 +182,8 @@ bin/opc-delivery.mjs              零依赖 CLI：install、list、help、versio
 test/                            CLI 文件系统与真实 npm tarball 安装验证
 agents/openai.yaml               Codex 展示与默认调用提示
 references/
+  delivery-loop.md               下一动作、推进/返回/等待/结束与恢复
+  specialist-integration.md      专业方法输入输出、来源、工具依赖与冲突
   discovery.md                   需求证据与最小验证
   development.md                 实现与职责边界
   verification.md                根因定位与回归
@@ -190,6 +199,9 @@ docs/validation-0.1.0.md          已完成的验证及其边界
 docs/validation-skill-recommendations.md  推荐能力增量验证
 docs/validation-npm-0.2.0.md      npm CLI、打包与安装验证
 docs/validation-specialists-0.3.0.md  三项专业能力的对照与安装验证
+docs/skills-system-design.md     整体设计与后续补缺顺序
+docs/validation-core-loop.md     核心机制同题对照及验证边界
+evals/core-loop/                 开发用合成场景、隔离夹具与原始记录（不随 npm 安装）
 ```
 
 ## 改进这个 Skill

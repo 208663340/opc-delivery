@@ -1,0 +1,28 @@
+已确认现有材料中的重复写入机制：**工具副作用成功后、checkpoint 完成前崩溃，恢复会再次执行同一 action，而写入端没有幂等保障。** 本次只做了本地只读诊断，未改代码。
+
+采用指定包内的 [系统化调试方法](/private/tmp/opc-core-de3vsjla/candidate/skill/skills/systematic-debugging/SKILL.md) 和 [Agent 可靠性审查](/private/tmp/opc-core-de3vsjla/candidate/skill/references/reliability-review.md)，检查恢复、副作用与 checkpoint 的先后顺序；这些方法适用于现有 Vue + 自研 Python 循环，无需安装技能或迁移框架。
+
+证据链：
+
+- [replay.log:1](/private/tmp/opc-core-de3vsjla/candidate/C08/project/replay.log:1) 记录同一 `run=r1/action=a1` 先创建记录 101，checkpoint 前崩溃，恢复后又创建记录 102，最后才完成 checkpoint。这是日志中的两次写入，不能仅按页面重复展示解释。
+- [agent.py:2](/private/tmp/opc-core-de3vsjla/candidate/C08/project/agent.py:2) 只检查 checkpoint；第 4 行调用 `external.create(action.payload)`，第 5 行才保存结果。两步之间存在已产生副作用、却仍被判定为未完成的窗口；调用处也没有显式传递 action 幂等键。
+- [architecture.md:3](/private/tmp/opc-core-de3vsjla/candidate/C08/project/architecture.md:3) 明确恢复沿用 run/action 标识、重执行未完成 action，且共享存储没有 action_id 唯一约束。因此稳定标识已经具备，但尚未用来约束副作用。
+
+我运行了未修改的 `execute`，以纯内存替身做一次对照和一次故障注入：
+
+| 场景 | create 次数 | 结果 |
+| --- | ---: | --- |
+| 正常完成后再次执行同一 action | 1 | checkpoint 阻止重复执行 |
+| create 成功，checkpoint 保存前模拟崩溃，再恢复 | 2 | 模拟记录 101、102；checkpoint 最终只关联 102 |
+
+命令退出码为 0，断言确认复现了缺陷，不代表缺陷已修复。内存实验只验证控制流，不证明真实数据库事务或并发安全。
+
+**下一步建议：先读共享存储的表结构、create 实现及 checkpoint 存储边界，确定可以在哪里原子地约束同一逻辑动作。** 目前材料不足以决定具体数据库方案。后续最小修复方向是：
+
+1. 核实 action_id 的唯一范围；若只在 run 内唯一，就使用包含 run_id 的业务幂等键。重复恢复须沿用该键，而非生成新的 attempt 键。
+2. 在实际副作用的存储 owner 处实现原子的“创建或返回已存在结果”，由唯一约束或等价机制处理并发；命中同键时返回首次创建的记录，再补 checkpoint。同键不同 payload 应明确拒绝或按既有契约处理。单纯“先查询再创建”、提前标记完成或只加进程锁，都不能可靠关闭该窗口。
+3. 核实记录和 checkpoint 能否处于同一事务；不能时，依靠写入端持久幂等结果恢复。遇到超时结果未知，应按原键查证或调用具备幂等保障的接口，避免盲目重复创建。
+4. 获准修复后，在隔离的真实存储上验证：写入后崩溃恢复、并发执行同键、写入成功但响应丢失、已完成动作重放，以及同键不同载荷。验收看实际记录数始终为 1、重复执行返回同一记录、checkpoint 最终关联该记录，并确认不同合法动作仍能各自创建。
+
+已有 101/102 重复记录需另行核对业务引用后决定保留与合并方式；本次未做数据清理。材料未提供存储实现、部署版本或变更历史，不能确定影响总量或引入时间。没有浏览器连接，也未进行页面验证；未安装依赖、联网或访问真实服务。
+

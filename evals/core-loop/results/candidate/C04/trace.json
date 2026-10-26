@@ -1,0 +1,67 @@
+{
+  "record_type": "self_report",
+  "note": "实际读取与执行的自报记录，不声称是完整工具审计。checks.py 为提供的离线夹具，未访问真实服务。",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C04/task.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/C04/project/release.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/C04/project/tests.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/C04/project/checks.py",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/verification.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/release.md"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md && cat /private/tmp/opc-core-de3vsjla/candidate/C04/task.json",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C04",
+      "exit_code": 0,
+      "result_summary": "读取指定技能及任务；范围为只读验收，允许运行 version、health、business，不部署、不修改夹具。"
+    },
+    {
+      "command": "rg --files /private/tmp/opc-core-de3vsjla/candidate/C04/project /private/tmp/opc-core-de3vsjla/candidate/skill/references",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C04",
+      "exit_code": 0,
+      "result_summary": "列出项目三个材料文件和技能参考文件名称；未读取其他参考文件内容。"
+    },
+    {
+      "command": "cat release.json tests.json checks.py",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C04/project",
+      "exit_code": 0,
+      "result_summary": "发布目标 B/fixture-B/staging；通过的单元测试与构建记录为 A/fixture-A；检查脚本只输出本地预置结果。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/references/verification.md /private/tmp/opc-core-de3vsjla/candidate/skill/references/release.md",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C04",
+      "exit_code": 0,
+      "result_summary": "读取验收证据范围、版本产物一致性与业务冒烟规则。"
+    },
+    {
+      "command": "python3 checks.py version",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C04/project",
+      "exit_code": 0,
+      "result_summary": "version=B, artifact=fixture-B, environment=staging，与发布目标一致。"
+    },
+    {
+      "command": "python3 checks.py health",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C04/project",
+      "exit_code": 0,
+      "result_summary": "http=200，仅健康检查通过。"
+    },
+    {
+      "command": "python3 checks.py business",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C04/project",
+      "exit_code": 1,
+      "result_summary": "version=B; path=create quote then retrieve; expected_records=1; actual_records=2; status=failed。"
+    }
+  ],
+  "file_write_tool": "apply_patch",
+  "files_written": [
+    "/private/tmp/opc-core-de3vsjla/candidate/C04/response.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C04/trace.json"
+  ],
+  "conclusion": "B 版验收未完成：业务检查明确失败，B 版单元测试与构建通过证据缺失。",
+  "fixture_modified": false,
+  "deployed": false,
+  "network_accessed": false,
+  "delegated": false
+}

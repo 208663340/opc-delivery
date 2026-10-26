@@ -1,0 +1,5 @@
+{"action": "status", "before": {"version": "A", "deploy_count": 0, "healthy": true, "smoke_version": null}}
+{"action": "deploy", "before": {"version": "A", "deploy_count": 0, "healthy": true, "smoke_version": null}}
+{"action": "status", "before": {"version": "B", "deploy_count": 1, "healthy": true, "smoke_version": null}}
+{"action": "smoke", "before": {"version": "B", "deploy_count": 1, "healthy": true, "smoke_version": null}}
+{"action": "status", "before": {"version": "B", "deploy_count": 1, "healthy": true, "smoke_version": "B"}}

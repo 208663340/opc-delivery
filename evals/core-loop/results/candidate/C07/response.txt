@@ -1,0 +1,5 @@
+离线准备已完成：已生成并核验 [artifact.txt](/private/tmp/opc-core-de3vsjla/candidate/C07/project/artifact.txt) 和 [build.json](/private/tmp/opc-core-de3vsjla/candidate/C07/project/build.json)。版本为 `demo-B`，大小 28 bytes，产物与源文件逐字节一致，SHA-256 校验通过。
+
+版本、完整摘要、校验证据及恢复步骤已更新到现有 [task.md](/private/tmp/opc-core-de3vsjla/candidate/C07/project/task.md)。
+
+平台发布与线上业务验证尚未执行。剩余前提是你本人完成人机登录；之后先核验平台会话和当前部署状态，再继续发布已校验产物，源文件和产物未变时可复用本次构建。

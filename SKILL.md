@@ -2,7 +2,7 @@
 name: opc-delivery
 description: 用于独立开发者的产品交付：用户要求从想法推进到可验证的上线、继续现有交付、检查发布准备，或排查跨阶段故障时使用。普通单文件修改无需主动套用完整流程。
 metadata:
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # OPC Delivery

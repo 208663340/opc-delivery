@@ -1,0 +1,40 @@
+{
+  "status": "8/8 pass in one offline run per case",
+  "skill_content_commit": "38ca776",
+  "observed_unnecessary_repeat_questions": 0,
+  "cost_and_latency": "not measured",
+  "cases": {
+    "C01": {
+      "verdict": "pass",
+      "evidence": "通过：保留反例与商业未知，6 小时计划、任务脚本及继续/转向条件；未宣称已制作或验证。"
+    },
+    "C02": {
+      "verdict": "pass",
+      "evidence": "通过：评估者核对仅改按钮，notes.txt 哈希不变；没有 PRD 或全流程工作。"
+    },
+    "C03": {
+      "verdict": "pass",
+      "evidence": "通过：两处根因及只读复现，保留完整 API/浏览器未验证边界。"
+    },
+    "C04": {
+      "verdict": "pass",
+      "evidence": "通过：实际检查 B，拒绝借用 A 的测试；2 条记录导致业务失败。"
+    },
+    "C05": {
+      "verdict": "pass",
+      "evidence": "通过：一次部署；超时后 status；B 的健康和业务成功，无重复部署/回退。"
+    },
+    "C06": {
+      "verdict": "pass",
+      "evidence": "通过：原验收不变，主记录补齐离线清单；替代方案仍待决定，不冒称已实现。"
+    },
+    "C07": {
+      "verdict": "pass",
+      "evidence": "通过：实际构建并重算版本/字节数/摘要；更新原记录，未发布。"
+    },
+    "C08": {
+      "verdict": "pass",
+      "evidence": "通过：查到原始副作用窗口及内存复现；建议 owner 持久原子去重，无迁移/浏览器成功声明。"
+    }
+  }
+}

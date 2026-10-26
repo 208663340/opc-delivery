@@ -1,0 +1,55 @@
+{
+  "case_id": "C08",
+  "record_type": "self_report",
+  "audit_scope": "Self-reported files read, local shell commands and result summaries; not a complete independent tool audit.",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/candidate/C08/task.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C08/project/architecture.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C08/project/replay.log",
+    "/private/tmp/opc-core-de3vsjla/candidate/C08/project/agent.py",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/verification.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/reliability-review.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/skill-recommendations.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/skills/systematic-debugging/SKILL.md"
+  ],
+  "commands": [
+    {
+      "cmd": "cat /private/tmp/opc-core-de3vsjla/candidate/C08/task.json && cat /private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md",
+      "exit_code": 0,
+      "result_summary": "Read requested task scope and designated OPC Delivery entry skill."
+    },
+    {
+      "cmd": "rg --files /private/tmp/opc-core-de3vsjla/candidate/C08/project && cat /private/tmp/opc-core-de3vsjla/candidate/C08/project/architecture.md /private/tmp/opc-core-de3vsjla/candidate/C08/project/replay.log /private/tmp/opc-core-de3vsjla/candidate/C08/project/agent.py /private/tmp/opc-core-de3vsjla/candidate/skill/references/verification.md /private/tmp/opc-core-de3vsjla/candidate/skill/references/reliability-review.md /private/tmp/opc-core-de3vsjla/candidate/skill/references/skill-recommendations.md",
+      "exit_code": 0,
+      "result_summary": "Project inventory contained three supplied files. Read all three plus relevant verification, reliability and skill-selection references. Identified create/checkpoint crash window."
+    },
+    {
+      "cmd": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/skills/systematic-debugging/SKILL.md && nl -ba /private/tmp/opc-core-de3vsjla/candidate/C08/project/agent.py && nl -ba /private/tmp/opc-core-de3vsjla/candidate/C08/project/replay.log && nl -ba /private/tmp/opc-core-de3vsjla/candidate/C08/project/architecture.md",
+      "exit_code": 0,
+      "result_summary": "Read packaged systematic debugging method and obtained exact line references for the supplied evidence."
+    },
+    {
+      "cmd": "python3 -B - <<'PY'\nfrom pathlib import Path\nfrom types import SimpleNamespace\nimport json\n\nroot = Path('/private/tmp/opc-core-de3vsjla/candidate/C08/project')\nnamespace = {}\nexec(compile((root / 'agent.py').read_text(), str(root / 'agent.py'), 'exec'), namespace)\nexecute = namespace['execute']\n\nclass External:\n    def __init__(self):\n        self.records = []\n    def create(self, payload):\n        record = {'id': 101 + len(self.records), 'payload': payload}\n        self.records.append(record)\n        return record\n\nclass Checkpoints:\n    def __init__(self, crash_once=False):\n        self.results = {}\n        self.crash_once = crash_once\n    def done(self, action_id):\n        return action_id in self.results\n    def complete(self, action_id, result):\n        if self.crash_once:\n            self.crash_once = False\n            raise RuntimeError('simulated crash before checkpoint persistence')\n        self.results[action_id] = result\n\naction = SimpleNamespace(id='a1', payload={'example': 'offline-only'})\nnormal_external = External()\nnormal_checkpoints = Checkpoints()\nexecute(action, normal_external, normal_checkpoints)\nexecute(action, normal_external, normal_checkpoints)\nassert len(normal_external.records) == 1\n\ncrash_external = External()\ncrash_checkpoints = Checkpoints(crash_once=True)\ntry:\n    execute(action, crash_external, crash_checkpoints)\nexcept RuntimeError as error:\n    assert str(error) == 'simulated crash before checkpoint persistence'\nassert len(crash_external.records) == 1\nassert not crash_checkpoints.done('a1')\nexecute(action, crash_external, crash_checkpoints)\nassert len(crash_external.records) == 2\nassert crash_checkpoints.results['a1']['id'] == 102\nprint(json.dumps({\n    'method': 'unchanged execute function; in-memory doubles; no external service or storage',\n    'completed_checkpoint_then_retry': {'create_count': len(normal_external.records)},\n    'crash_before_checkpoint_then_resume': {\n        'create_count': len(crash_external.records),\n        'record_ids': [record['id'] for record in crash_external.records],\n        'checkpoint_result': crash_checkpoints.results['a1']['id']\n    },\n    'assertions': 'passed; confirms supplied failure pattern, not a fix'\n}, ensure_ascii=False))\nPY",
+      "exit_code": 0,
+      "result_summary": "{\"method\": \"unchanged execute function; in-memory doubles; no external service or storage\", \"completed_checkpoint_then_retry\": {\"create_count\": 1}, \"crash_before_checkpoint_then_resume\": {\"create_count\": 2, \"record_ids\": [101, 102], \"checkpoint_result\": 102}, \"assertions\": \"passed; confirms supplied failure pattern, not a fix\"}"
+    }
+  ],
+  "findings": [
+    {
+      "status": "confirmed_in_supplied_material_and_control_flow",
+      "summary": "create succeeds before checkpoint; crash leaves action incomplete; replay duplicates the non-idempotent write."
+    }
+  ],
+  "boundaries": [
+    "No project code changes.",
+    "Only pure in-memory diagnostic side effects.",
+    "No browser verification, network, real services, installs, framework migration, or delegation.",
+    "Real storage atomicity, concurrency behavior, deployed version and full impact remain unverified."
+  ],
+  "output_writes": [
+    "/private/tmp/opc-core-de3vsjla/candidate/C08/response.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C08/trace.json"
+  ]
+}
+

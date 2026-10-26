@@ -1,0 +1,51 @@
+{
+  "case_id": "C01",
+  "record_type": "self_report",
+  "disclaimer": "仅记录本代理实际读取的文件、实际运行的命令与结果摘要，不声称是完整工具审计。",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C01/task.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/C01/project/feedback.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/discovery.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/skills/user-research/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/skills/prototype-validation/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/skills/user-research/references/interview-and-synthesis.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/skills/prototype-validation/references/task-testing.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C01/response.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C01/trace.json"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md /private/tmp/opc-core-de3vsjla/candidate/C01/task.json",
+      "exit_code": 0,
+      "result_summary": "读取指定主技能、用户请求与允许动作。"
+    },
+    {
+      "command": "rg --files /private/tmp/opc-core-de3vsjla/candidate/C01/project && cat /private/tmp/opc-core-de3vsjla/candidate/C01/project/feedback.md /private/tmp/opc-core-de3vsjla/candidate/skill/references/discovery.md",
+      "exit_code": 0,
+      "result_summary": "项目材料只有 feedback.md；读取两位设计师反馈、创始人倾向与需求判断方法。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/skills/user-research/SKILL.md /private/tmp/opc-core-de3vsjla/candidate/skill/skills/prototype-validation/SKILL.md",
+      "exit_code": 0,
+      "result_summary": "读取用户研究与原型验证规则；不把拟定计划或内部走查当成真人证据。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/skills/user-research/references/interview-and-synthesis.md /private/tmp/opc-core-de3vsjla/candidate/skill/skills/prototype-validation/references/task-testing.md",
+      "exit_code": 0,
+      "result_summary": "读取证据分析、中性访谈与任务测试方法；未访问其中参考网址。"
+    },
+    {
+      "command": "python3 -c 'import json; from pathlib import Path; p = Path(\"/private/tmp/opc-core-de3vsjla/candidate/C01\"); t = json.loads((p / \"trace.json\").read_text()); r = (p / \"response.md\").read_text(); assert t[\"case_id\"] == \"C01\"; assert \"真人测试数为 0\" in r; assert \"6 小时\" in r; print(\"Verified: response.md present; trace.json valid; evidence boundaries recorded.\")'",
+      "exit_code": 0,
+      "result_summary": "确认回复文件存在，trace.json 可解析，回复明确真人验证未执行并保留 6 小时预算。此检查不代表产品或真人验证通过。"
+    }
+  ],
+  "file_writes": [
+    "/private/tmp/opc-core-de3vsjla/candidate/C01/response.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C01/trace.json"
+  ],
+  "write_method": "apply_patch",
+  "work_summary": "整理证据与反例、两种可选切口、6 小时任务卡、虚构走查样例、待执行访谈和任务脚本、继续调整暂停条件；将范围取舍问题留在回复中。",
+  "not_performed": ["联网", "联系或招募用户", "真实访谈或可用性测试", "付费试验", "实现产品或原型", "公开上线", "委派"]
+}

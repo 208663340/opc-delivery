@@ -1,4 +1,4 @@
 interface:
   display_name: "OPC Delivery · 独立产品交付"
-  short_description: "从需求判断到代码验证与可靠发布，让一个人也能完成有证据的产品交付"
-  default_prompt: "使用 $opc-delivery，识别这个项目当前最关键的交付问题，推进到有证据支持的结果。"
+  short_description: "从当前事实找到关键交付缺口，按需接入专业能力，把产品推进到可验证的上线"
+  default_prompt: "使用 $opc-delivery，从项目当前状态出发，完成已授权工作并取得证据，把本次目标推进到可验证的结果。"

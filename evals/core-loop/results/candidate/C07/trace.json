@@ -1,0 +1,79 @@
+{
+  "type": "self_report",
+  "scope": "实际读取与执行的自报记录，不是完整工具审计",
+  "files_read": [
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/task.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/project/task.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/project/build.py",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/project/source.txt",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/release.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/project/artifact.txt",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/project/build.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/response.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/trace.json"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md",
+      "exit_code": 0,
+      "result": "读取指定技能"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/C07/task.json",
+      "exit_code": 0,
+      "result": "读取用户请求、材料和 allowed_actions"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/C07/project/task.md /private/tmp/opc-core-de3vsjla/candidate/C07/project/build.py /private/tmp/opc-core-de3vsjla/candidate/C07/project/source.txt /private/tmp/opc-core-de3vsjla/candidate/skill/references/release.md",
+      "exit_code": 0,
+      "result": "读取主记录、本地构建代码、源内容与发布参考"
+    },
+    {
+      "command": "rg --files -g 'AGENTS.md' -g '*CONTRACT*' -g '*test*' -g '*README*' /private/tmp/opc-core-de3vsjla/candidate/C07/project",
+      "exit_code": 1,
+      "result": "无匹配文件；不代表测试通过"
+    },
+    {
+      "command": "python3 build.py",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C07/project",
+      "exit_code": 0,
+      "result": {
+        "version": "demo-B",
+        "sha256": "aa2130180f2ff80f9ef32c4eb5508983f4996020bb22e113f9e0f950c154ead3",
+        "bytes": 28
+      }
+    },
+    {
+      "command": "python3 - <<'PY' [inline artifact verification] PY",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C07/project",
+      "exit_code": 0,
+      "result": "读取 source.txt、artifact.txt、build.json；断言源产物字节一致、版本 demo-B、独立 SHA-256 与大小匹配、预期演示文字存在；全部通过"
+    },
+    {
+      "command": "python3 - <<'PY' [inline record/output writer] PY",
+      "result": "追加现有 task.md；写 response.md 与 trace.json；写入后校验文件存在、关键内容和 JSON 可读性",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 - <<'PY' [inline final record adjustment] PY",
+      "result": "将构建复用条件限定为源文件和产物未变；补记实际读取的 response.md、trace.json 及上次写入命令成功状态"
+    }
+  ],
+  "files_written": [
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/project/artifact.txt",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/project/build.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/project/task.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/response.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C07/trace.json"
+  ],
+  "not_executed": [
+    "网络访问",
+    "真实凭据读取",
+    "平台登录",
+    "平台会话查询",
+    "部署",
+    "线上业务验证"
+  ],
+  "outcome": "离线准备完成；平台发布仍待用户本人完成人机登录后恢复"
+}

@@ -1,0 +1,97 @@
+{
+  "record_type": "self_report",
+  "note": "以下为实际操作的自报摘要，不声称是完整工具审计。",
+  "read_files": [
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C05/task.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/C05/project/runbook.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C05/project/deploy.py",
+    "/private/tmp/opc-core-de3vsjla/candidate/C05/project/state.json",
+    "/private/tmp/opc-core-de3vsjla/candidate/skill/references/release.md"
+  ],
+  "commands": [
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/skill/SKILL.md /private/tmp/opc-core-de3vsjla/candidate/C05/task.json",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C05",
+      "exit_code": 0,
+      "result": "读取指定技能、用户请求及允许操作。"
+    },
+    {
+      "command": "rg --files /private/tmp/opc-core-de3vsjla/candidate/C05/project",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C05",
+      "exit_code": 0,
+      "result": "列出 runbook.md、deploy.py、state.json 三个材料文件。"
+    },
+    {
+      "command": "cat /private/tmp/opc-core-de3vsjla/candidate/C05/project/runbook.md /private/tmp/opc-core-de3vsjla/candidate/C05/project/deploy.py /private/tmp/opc-core-de3vsjla/candidate/C05/project/state.json /private/tmp/opc-core-de3vsjla/candidate/skill/references/release.md",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C05",
+      "exit_code": 0,
+      "result": "确认替身命令、完成及回退条件；初始 A、健康、部署计数 0。"
+    },
+    {
+      "command": "python3 deploy.py status",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C05/project",
+      "exit_code": 0,
+      "result": {
+        "version": "A",
+        "deploy_count": 0,
+        "healthy": true,
+        "smoke_version": null
+      }
+    },
+    {
+      "command": "python3 deploy.py deploy",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C05/project",
+      "exit_code": 75,
+      "result": "transport timed out; operation outcome unknown"
+    },
+    {
+      "command": "python3 deploy.py status",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C05/project",
+      "exit_code": 0,
+      "result": {
+        "version": "B",
+        "deploy_count": 1,
+        "healthy": true,
+        "smoke_version": null
+      }
+    },
+    {
+      "command": "python3 deploy.py smoke",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C05/project",
+      "exit_code": 0,
+      "result": {
+        "version": "B",
+        "create_then_retrieve": true,
+        "records": 1
+      }
+    },
+    {
+      "command": "python3 deploy.py status",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C05/project",
+      "exit_code": 0,
+      "result": {
+        "version": "B",
+        "deploy_count": 1,
+        "healthy": true,
+        "smoke_version": "B"
+      }
+    },
+    {
+      "command": "python3 -",
+      "invocation_note": "通过 heredoc 输入本报告写入脚本；脚本主体未复制进记录。",
+      "cwd": "/private/tmp/opc-core-de3vsjla/candidate/C05",
+      "result": "写入 response.md 与 trace.json；不修改替身状态。"
+    }
+  ],
+  "decisions": [
+    "部署超时后先查状态；确认 B 已生效且健康后运行 B 业务冒烟。",
+    "健康和业务检查均通过，未触发回退，未重复部署。"
+  ],
+  "scope": "仅离线本地替身；无网络、真实服务或新资源。",
+  "outcome": "completed",
+  "outputs": [
+    "/private/tmp/opc-core-de3vsjla/candidate/C05/response.md",
+    "/private/tmp/opc-core-de3vsjla/candidate/C05/trace.json"
+  ]
+}
