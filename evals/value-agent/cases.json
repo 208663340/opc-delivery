@@ -1,0 +1,6 @@
+[
+  {"id":"P01","request":"报价工具已经上线。根据目录里的使用与付款材料判断目前有没有持续价值，给出可复核的指标和下一步，不要联系用户或改线上配置。请优先使用技能包里可复用的方法或模板，没有适用材料时自行完成并说明。","materials":["definitions.md","users.csv","events.csv","payments.csv"],"allowed_actions":["本地读取与计算，输出分析、指标口径及下一步","不得联网、联系人、扣款或修改原始材料"]},
+  {"id":"P02","request":"新引导页上线后导出率从 20% 到 30%，我们想全量并开始收费。请判断这是否支持决定，再交付一份能直接执行的下一轮验证计划。只分析和准备，不发布、不招募、不收费。优先复用本包适用方法或模板。","materials":["rollout.json","feedback.md"],"allowed_actions":["本地读取与计算，在回复中准备验证计划","没有用户回复；未决取舍写入结果，不擅自执行实验"]},
+  {"id":"A01","request":"自研 Agent 的 B 版 judge 分数满分而且看起来便宜，能替换 A 吗？请核对原始 trial 和任务要求，给出质量、成本、延迟及风险结论和下一步。不要调用任何模型 API，优先复用本包适用评测材料。","materials":["tasks.md","runs.csv","provenance.md"],"allowed_actions":["本地读取、计算和分析；不修改原始记录","不联网、不访问真实 Tools、不迁移框架"]},
+  {"id":"A02","request":"给这个自研 Python Agent 建立最小可用的跨模型评测包，覆盖交付质量、工具副作用、恢复及预算，并接上现有入口做离线检查。不要新增评测框架，不调用收费 API。优先复用本包适用模板。","materials":["README.md","evals/run.py","evals/tasks.seed.jsonl","evals/oracles.seed.json"],"allowed_actions":["读取本案例及指定技能包","可在项目 evals/ 新建数据、评分材料与计划，运行现有 run.py --dry-run","不修改 run.py、原始 seed 或 README；不联网、不装包、不运行真实模型或外部副作用"]}
+]

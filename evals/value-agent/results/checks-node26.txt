@@ -1,0 +1,25 @@
+
+> opc-delivery@0.5.0 test
+> node --test
+
+✔ installs the complete bundle into a destination containing spaces (81.369167ms)
+✔ uses CODEX_HOME for the default install location (84.006584ms)
+✔ CLI summaries follow the bundled manifest instead of a fixed skill count (35.205625ms)
+✔ dry-run reports the destination without creating it (32.501542ms)
+✔ refuses an existing installation without changing user files (35.85075ms)
+✔ force keeps the entire old installation in a backup (72.010375ms)
+✔ dry-run with force preserves the existing install and creates no backup (31.439708ms)
+✔ list, help and version do not install anything (123.72975ms)
+✔ invalid arguments fail without writing a destination (180.126875ms)
+✔ does not replace a symlinked install even with force (30.381792ms)
+✔ refuses installs inside the source package or over an ancestor of it (65.747833ms)
+✔ Git checkouts preserve snapshot bytes even with Windows CRLF conversion enabled (198.104542ms)
+✔ the actual npm tarball installs a working CLI and complete skills without install-time home writes (1395.372375ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1662.524709

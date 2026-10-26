@@ -20,7 +20,7 @@ description: Use when planning user interviews, investigating user needs, synthe
 | 用户如何处理问题、为什么不改变现状 | 最近一次实际事件的访谈，条件允许时观察操作 | 场景、流程、替代方案、真实代价与反例 |
 | 哪类用户值得优先服务 | 比较有相关经历的细分样本，包括低频或不采用者 | 差异及其证据；不把便利样本当作总体分布 |
 | 某个流程能否被理解和完成 | 转入 [prototype-validation](../prototype-validation/SKILL.md) | 具体任务中的行为和障碍 |
-| 是否会持续使用或付费 | 准备获准的试用、留存或真实承诺验证 | 实际行动；访谈中的认可只是线索 |
+| 是否会持续使用或付费 | 转入 [product-value-validation](../product-value-validation/SKILL.md)，准备试用、留存或真实承诺验证 | 实际行动；访谈中的认可只是线索 |
 
 样本量由细分人群、风险、预算和待解问题决定。分轮记录覆盖与缺口；少量访谈只说明观察到的现象，不给总体转化率或统计显著性背书。
 

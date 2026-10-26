@@ -1,0 +1,9 @@
+已建立最小跨模型评测包，包含 **12 个场景**，覆盖交付质量、审批与工具副作用、取消与幂等恢复，以及调用次数、时间和 token 预算。
+
+- [主记录与运行方式](/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/PLAN.cross-model.md)
+- [任务集](/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/tasks.cross-model.jsonl) · [独立 oracle](/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/oracles.cross-model.json) · [评分规则](/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/grading.cross-model.md)
+- [离线检查证据](/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/offline-check.cross-model.json)
+
+现有 `run.py --dry-run` 已通过新增 12 条及原始 seed 的校验；oracle 一一对应、fixture 路径和保护文件哈希检查通过。未修改 README、runner 或原始 seed，未新增框架、联网、安装依赖或调用模型。
+
+指定技能快照没有适用的专用评测模板，本次复用了项目 seed 格式与技能可靠性方法。已提供同条件配对比较、预算、判分校准和结果模板；**真实模型、故障注入及评分均未执行**，下一步需在现有 runtime 接入本地 fixture/fake 适配并指定两组模型或提示配置。

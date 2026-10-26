@@ -1,0 +1,91 @@
+{
+  "case_id": "A01",
+  "scope": "Independent offline analysis; self-reported trace, not a complete tool audit.",
+  "read_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A01/task.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/skills/agent-evaluation/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A01/project/tasks.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A01/project/provenance.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A01/project/runs.csv",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/skills/agent-evaluation/references/trial-and-grading.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A01/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A01/trace.json"
+  ],
+  "commands": [
+    {
+      "call": 1,
+      "command": "cat A01/task.json skill/SKILL.md (absolute case and skill paths)",
+      "result": "Read user request, allowed actions, and entry skill; exit 0."
+    },
+    {
+      "call": 2,
+      "command": "rg --files A01/project && cat skill/skills/agent-evaluation/SKILL.md (absolute paths)",
+      "result": "Listed exactly tasks.md, provenance.md, runs.csv; read relevant evaluation skill; exit 0."
+    },
+    {
+      "call": 3,
+      "command": "cat A01/project/tasks.md A01/project/provenance.md A01/project/runs.csv skill/skills/agent-evaluation/references/trial-and-grading.md (absolute paths)",
+      "result": "Read all source materials and grading guidance; exit 0."
+    },
+    {
+      "call": 4,
+      "command": "python3 heredoc: csv.DictReader; compare expected state/records; aggregate outcomes, Decimal costs and wall_s statistics",
+      "result": {
+        "A": {
+          "actual": 9,
+          "state_record_pass": 7,
+          "fail": 2,
+          "unknown": 0,
+          "known_cost": "0.90",
+          "mean_wall_s": 12.666666666666666,
+          "success_subset_mean_wall_s": 10.428571428571429,
+          "median_wall_s": 11,
+          "p95_nearest_rank_s": 21,
+          "at_least_one_tasks": 3,
+          "all_three_tasks": 2
+        },
+        "B": {
+          "actual": 9,
+          "state_record_pass": 6,
+          "fail": 2,
+          "unknown": 1,
+          "known_cost": "0.32",
+          "missing_cost_count": 1,
+          "mean_observed_wall_s": 11.444444444444445,
+          "success_subset_mean_wall_s": 5.833333333333333,
+          "median_wall_s": 5,
+          "p95_nearest_rank_cutoff_s": 60,
+          "at_least_one_tasks": 3,
+          "all_three_tasks": 1
+        },
+        "exit_code": 0
+      }
+    },
+    {
+      "call": 5,
+      "command": "python3 heredoc: write only A01/response.md and A01/trace.json",
+      "result": "Saved final response and this self-report."
+    },
+    {
+      "call": 6,
+      "command": "python3 heredoc: read response.md and trace.json; validate JSON, key conclusions and scope flags; append this verification to trace.json",
+      "result": "Assertions passed; both artifacts readable; source files unchanged by all executed commands."
+    }
+  ],
+  "limitations": [
+    "No new Agent trials executed.",
+    "t2 recoverable-request persistence is not evidenced in CSV.",
+    "B t3 trial 3 terminal state and cost remain unknown.",
+    "No independent task holdout; B tuned on all tasks.",
+    "No expert-calibrated judge or production inference."
+  ],
+  "network_calls": 0,
+  "model_api_calls": 0,
+  "delegation_calls": 0,
+  "original_records_modified": false,
+  "output_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A01/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A01/trace.json"
+  ]
+}

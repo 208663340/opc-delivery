@@ -1,0 +1,86 @@
+{
+  "case_id": "A01",
+  "scope": "Offline read-only analysis of provided case; output only response.md and trace.json. Self-reported execution record, not a complete tool audit.",
+  "read_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A01/task.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A01/project/tasks.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A01/project/runs.csv",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A01/project/provenance.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/reliability-review.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/skill-recommendations.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/verification.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A01/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A01/trace.json"
+  ],
+  "commands": [
+    {
+      "command": "cat <case>/task.json <skill>/SKILL.md",
+      "result": "exit 0; read user request, allowed actions and specified skill"
+    },
+    {
+      "command": "rg --files <case>/project && cat <case>/project/{tasks.md,runs.csv,provenance.md} <skill>/references/{reliability-review.md,skill-recommendations.md}",
+      "result": "exit 0; project contains three supplied materials; read task contracts, 18 trials and provenance plus applicable references. Braces here summarize the actual explicit path arguments."
+    },
+    {
+      "command": "cat <skill>/references/verification.md; python3 inline csv/json/statistics calculation",
+      "result": "exit 0; computed observable state/record checks, task consistency, full-trial and pass-only latency, known costs and missing-cost break-even; no files written"
+    },
+    {
+      "command": "python3 inline pathlib/json output writer",
+      "result": "prepared response.md and trace.json; no original records modified"
+    },
+    {
+      "command": "python3 inline output verification and absolute-link normalization",
+      "result": "verified response exists, trace JSON parses, reported metrics match saved computation, source paths exist; normalized three source links and updated self-reported trace"
+    }
+  ],
+  "computed_results": {
+    "A": {
+      "snapshot_pass": 7,
+      "known_fail": 2,
+      "unknown": 0,
+      "at_least_once_tasks": 3,
+      "all_three_tasks": 2,
+      "known_cost": 0.9,
+      "priced_trials": 9,
+      "mean_wall_s": 12.666666666666666,
+      "pass_only_mean_wall_s": 10.428571428571429,
+      "max_wall_s": 21
+    },
+    "B": {
+      "snapshot_pass": 6,
+      "known_fail": 2,
+      "unknown": 1,
+      "at_least_once_tasks": 3,
+      "all_three_tasks": 1,
+      "known_cost": 0.32,
+      "priced_trials": 8,
+      "mean_wall_s": 11.444444444444445,
+      "pass_only_mean_wall_s": 5.833333333333333,
+      "max_wall_s": 60
+    },
+    "B_missing_cost_break_even_for_fixed_observed_pass_counts": 0.45142857142857146
+  },
+  "limitations": [
+    "t2 recoverable request persistence not included in evidence",
+    "B t3 trial 3 final state and cost missing",
+    "B tuned on all supplied tasks; no holdout",
+    "judge assesses text claims only and is uncalibrated",
+    "synthetic billing and tool substitutes cannot establish production effects",
+    "no source code or rerun harness supplied"
+  ],
+  "actions_not_taken": [
+    "network access",
+    "model API calls",
+    "real Tools access",
+    "framework migration",
+    "subagent delegation",
+    "raw record modifications"
+  ],
+  "decision": "Do not replace A with B on current evidence; A also has confirmed duplicate-write defects.",
+  "output_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A01/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A01/trace.json"
+  ]
+}

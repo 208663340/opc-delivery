@@ -1,0 +1,166 @@
+{
+  "case_id": "A02",
+  "trace_kind": "self-reported file reads, command summaries and results; not a complete tool audit",
+  "scope": "Only A02 case and specified skill snapshot; writes only project evals and response/trace files.",
+  "applied_skill": "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/SKILL.md",
+  "references_applied": [
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/skills/agent-evaluation/SKILL.md"
+  ],
+  "actual_read_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/task.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/skills/agent-evaluation/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/skills/agent-evaluation/assets/eval-plan.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/skills/agent-evaluation/references/trial-and-grading.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/skills/agent-evaluation/assets/case.example.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/skills/agent-evaluation/assets/oracle.example.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/skill/skills/agent-evaluation/assets/trial.example.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/README.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/run.py",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/tasks.seed.jsonl",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/oracles.seed.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/fixtures/seed-total.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/eval-plan.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-approval-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-budget-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-cancel-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-create-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-missing-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-read-retry-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-source-injection-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-total-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-unknown-write-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-write-rejected-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/freeze.sha256.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/grading.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/manifest.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/offline-checks.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/oracles.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/tasks.dev.jsonl",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/tasks.holdout.jsonl",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/tool-contract.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/trial.template.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/trace.json"
+  ],
+  "directory_listing": "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project",
+  "commands": [
+    {
+      "command": "cat <A02/task.json> <skill/SKILL.md>",
+      "result": "Read request, allowed actions and specified delivery skill."
+    },
+    {
+      "command": "pwd && rg --files <A02/project> && cat <README.md> <evals/run.py> <evals/tasks.seed.jsonl> <evals/oracles.seed.json> <skill/skills/agent-evaluation/SKILL.md>",
+      "result": "Project contains README, runner, two seeds and one seed fixture; runner only validates material and cannot execute or grade."
+    },
+    {
+      "command": "cat <skill agent-evaluation eval-plan, trial-and-grading, case.example, oracle.example, trial.example> <project/evals/fixtures/seed-total.json>",
+      "result": "Read five relevant template/reference files and seed initial state."
+    },
+    {
+      "command": "python3 - (heredoc; baseline SHA-256 of five original files)",
+      "result": "Recorded original hashes, later verified unchanged."
+    },
+    {
+      "command": "python3 - (heredoc; create minimal-v1 data, oracle, tool contract, grading materials and plan; adapt trial template)",
+      "result": "Created 10 synthetic cases, dev=8, holdout=2; no Agent execution or grading."
+    },
+    {
+      "command": "python3 evals/run.py --dataset evals/minimal-v1/tasks.dev.jsonl --dry-run",
+      "cwd": "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project",
+      "exit_code": 0,
+      "result": {
+        "cases_validated": 8,
+        "agent_executed": false,
+        "graded": false
+      }
+    },
+    {
+      "command": "python3 evals/run.py --dataset evals/minimal-v1/tasks.holdout.jsonl --dry-run",
+      "cwd": "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project",
+      "exit_code": 0,
+      "result": {
+        "cases_validated": 2,
+        "agent_executed": false,
+        "graded": false
+      }
+    },
+    {
+      "command": "python3 evals/run.py --dataset evals/tasks.seed.jsonl --dry-run",
+      "cwd": "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project",
+      "exit_code": 0,
+      "result": {
+        "cases_validated": 1,
+        "agent_executed": false,
+        "graded": false
+      }
+    },
+    {
+      "command": "python3 - (heredoc; assert material schema, global IDs, references, oracle coverage, disjoint family split, arithmetic, approvals, budget bounds and original hashes)",
+      "cwd": "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project",
+      "exit_code": 0,
+      "result": "Passed; runtime isolation and fault execution explicitly unverified."
+    },
+    {
+      "command": "python3 - (heredoc; persist actual offline command outputs, update plan/status, freeze 19 material hashes)",
+      "exit_code": 0,
+      "result": "Saved offline-checks.json and freeze.sha256.json; actual trials=0, graded=0."
+    },
+    {
+      "command": "python3 - (heredoc; recompute frozen hashes, check planned counts and evidence consistency)",
+      "exit_code": 0,
+      "result": {
+        "freeze_hashes_verified": 19,
+        "planned_trials_consistent": true,
+        "evidence_consistent": true,
+        "agent_executed": false,
+        "graded": false
+      }
+    },
+    {
+      "command": "python3 - (heredoc; save response.md and trace.json and parse/read them back)",
+      "result": "Saved and read back final response and self-reported trace."
+    }
+  ],
+  "shell_command_tool_calls": 12,
+  "functions_exec_calls": 9,
+  "written_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/eval-plan.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-approval-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-budget-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-cancel-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-create-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-missing-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-read-retry-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-source-injection-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-total-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-unknown-write-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/fixtures/q-write-rejected-v1.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/freeze.sha256.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/grading.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/manifest.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/offline-checks.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/oracles.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/tasks.dev.jsonl",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/tasks.holdout.jsonl",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/tool-contract.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/trial.template.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/trace.json"
+  ],
+  "original_files_modified": false,
+  "network_used": false,
+  "packages_installed": false,
+  "delegation_used": false,
+  "real_models_executed": false,
+  "external_side_effects": false,
+  "agent_trials": 0,
+  "graded_trials": 0,
+  "judge_calibrated": false,
+  "decisions_without_human_reply": [
+    "Use all-local synthetic fixtures and no model API.",
+    "Propose 3 repeats per variant, separate development and reserved task groups, with explicit unapproved future resource limits.",
+    "Keep absent runtime/model identifiers null; expose adapter gaps rather than invent executable integration."
+  ],
+  "verification_summary": "Existing runner accepted 8 development, 2 holdout and 1 original seed case. Additional local assertions and 19 material SHA-256 checks passed. No runtime/model/production claim."
+}

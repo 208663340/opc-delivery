@@ -1,0 +1,41 @@
+{
+  "evidence_type": "material validation only",
+  "commands": [
+    {
+      "check": "dev_dry_run",
+      "chunk_id": "e7e52e",
+      "wall_time_seconds": 5.167e-06,
+      "exit_code": 0,
+      "original_token_count": 17,
+      "output": "{\"cases_validated\": 8, \"agent_executed\": false, \"graded\": false}\n"
+    },
+    {
+      "check": "holdout_dry_run",
+      "chunk_id": "3f1067",
+      "wall_time_seconds": 3.625e-06,
+      "exit_code": 0,
+      "original_token_count": 17,
+      "output": "{\"cases_validated\": 2, \"agent_executed\": false, \"graded\": false}\n"
+    },
+    {
+      "check": "seed_dry_run",
+      "chunk_id": "8f2231",
+      "wall_time_seconds": 8.208e-06,
+      "exit_code": 0,
+      "original_token_count": 17,
+      "output": "{\"cases_validated\": 1, \"agent_executed\": false, \"graded\": false}\n"
+    },
+    {
+      "check": "material_consistency",
+      "chunk_id": "3de041",
+      "wall_time_seconds": 7.208e-06,
+      "exit_code": 0,
+      "original_token_count": 66,
+      "output": "{\"checks\": \"passed\", \"cases\": 10, \"same_family_cross_split\": false, \"totals_consistent\": true, \"oracle_key_coverage\": true, \"original_files_unchanged\": true, \"runtime_isolation_verified\": false, \"faults_executed\": false, \"agent_executed\": false, \"graded\": false}\n"
+    }
+  ],
+  "agent_executed": false,
+  "graded": false,
+  "faults_executed": false,
+  "judge_calibrated": false
+}

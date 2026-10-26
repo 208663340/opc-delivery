@@ -2,7 +2,7 @@
 name: opc-delivery
 description: 用于独立开发者的产品交付：用户要求从想法推进到可验证的上线、继续现有交付、检查发布准备，或排查跨阶段故障时使用。普通单文件修改无需主动套用完整流程。
 metadata:
-  version: "0.4.0"
+  version: "0.5.0"
 ---
 
 # OPC Delivery
@@ -48,15 +48,17 @@ python3 <本技能目录>/scripts/inspect_project.py <项目目录>
 | 谁需要、为何需要、先做什么 | [discovery.md](references/discovery.md) | 问题证据、最小验证、继续或停止条件 |
 | 访谈与用户需求证据如何取得 | [user-research](skills/user-research/SKILL.md) | 研究问题、中性访谈、可追溯发现与反例 |
 | 原型是否可理解、任务是否能完成 | [prototype-validation](skills/prototype-validation/SKILL.md) | 任务脚本、真实观察、完成计数与迭代依据 |
+| 上线后是否产生持续价值，是否值得扩大 | [product-value-validation](skills/product-value-validation/SKILL.md) | 事件口径、留存与付费证据、实验决定 |
 | 需求明确，如何实现与拆分 | [development.md](references/development.md) | 验收样例、影响面、代码与回归验证 |
 | 是否正确，故障在哪里 | [verification.md](references/verification.md) | 可复现行为、根因、修复前后对照 |
+| Agent 任务质量如何评，哪个版本更可靠 | [agent-evaluation](skills/agent-evaluation/SKILL.md) | 任务集、独立评分、状态与副作用、质量/成本/延迟对照 |
 | 长任务、Agent、Tools 是否可靠 | [reliability-review.md](references/reliability-review.md) | 生命周期、恢复、副作用与资源边界的证据 |
 | 怎样发布、验证与回退 | [release.md](references/release.md) | 源码到产物到环境的对应关系及业务冒烟 |
 | 怎样渐进发布、监控值守与故障恢复 | [deployment-operations](skills/deployment-operations/SKILL.md) | 兼容性、停止条件、恢复证据与运维交接 |
 
 参考按需读取。已有结果可复用；当新证据推翻假设时返回相关步骤。小任务可以一次完成定位、修改和验证，无需额外写计划、profile 或发布凭证。
 
-需要领域方法时，按 [专业 Skill 推荐](references/skill-recommendations.md) 选择当前问题对应的候选。`skills/` 内附 30 项配套技能（27 项快照与 3 项本项目专业技能），只读当前需要的项及必要依赖，并核对来源、版本和工具。交给专业方法的是目标、事实、范围及证据要求；交回动作、证据及未解问题，由主入口核对下一步。跨专业交接、同名版本或流程冲突时，读取 [专业技能接入约定](references/specialist-integration.md)。
+需要领域方法时，按 [专业 Skill 推荐](references/skill-recommendations.md) 选择当前问题对应的候选。`skills/` 内附 32 项配套技能（27 项快照与 5 项本项目专业技能），只读当前需要的项及必要依赖，并核对来源、版本和工具。交给专业方法的是目标、事实、范围及证据要求；交回动作、证据及未解问题，由主入口核对下一步。跨专业交接、同名版本或流程冲突时，读取 [专业技能接入约定](references/specialist-integration.md)。
 
 ## 3. 在现有项目里执行
 

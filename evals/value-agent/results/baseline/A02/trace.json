@@ -1,0 +1,130 @@
+{
+  "description": "Self-reported actions and evidence; not a complete tool audit.",
+  "tool_calls": 8,
+  "scope": "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02",
+  "skill": "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/SKILL.md",
+  "files_read": [
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/task.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/reliability-review.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/evaluation.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/verification.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/skill-recommendations.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/README.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/run.py",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/tasks.seed.jsonl",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/oracles.seed.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/seed-total.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/tasks.cross-model.jsonl",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/oracles.cross-model.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/cross-model.manifest.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/results.cross-model.template.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/grading.cross-model.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/PLAN.cross-model.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/approval-granted.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/approval-missing.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/budget-deadline.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/budget-tokens.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/budget-tool-calls.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/cancel-before-write.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/duplicate-delivery.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/lost-write-response.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/missing-price.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/source-injection.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/total-basic.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/total-decimal.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/offline-check.cross-model.json"
+  ],
+  "file_discovery_only": [
+    "rg --files in this project and specified skill snapshot; listed template and matching file paths without reading unrelated skills"
+  ],
+  "commands": [
+    {
+      "call": 1,
+      "command": "cat A02/task.json baseline/skill/SKILL.md (absolute paths)",
+      "result": "Read request, allowed_actions and designated skill; exit 0"
+    },
+    {
+      "call": 2,
+      "command": "pwd; rg --files with AGENTS/eval/model/agent/reliability/README globs in case project and skill; cat README, run.py, seed dataset/oracle, reliability-review.md",
+      "result": "Existing input-only runner identified; no project AGENTS found; exit 0"
+    },
+    {
+      "call": 3,
+      "command": "rg --files project and skill/assets; cat evaluation.md, verification.md, seed-total.json",
+      "result": "Read existing fixture and verification boundaries; listed assets; exit 0"
+    },
+    {
+      "call": 4,
+      "command": "cat skill-recommendations.md; rg --files specified skill filtered for assets/templates/eval/benchmark/agent-reliability",
+      "result": "No applicable cross-model template; retained custom runtime and seed format; exit 0"
+    },
+    {
+      "call": 5,
+      "command": "python3 heredoc using pathlib/json/hashlib to create 12 fixtures, tasks, independent oracles, manifest and result template under evals",
+      "result": "12 cases created; 5 protected hashes captured; exit 0"
+    },
+    {
+      "call": 6,
+      "command": "python3 heredoc to create grading and plan; python3 evals/run.py --dataset evals/tasks.cross-model.jsonl --dry-run; python3 evals/run.py --dataset evals/tasks.seed.jsonl --dry-run",
+      "result": {
+        "shell_exit_code": 0,
+        "new_cases_validated": 12,
+        "seed_cases_validated": 1,
+        "agent_executed": false,
+        "graded": false
+      }
+    },
+    {
+      "call": 7,
+      "command": "python3 heredoc with stdlib read-only assertions on IDs, fixture paths/schema, oracle mapping, budgets and protected hashes; write offline-check.cross-model.json",
+      "result": {
+        "exit_code": 0,
+        "cases": 12,
+        "oracles": 12,
+        "protected_files_unchanged": 5,
+        "artifact_hashes": 18
+      }
+    },
+    {
+      "call": 8,
+      "command": "python3 heredoc to record observed validation exit code and save response.md/trace.json",
+      "result": "Saved final response and self-report; final command success visible in tool output"
+    }
+  ],
+  "files_written": [
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/tasks.cross-model.jsonl",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/oracles.cross-model.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/cross-model.manifest.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/results.cross-model.template.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/grading.cross-model.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/PLAN.cross-model.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/approval-granted.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/approval-missing.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/budget-deadline.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/budget-tokens.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/budget-tool-calls.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/cancel-before-write.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/duplicate-delivery.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/lost-write-response.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/missing-price.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/source-injection.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/total-basic.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/fixtures/cross-model/total-decimal.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/project/evals/offline-check.cross-model.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/trace.json"
+  ],
+  "prohibited_actions_performed": [],
+  "delegation": false,
+  "network_access": false,
+  "packages_installed": false,
+  "actual_model_calls": 0,
+  "actual_judge_calls": 0,
+  "limitations": [
+    "Dry-run does not execute Agent or grade outcomes",
+    "Fixtures/fault controls require future existing-runtime adapter support",
+    "No model comparison, human judge calibration, latency or real cost measurements"
+  ],
+  "final_response_file": "/private/tmp/opc-value-agent-rx2w4xom/baseline/A02/response.md"
+}

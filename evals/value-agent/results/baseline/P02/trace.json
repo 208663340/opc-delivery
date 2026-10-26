@@ -1,0 +1,101 @@
+{
+  "case_id": "P02",
+  "status": "completed_analysis_and_prepared_plan",
+  "scope": "offline only; no experiment, recruitment, publishing, charging, network, or delegation",
+  "actual_read_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P02/task.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P02/project/rollout.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P02/project/feedback.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/discovery.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/prototype-validation/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/assets/research-brief.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/assets/evidence-notes.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/prototype-validation/references/task-testing.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/prototype-validation/assets/usability-test.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/references/interview-and-synthesis.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P02/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P02/trace.json"
+  ],
+  "commands": [
+    {
+      "id": 1,
+      "command": "cat task.json and skill/SKILL.md using full permitted paths",
+      "result": "exit 0; task and authorization, OPC Delivery 0.4.0 read"
+    },
+    {
+      "id": 2,
+      "command": "cat project/rollout.json project/feedback.md and skill discovery/prototype-validation/user-research references using full permitted paths",
+      "result": "exit 0; evidence and relevant method read"
+    },
+    {
+      "id": 3,
+      "command": "rg --files /private/tmp/opc-value-agent-rx2w4xom/baseline/P02/project",
+      "result": "exit 0; only rollout.json and feedback.md listed"
+    },
+    {
+      "id": 4,
+      "command": "cat research-brief.md evidence-notes.md task-testing.md usability-test.md interview-and-synthesis.md within permitted skill snapshot",
+      "result": "exit 0; templates and observation/analysis rules read"
+    },
+    {
+      "id": 5,
+      "command": "python3 heredoc: json + pathlib + statistics.NormalDist + math; read rollout.json; calculate nominal rates, support burden, illustrative normal-approximation two-proportion sample sizes",
+      "result": {
+        "nominal_rates": [
+          0.2,
+          0.3
+        ],
+        "nominal_change_pp": 10,
+        "nominal_relative_change": 0.5,
+        "support_minutes_per_100": [
+          200,
+          900
+        ],
+        "support_hours_per_100": [
+          3.3333333333333335,
+          15.0
+        ],
+        "support_ratio": 4.5,
+        "accounts_at_6h_only_support_9min": 40,
+        "illustrative_ab_per_arm_5pp": 1094,
+        "illustrative_ab_per_arm_10pp": 294
+      }
+    },
+    {
+      "id": 6,
+      "command": "python3 heredoc: pathlib write_text response.md and json.dumps trace.json in permitted case directory",
+      "result": "report and self-reported trace written; no project or skill files changed"
+    },
+    {
+      "id": 7,
+      "command": "python3 heredoc: read response.md and trace.json; validate JSON, decision/plan coverage, 6-hour allocation and source read count; append verification record",
+      "result": "passed; response is nonempty, required decision and plan elements present, planned first-week hours total 6, trace JSON parses"
+    }
+  ],
+  "created_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P02/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P02/trace.json"
+  ],
+  "methods_reused": [
+    "OPC Delivery discovery and evidence discipline",
+    "User research research-brief and evidence-notes templates",
+    "Prototype validation task-testing and usability-test template"
+  ],
+  "limitations": [
+    "No server event logs or source code provided",
+    "Minimum worthwhile effect and support budget not agreed",
+    "No comparable paid cohort or retention observations",
+    "No live user answers; unresolved business choices preserved"
+  ],
+  "audit_note": "Self-reported actual reads, commands and results; command descriptions are concise summaries, not a complete tool audit.",
+  "verification": {
+    "status": "passed",
+    "report_characters": 5179,
+    "first_week_planned_hours": 6,
+    "shell_command_count": 7,
+    "human_sessions_conducted": 0,
+    "external_actions": 0
+  }
+}

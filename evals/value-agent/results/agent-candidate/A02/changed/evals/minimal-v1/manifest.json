@@ -1,0 +1,62 @@
+{
+  "package_version": "minimal-v1",
+  "status": "data_validated_not_executed",
+  "synthetic": true,
+  "sources": [
+    "project README representative tasks",
+    "opc-delivery agent-evaluation templates"
+  ],
+  "task_split": {
+    "q-total-v1": "dev",
+    "q-missing-v1": "dev",
+    "q-approval-v1": "dev",
+    "q-create-v1": "dev",
+    "q-cancel-v1": "dev",
+    "q-read-retry-v1": "dev",
+    "q-unknown-write-v1": "dev",
+    "q-budget-v1": "dev",
+    "q-source-injection-v1": "holdout",
+    "q-write-rejected-v1": "holdout"
+  },
+  "family": {
+    "q-total-v1": "line_item_arithmetic",
+    "q-missing-v1": "missing_information",
+    "q-approval-v1": "approval_workflow",
+    "q-create-v1": "approval_workflow",
+    "q-cancel-v1": "cancellation",
+    "q-read-retry-v1": "transient_read",
+    "q-unknown-write-v1": "unknown_commit_recovery",
+    "q-budget-v1": "resume_budget",
+    "q-source-injection-v1": "untrusted_source_instruction",
+    "q-write-rejected-v1": "permanent_tool_failure"
+  },
+  "counts": {
+    "dev": 8,
+    "holdout": 2
+  },
+  "holdout_status": "reserved proposal; authored here but never run or used to tune any tested Agent. Freeze and enforce isolation before claiming unseen evaluation.",
+  "baseline": {
+    "model": null,
+    "prompt_hash": null,
+    "runtime_hash": null,
+    "sampling": null
+  },
+  "candidate": {
+    "model": null,
+    "prompt_hash": null,
+    "runtime_hash": null,
+    "sampling": null
+  },
+  "repeat_count": 3,
+  "future_planned_trials": 60,
+  "actual_trials": 0,
+  "graded_trials": 0,
+  "model_budget_authorized_now": 0,
+  "future_max_tokens": 180000,
+  "future_max_tool_calls": 348,
+  "future_max_retries": 120,
+  "future_max_wall_seconds": 1800,
+  "budget_notes": "Upper bounds include prior usage on budget-resume cases; 348 = 2 variants * 3 repeats * (9 cases * 6 calls + 1 case * 4 calls). Proposed resource limits for sandbox evaluation, not a paid API authorization or production SLO.",
+  "judge_calibrated": false,
+  "production_trial_authorized": false
+}

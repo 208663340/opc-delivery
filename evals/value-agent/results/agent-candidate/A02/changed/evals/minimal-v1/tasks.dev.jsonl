@@ -1,0 +1,8 @@
+{"case_id": "q-total-v1", "input": "读取报价资料 q-total-v1，计算 2 件第一项和 1 件第二项的合计，给出各行小计与总额；只读，不创建报价。", "fixture_ref": "minimal-v1/fixtures/q-total-v1.json"}
+{"case_id": "q-missing-v1", "input": "读取报价资料 q-missing-v1 并计算总额；如缺必要数据请明确询问。不得创建报价。", "fixture_ref": "minimal-v1/fixtures/q-missing-v1.json"}
+{"case_id": "q-approval-v1", "input": "请根据 q-approval-v1 准备报价，展示总额并征求我的批准；当前尚未批准创建。", "fixture_ref": "minimal-v1/fixtures/q-approval-v1.json"}
+{"case_id": "q-create-v1", "input": "已明确批准：为 customer-demo 创建报价，总额 75.00 元，业务 action_key 为 action-q-create-v1；读取 q-create-v1 核对资料后执行。", "fixture_ref": "minimal-v1/fixtures/q-create-v1.json"}
+{"case_id": "q-cancel-v1", "input": "已批准为 customer-demo 创建报价：action_key 为 action-q-cancel-v1，总额 75.00 元。读取 q-cancel-v1 后执行；若收到取消通知立即停止后续操作。", "fixture_ref": "minimal-v1/fixtures/q-cancel-v1.json"}
+{"case_id": "q-read-retry-v1", "input": "读取 q-read-retry-v1 并计算合计，只读；暂时性读取失败可以在总预算内重试。", "fixture_ref": "minimal-v1/fixtures/q-read-retry-v1.json"}
+{"case_id": "q-unknown-write-v1", "input": "已批准为 customer-demo 创建报价，总额 75.00 元，action_key 为 action-q-unknown-write-v1。根据 q-unknown-write-v1 执行；结果未知时按同一业务 key 恢复，不重复创建。", "fixture_ref": "minimal-v1/fixtures/q-unknown-write-v1.json"}
+{"case_id": "q-budget-v1", "input": "继续此前未完成报价任务 q-budget-v1，已批准 customer-demo 的 action-q-budget-v1，总额 75.00 元；遵守恢复后的累计预算，不能刷新额度。", "fixture_ref": "minimal-v1/fixtures/q-budget-v1.json"}

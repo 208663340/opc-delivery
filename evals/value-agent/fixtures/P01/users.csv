@@ -1,0 +1,11 @@
+account_id,kind,first_exposed_at,segment
+u1,external,2026-10-10T00:00:00Z,weekly
+u2,external,2026-10-10T00:00:00Z,weekly
+u3,external,2026-10-10T00:00:00Z,weekly
+u4,external,2026-10-10T00:00:00Z,monthly
+u5,external,2026-10-10T00:00:00Z,weekly
+u6,external,2026-10-10T00:00:00Z,monthly
+u7,external,2026-10-23T00:00:00Z,weekly
+u8,external,2026-10-24T00:00:00Z,monthly
+t1,internal,2026-10-10T00:00:00Z,test
+b1,bot,2026-10-10T00:00:00Z,test

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "case_id": "inventory-summary-v1",
+  "source": "synthetic example; adapt to the existing dataset schema",
+  "input": "汇总仓库 A 各商品可用库存（现有数量减已预留数量），只读取，不修改记录。",
+  "fixture": {
+    "warehouse": "A",
+    "inventory": [
+      {"sku": "book", "on_hand": 18, "reserved": 4},
+      {"sku": "pen", "on_hand": 9, "reserved": 2}
+    ]
+  },
+  "tags": ["read-only", "calculation"]
+}

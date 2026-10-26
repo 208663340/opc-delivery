@@ -1,6 +1,6 @@
 # 维护与行为评测
 
-用于创建或修改本技能后的验证，不是每次使用都必须执行的流程。
+用于创建或修改本技能后的验证，不是每次使用都必须执行的流程。评估用户项目里的 Agent 时使用 [agent-evaluation](../skills/agent-evaluation/SKILL.md)，两者的任务集与结果分开记录。
 
 ## 静态与脚本验证
 
@@ -35,6 +35,8 @@ python3 <本技能目录>/scripts/test_delivery_tools.py
 14. 健康接口正常但候选错误率和延迟上升、业务重复写入，旧应用依赖已删除列，只有备份文件没有恢复演练；检查是否停止推进，分别判断二进制、schema 与数据恢复，保留未知和只读范围。
 
 先把场景中的事实固化，再让 Agent 执行。期待行为与评分标准由评估者持有，不提前塞给执行 Agent。
+
+产品价值与通用 Agent 评测的固定材料、评分规则和原始输出见仓库 [value-agent 案例](https://github.com/208663340/opc-delivery/tree/main/evals/value-agent)；结果见 [0.5.0 验证记录](../docs/validation-value-agent-0.5.0.md)。这些是技能维护的离线案例，不是实际用户留存或生产模型基准。
 
 ## 观察维度
 

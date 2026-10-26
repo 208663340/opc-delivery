@@ -1,0 +1,75 @@
+{
+  "case_id": "P02",
+  "status": "analysis_and_plan_prepared_no_experiment_executed",
+  "read_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/P02/task.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/P02/project/rollout.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/P02/project/feedback.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/skill/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/skill/skills/product-value-validation/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/skill/skills/product-value-validation/assets/value-scorecard.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/skill/skills/product-value-validation/assets/experiment-brief.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/skill/skills/product-value-validation/references/measurement-and-experiments.md"
+  ],
+  "commands": [
+    {
+      "operation": "cat task.json and specified root SKILL.md",
+      "result": "Read request, permitted actions and skill routing; exit 0"
+    },
+    {
+      "operation": "cat rollout.json, feedback.md and product-value-validation/SKILL.md",
+      "result": "Read all supplied evidence and applicable method; exit 0"
+    },
+    {
+      "operation": "cat value-scorecard.md, experiment-brief.md, measurement-and-experiments.md",
+      "result": "Read and reused templates and experiment method; exit 0"
+    },
+    {
+      "operation": "python3 local arithmetic using rollout.json",
+      "result": "Nominal +10 percentage points/+50%; support 4.5x, conditional totals 200/900 minutes; weekly capacity 360 minutes; support-only capacity 40 accounts; exit 0"
+    },
+    {
+      "operation": "python3 write response.md and trace.json",
+      "result": "Prepared only the two authorized output artifacts"
+    },
+    {
+      "operation": "python3 verify response.md and trace.json",
+      "result": {
+        "response_characters": 5302,
+        "case_input_and_skill_files_read": 8,
+        "weekly_plan_minutes": 360,
+        "json_valid": true,
+        "artifact_content_checks": "passed"
+      }
+    }
+  ],
+  "results": {
+    "decision": "Existing evidence does not support full rollout or charging",
+    "reason": [
+      "Changed event semantics",
+      "Nonrandom cohorts and changed recruitment",
+      "Support load and assistance",
+      "No retention or comparable paid evidence"
+    ],
+    "prepared": "Measurement reconciliation, bounded trial plan, future causal comparison and paid evidence prerequisites; explicit unresolved business thresholds"
+  },
+  "not_performed": [
+    "Network requests",
+    "Delegation",
+    "Reading other cases or scoring materials",
+    "Project edits",
+    "Publishing",
+    "Recruiting or contacting users",
+    "Charging",
+    "Live experiments"
+  ],
+  "artifacts": [
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/P02/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/P02/trace.json"
+  ],
+  "trace_limit": "Self-reported actual file reads, commands and results; not a complete tool audit.",
+  "output_files_read_for_verification": [
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/P02/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/product-candidate/P02/trace.json"
+  ]
+}

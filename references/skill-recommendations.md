@@ -1,6 +1,6 @@
 # 专业 Skill 推荐：按当前问题选择
 
-OPC Delivery 负责推进交付；需要某个领域的方法时，再选择相应的专业 Skill。`skills/` 已附带 30 项配套技能：下方 21 项主要推荐，加上 9 项 Agent 与 Python 配套能力。其中 27 项为本地快照，用户研究、原型验证与部署运维 3 项由本项目编写并附专用模板。表中的技能名称链接本包文件，作者链接保留上游来源。按问题查阅，不要求为一个任务加载所有分类。
+OPC Delivery 负责推进交付；需要某个领域的方法时，再选择相应的专业 Skill。`skills/` 已附带 32 项配套技能：下方 23 项主要推荐，加上 9 项 Agent 与 Python 配套能力。其中 27 项为本地快照，用户研究、原型验证、部署运维、产品价值验证与 Agent 评测 5 项由本项目编写并附专用模板。表中的技能名称链接本包文件，作者链接保留上游来源。按问题查阅，不要求为一个任务加载所有分类。
 
 ## 如何选用
 
@@ -53,10 +53,11 @@ FastAPI 材料提到的 Python 专题也已附带：
 
 ## 4. Agent 开发
 
-已有自研循环或其他 Agent 框架时，先读 [可靠性审查](reliability-review.md)，检查任务生命周期、Tools、副作用、恢复与资源边界。下列候选针对 LangChain 生态，只有项目已使用该生态或用户明确要求评估它时才选用。
+任务质量、评分或版本比较使用通用评测；生命周期故障先读 [可靠性审查](reliability-review.md)。自研循环保留既有入口。除通用评测外，下列框架候选针对 LangChain 生态，只有项目已使用该生态或用户明确要求评估它时才选用。
 
 | 候选与来源 | 何时选择 | 交回的结果与证据 |
 | --- | --- | --- |
+| [agent-evaluation](../skills/agent-evaluation/SKILL.md) · 本项目 | 自研或任意框架 Agent 的任务集、评分、失败分析及版本比较 | 独立输入/oracle/trial、实际状态与副作用、质量/成本/延迟及保留集证据 |
 | [ecosystem-primer](../skills/ecosystem-primer/SKILL.md) · [LangChain](https://github.com/langchain-ai/langchain-skills/blob/main/config/skills/ecosystem-primer/SKILL.md) | 需要在 LangChain / LangGraph / Deep Agents 之间确定适用层次；使用该生态时先读此入口 | 选择依据、现有约束与不确定项，再按其路由加载相关专业 Skill |
 | [langchain-fundamentals](../skills/langchain-fundamentals/SKILL.md) · [LangChain](https://github.com/langchain-ai/langchain-skills/blob/main/config/skills/langchain-fundamentals/SKILL.md) | 实现 LangChain Agent、Tools 与 middleware | Tool 输入输出、错误与副作用边界，以及可复现的调用记录 |
 | [langgraph-fundamentals](../skills/langgraph-fundamentals/SKILL.md) · [LangChain](https://github.com/langchain-ai/langchain-skills/blob/main/config/skills/langgraph-fundamentals/SKILL.md) | 实现 LangGraph 的状态、节点、分支、循环与流式执行 | 状态流转及终止条件的验证；恢复等能力继续按入口加载相应专题 |
@@ -81,6 +82,7 @@ FastAPI 材料提到的 Python 专题也已附带：
 | 候选与来源 | 何时选择 | 交回的结果与证据 |
 | --- | --- | --- |
 | [user-research](../skills/user-research/SKILL.md) · 本项目 | 需要规划访谈、识别用户分群、分析需求与相反证据 | 研究简报、中性提纲、证据账本与可支持的决定；样本边界和待验证项明确 |
+| [product-value-validation](../skills/product-value-validation/SKILL.md) · 本项目 | 已上线产品的采用、重复价值、留存、付费或实验决策 | 可复核指标与缺失、价值记分表、实验简报及继续/调整/停止依据 |
 | [market-research](../skills/market-research/SKILL.md) · [ECC 社区](https://github.com/affaan-m/ECC/blob/main/skills/market-research/SKILL.md) | 关键未知在市场、竞品、用户替代方案或供应商，需要外部研究支持取舍 | 可追溯来源、日期、事实与推断，以及会改变决策的结论 |
 | [prd](../skills/prd/SKILL.md) · [GitHub 社区集合](https://github.com/github/awesome-copilot/blob/main/skills/prd/SKILL.md) | 用户要求 PRD，或复杂功能需要统一范围、用户故事、验收与风险 | 可执行的需求规格、待验证假设及验收条件 |
 
@@ -108,7 +110,7 @@ CI/CD、容器、数据库和部署优先复用项目现有入口；需要额外
 
 ## 清单之外与来源维护
 
-本清单的上游源文件和声明范围于 **2026-10-22** 核对；27 项包内内容取自用户本机已安装的快照，可能与上游最新文件不同；新增 3 项为本项目编写，方法参考与核对日期列在各自 references 中，不标为上游导入。完整目录、来源、源文件与打包文件的 SHA-256 及本地调整见 [manifest.json](../skills/manifest.json)。所有原有参考文件与许可文件一起保留；Vercel 生成文档中的三处相对链接做了路径修正并记录。打包不代表所有 Skill 已做行为评测或兼容当前环境，来源身份不替代适用性判断。
+本清单的上游源文件和声明范围于 **2026-10-22** 核对；27 项包内内容取自用户本机已安装的快照，可能与上游最新文件不同；5 项为本项目编写，方法参考与核对日期列在各自 references 中，不标为上游导入。完整目录、来源、源文件与打包文件的 SHA-256 及本地调整见 [manifest.json](../skills/manifest.json)。所有原有参考文件与许可文件一起保留；Vercel 生成文档中的三处相对链接做了路径修正并记录。打包不代表所有 Skill 已做行为评测或兼容当前环境，来源身份不替代适用性判断。
 
 未覆盖的技术栈先检索本会话技能目录；环境有技能发现工具时再用精确任务与技术栈查找，例如 `Vue accessibility`、`PostgreSQL migration`。推荐外部项前读取真实 `SKILL.md`，核对名称、范围、依赖和调用方式，给出可访问来源。找不到或无法核对时说明缺口并继续完成可做部分，不补造名称或安装状态。
 

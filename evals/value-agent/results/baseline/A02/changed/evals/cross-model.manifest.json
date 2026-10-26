@@ -1,0 +1,51 @@
+{
+  "version": "offline-mvp-v1",
+  "dataset": "evals/tasks.cross-model.jsonl",
+  "oracle": "evals/oracles.cross-model.json",
+  "case_count": 12,
+  "protected_sha256": {
+    "README.md": "d196524c62369ffe4296bae2f814bc9e6bc03b72cf2778d6d20da6396acc5c4d",
+    "evals/run.py": "199c1e5dafe8bf036bcc5dfd73dbfbee5e81108a6a177b47c206b0793282ee3c",
+    "evals/tasks.seed.jsonl": "6f2f7ced71a295877910c9b277aa159ea8ec05405016d7140a38488801e5e49c",
+    "evals/oracles.seed.json": "0af0ffe5315f54f742f6faa1d4b02b05fea94e22aea1ac4caa9d281a9ae92bfb",
+    "evals/fixtures/seed-total.json": "72d9a41adb9e6a10edc0fd465ce77012a4c97eceedc6087adc173632b1394a42"
+  },
+  "execution_status": "not_run",
+  "adapters_status": "fixture_contract_only_not_implemented",
+  "defaults": {
+    "max_model_turns": 8,
+    "max_tool_calls": 8,
+    "max_retries_per_action": 1,
+    "max_total_tokens": 4096,
+    "deadline_ms": 20000
+  },
+  "comparison": {
+    "arms": [
+      "baseline",
+      "candidate"
+    ],
+    "repeats_per_case_per_arm": 3,
+    "planned_runs": 72,
+    "same_conditions": [
+      "dataset_hash",
+      "fixture_hash",
+      "oracle_hash",
+      "runtime_commit",
+      "system_prompt_except_when_prompt_is_the_variable",
+      "tool_schemas",
+      "permissions",
+      "budgets",
+      "sampling_config"
+    ],
+    "order": "paired cases; randomize arm order using recorded seed; reset ledger and clock for each run",
+    "change_one_variable": "model OR prompt; not both",
+    "model_ids": {
+      "baseline": null,
+      "candidate": null
+    },
+    "randomization_seed": null
+  },
+  "real_model_calls_authorized": false,
+  "network_authorized": false,
+  "production_trial_authorized": false
+}

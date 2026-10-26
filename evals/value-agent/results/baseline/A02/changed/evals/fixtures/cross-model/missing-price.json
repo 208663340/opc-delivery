@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "name": "设计",
+      "quantity": 1,
+      "unit_price": "30.00"
+    },
+    {
+      "name": "交付",
+      "quantity": 1,
+      "unit_price": null
+    }
+  ],
+  "records": [],
+  "approved": false,
+  "currency": "CNY",
+  "budget": {
+    "max_model_turns": 8,
+    "max_tool_calls": 8,
+    "max_retries_per_action": 1,
+    "max_total_tokens": 4096,
+    "deadline_ms": 20000
+  }
+}

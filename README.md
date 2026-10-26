@@ -5,7 +5,7 @@
 A practical Agent Skill for independent product delivery.
 
 [![CI](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml/badge.svg)](https://github.com/208663340/opc-delivery/actions/workflows/ci.yml)
-![Version](https://img.shields.io/badge/version-0.4.0-2563eb)
+![Version](https://img.shields.io/badge/version-0.5.0-2563eb)
 ![Node](https://img.shields.io/badge/installer-Node.js%20%E2%89%A520-339933)
 ![Python](https://img.shields.io/badge/tools-Python%20stdlib-3776ab)
 
@@ -19,6 +19,8 @@ OPC Delivery 帮助独立开发者与 Agent 协作完成需求判断、开发、
 | 功能明确，准备开发 | 找到现有 owner，按验收条件实现并验证 |
 | 页面报错，但原因不清楚 | 沿调用链找到根因，建立修复前后对照 |
 | 长任务卡住、恢复后重复执行 | 检查取消、checkpoint、幂等、Tools、Trace 与资源边界 |
+| 上线了，却不知道是否真的有价值 | 核对独立结果、留存、退款与成本，准备下一轮价值实验 |
+| 想换 Agent 模型或提示，担心只看评分不可靠 | 按独立任务与实际状态比较质量、副作用、成本和延迟 |
 | CI 绿了，准备上线 | 核对源码、产物、环境与业务检查，保留回退路径 |
 
 小任务直接完成。复杂任务按需要加载参考，并在允许委派时分工协作。
@@ -34,7 +36,7 @@ npm install -g github:208663340/opc-delivery
 opc-delivery install
 ```
 
-默认将主 Skill 和全部 30 项配套能力放入 `${CODEX_HOME:-~/.codex}/skills/opc-delivery`。需要其他 Agent 的技能目录或项目内安装时，使用 `--dir` 指定技能根目录：
+默认将主 Skill 和全部 32 项配套能力放入 `${CODEX_HOME:-~/.codex}/skills/opc-delivery`。需要其他 Agent 的技能目录或项目内安装时，使用 `--dir` 指定技能根目录：
 
 ```bash
 opc-delivery install --dir .agents/skills
@@ -59,7 +61,7 @@ opc-delivery install
 
 ```bash
 npm pack
-npm install -g ./opc-delivery-0.4.0.tgz
+npm install -g ./opc-delivery-0.5.0.tgz
 opc-delivery install --dry-run
 ```
 
@@ -75,9 +77,9 @@ git clone https://github.com/208663340/opc-delivery.git "$OPC_SKILL_ROOT/opc-del
 
 已有同名目录时，先保留原有内容，再按你的技能管理方式更新。也可以从 [Releases](https://github.com/208663340/opc-delivery/releases) 下载版本包。
 
-仓库中已附带 30 项配套 Skill：27 项从本机技能库收录，保留各自的规则、参考和已有许可文件；另有 3 项本项目编写的用户研究、原型验证与部署运维技能及其模板。完整克隆本仓库即可一起取得，OPC Delivery 会沿推荐表的本地路径按需读取。它们不需要为了被读取而再次联网下载；部分专业任务所需的浏览器、外部文档或框架依赖仍按实际环境使用。
+仓库中已附带 32 项配套 Skill：27 项从本机技能库收录，保留各自的规则、参考和已有许可文件；另有 5 项本项目编写的用户研究、原型验证、部署运维、产品价值验证与通用 Agent 评测技能及其模板。完整克隆本仓库即可一起取得，OPC Delivery 会沿推荐表的本地路径按需读取。它们不需要为了被读取而再次联网下载；部分专业任务所需的浏览器、外部文档或框架依赖仍按实际环境使用。
 
-这些内置目录由 OPC Delivery 按路径路由，各 Agent 对嵌套 Skill 的发现方式可能不同。需要单独安装某项时，可将 `skills/<名称>/` 完整放入所用 Agent 的技能目录，先保留已有同名内容。
+这些内置目录由 OPC Delivery 按路径路由，各 Agent 对嵌套 Skill 的发现方式可能不同。若另行注册单项入口，需同时保留其相对引用和依赖，并先保护已有同名内容；只复制单个子目录可能使跨 Skill 引用失效，建议优先沿完整包路径读取。
 
 调用：
 
@@ -104,24 +106,26 @@ $opc-delivery 检查这个版本是否具备发布条件，推进已授权的部
 | --- | --- |
 | 主入口 | [SKILL.md](SKILL.md) 确定当前目标、下一动作和完成声明 |
 | 交付方法 | [推进循环](references/delivery-loop.md) 处理排序、返回、等待与结束；阶段参考规定各自的证据 |
-| 专业能力 | 30 项配套技能按问题接入；[交接约定](references/specialist-integration.md) 统一目标、事实、范围、证据与未解问题 |
+| 专业能力 | 32 项配套技能按问题接入；[交接约定](references/specialist-integration.md) 统一目标、事实、范围、证据与未解问题 |
 | 工具与材料 | 复用目标项目工具；本包提供检查器、模板、来源清单与安装器 |
 
 主入口协调工作，专业技能提供方法，项目保留自己的数据 owner、架构和发布事实。必要规则在入口中，复杂细节按需读取；长任务复用一个主记录。整体设计与 P1/P2 后续缺口见 [设计文档](docs/skills-system-design.md)。
 
 ## 按当前问题补充专业 Skill
 
-内置 [专业 Skill 推荐](references/skill-recommendations.md)，覆盖 UI/UX 设计、前端开发、后端开发、Agent 开发、产品设计与分析、Bug 修复和工程基础。21 项主要推荐和 9 项 Agent / Python 配套能力均已收录到 `skills/`，表中技能名称直接打开本地 `SKILL.md`，并保留上游来源、选择时机与应交回的验证证据。
+内置 [专业 Skill 推荐](references/skill-recommendations.md)，覆盖 UI/UX 设计、前端开发、后端开发、Agent 开发、产品设计与分析、Bug 修复和工程基础。23 项主要推荐和 9 项 Agent / Python 配套能力均已收录到 `skills/`，表中技能名称直接打开本地 `SKILL.md`，并保留上游来源、选择时机与应交回的验证证据。
 
-例如，视觉改版可参考 `frontend-design`，React 请求瀑布可参考 `vercel-react-best-practices`，根因未知时可参考 `systematic-debugging`。Agent 专题按项目实际框架选择；自研循环先走现有可靠性审查。完整名单与来源以推荐参考为准。
+例如，视觉改版可参考 `frontend-design`，React 请求瀑布可参考 `vercel-react-best-practices`，根因未知时可参考 `systematic-debugging`。Agent 任务质量与版本比较使用通用评测，运行机制故障使用可靠性审查；框架专题按项目实际情况选择。完整名单与来源以推荐参考为准。
 
-其中三项本项目编写的专业能力：
+其中五项本项目编写的专业能力：
 
 | Skill | 适用问题与配套材料 |
 | --- | --- |
 | [user-research](skills/user-research/SKILL.md) | 用户分群、访谈与需求证据；附研究简报、中性提纲方法与证据记录模板 |
 | [prototype-validation](skills/prototype-validation/SKILL.md) | 原型范围、任务测试与迭代；附主持方法、观察表、结果计数与复测模板 |
 | [deployment-operations](skills/deployment-operations/SKILL.md) | 发布、监控值守与恢复；附兼容性检查、告警与发布/恢复/交接手册 |
+| [product-value-validation](skills/product-value-validation/SKILL.md) | 上线后采用、留存、付费与实验；附价值记分表和实验简报 |
+| [agent-evaluation](skills/agent-evaluation/SKILL.md) | 跨框架任务、评分与版本比较；附评测计划及分离的 case / oracle / trial 示例 |
 
 先读取选中项的实际说明，再按需加载其规则和参考；专业结果回到当前任务的验收与证据记录。目录、来源、文件校验值及打包调整见 [技能来源与文件清单](skills/manifest.json)。
 
@@ -164,6 +168,8 @@ python3 scripts/check_release_receipt.py /path/to/release-receipt.json
 
 - **0.4.0 核心机制对照**：8 个固定案例的旧版与候选各一次独立执行，双方均通过；这轮未测出质量或效率提升，详见 [核心机制验证记录](docs/validation-core-loop.md)。
 
+- **0.5.0 产品价值与 Agent 评测**：4 个固定案例中新版均通过，补齐旧版评测材料遗漏的任务保留集；其余案例新旧均通过。新增方法与模板、既有安装/工具测试及证据边界见 [第二阶段验证记录](docs/validation-value-agent-0.5.0.md)，不代表真实用户价值或生产模型性能已验证。
+
 详见 [0.1.0 验证记录](docs/validation-0.1.0.md)。这些结果不替代你自己的生产验证，也不构成效率提升或商业效果承诺。
 
 本地运行工具测试：
@@ -193,7 +199,7 @@ references/
   evaluation.md                  技能维护与行为评测
 scripts/                         只读检查器、证据检查器及测试
 assets/                          项目接入与发布证据模板
-skills/                          30 项配套技能及其方法、模板、参考与已有许可文件
+skills/                          32 项配套技能及其方法、模板、参考与已有许可文件
   manifest.json                  来源、源文件与打包校验值、本地调整
 docs/validation-0.1.0.md          已完成的验证及其边界
 docs/validation-skill-recommendations.md  推荐能力增量验证
@@ -201,6 +207,8 @@ docs/validation-npm-0.2.0.md      npm CLI、打包与安装验证
 docs/validation-specialists-0.3.0.md  三项专业能力的对照与安装验证
 docs/skills-system-design.md     整体设计与后续补缺顺序
 docs/validation-core-loop.md     核心机制同题对照及验证边界
+docs/validation-value-agent-0.5.0.md  产品价值与 Agent 评测对照
+evals/value-agent/               第二阶段合成场景、夹具与原始记录（不随 npm 安装）
 evals/core-loop/                 开发用合成场景、隔离夹具与原始记录（不随 npm 安装）
 ```
 

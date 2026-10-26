@@ -14,7 +14,7 @@ description: Use when choosing prototype fidelity, planning usability tests, obs
 | 信息与术语是否理解 | 纸面草图、静态页面与任务问题 | 理解障碍和信息缺口 |
 | 用户能否完成流程 | 可点击原型、已有产品的隔离测试环境 | 在该版本、任务和样本中的操作表现 |
 | 接口、性能或技术是否可行 | 隔离技术实验、真实格式样本 | 该约束下的技术结果，另附测量 |
-| 是否持续使用或付费 | 实际试用、承诺或付费实验 | 相应真实行为；原型好评不能代替 |
+| 是否持续使用或付费 | [产品价值验证](../product-value-validation/SKILL.md) 中的实际试用、承诺或付费实验 | 相应真实行为；原型好评不能代替 |
 
 目标用户与招募标准不清时读 [user-research](../user-research/SKILL.md)。需要制作界面且符合现有技术栈时，再读 [frontend-design](../frontend-design/SKILL.md)；验证不要求换框架或先做完整产品。
 

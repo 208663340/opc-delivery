@@ -1,0 +1,5 @@
+已建立[最小评测包](/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/eval-plan.md)：开发集 8 例、保留集 2 例，覆盖交付质量、批准与取消、工具失败、写入结果未知恢复、累计预算。沿用现有三字段 JSONL，独立保存 oracle、[评分规则](/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/grading.md)及 trial 模板，并给出两模型配对比较方案。
+
+现有 `run.py --dry-run` 已通过：开发集 8 例、保留集 2 例、原 seed 1 例。金额、引用、oracle 覆盖与分组一致性检查通过；19 份材料的哈希已复核。[检查证据](/private/tmp/opc-value-agent-rx2w4xom/agent-candidate-v1/A02/project/evals/minimal-v1/offline-checks.json)。未修改 README、runner 或原 seed，未新增框架、联网、装包或调用模型。
+
+本次完成的是可离线校验的评测材料；Agent 执行、故障注入、评分和 judge 校准均未发生，不能据此判断哪个模型更好。计划中列明接入自研 Agent、隔离工具替身、权威状态审计与评分器的缺口，后续应在获准的免费本地环境中验证。

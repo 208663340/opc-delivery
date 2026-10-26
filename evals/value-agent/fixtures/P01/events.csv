@@ -1,0 +1,15 @@
+event_id,account_id,at,event
+e1,u1,2026-10-10T01:00:00Z,export_verified
+e1,u1,2026-10-10T01:00:00Z,export_verified
+e2,u2,2026-10-11T01:00:00Z,export_verified
+e3,u3,2026-10-12T01:00:00Z,export_verified
+e4,u4,2026-10-10T01:00:00Z,button_click
+e5,u5,2026-10-11T01:00:00Z,export_verified
+e6,u6,2026-10-12T01:00:00Z,export_verified
+e7,u7,2026-10-24T01:00:00Z,export_verified
+e8,u8,2026-10-25T01:00:00Z,button_click
+e9,u1,2026-10-18T01:00:00Z,export_verified
+e10,u2,2026-10-19T01:00:00Z,export_verified
+e11,u3,2026-10-19T01:00:00Z,button_click
+e12,t1,2026-10-19T01:00:00Z,export_verified
+e13,b1,2026-10-19T01:00:00Z,export_verified

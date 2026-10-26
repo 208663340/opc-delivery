@@ -1,0 +1,68 @@
+{
+  "status": "offline_materials_validated",
+  "python": "3.9.6",
+  "checks": [
+    {
+      "command": "python3 evals/run.py --dataset evals/tasks.cross-model.jsonl --dry-run",
+      "stdout": {
+        "cases_validated": 12,
+        "agent_executed": false,
+        "graded": false
+      }
+    },
+    {
+      "command": "python3 evals/run.py --dataset evals/tasks.seed.jsonl --dry-run",
+      "stdout": {
+        "cases_validated": 1,
+        "agent_executed": false,
+        "graded": false
+      }
+    },
+    {
+      "command": "python3 - <<PY (stdlib read-only material validation)",
+      "assertions": [
+        "12 unique cases",
+        "oracle IDs exactly match cases",
+        "fixtures resolve inside evals and parse",
+        "required initial-state fields present",
+        "no oracle/expected/rubric/score/allowed-terminal fixture keys",
+        "positive integer budget caps",
+        "each oracle has terminals and assertions",
+        "all 5 protected file SHA-256 values unchanged"
+      ],
+      "result": "pass"
+    }
+  ],
+  "dry_run_shell_exit_code": 0,
+  "artifact_sha256": {
+    "evals/tasks.cross-model.jsonl": "165226c98c425a95672efe61e24c09083b429618f4236c9c3789b11099b39dbe",
+    "evals/oracles.cross-model.json": "82cd4d685813c9783c0ae2bef388e5d9963ac91bebf0349b85809546ab0d50b9",
+    "evals/cross-model.manifest.json": "d0522a38ed7b9e71caaa2ae77441899d8f93a6745ff0ccf05e1296043e68bc18",
+    "evals/results.cross-model.template.json": "3fcc802151bd13c98d50c06816ff14e908c41ccb16f1f5b01fe80e52b8217515",
+    "evals/grading.cross-model.md": "538cd747cd4076cf8447e18ff3c394d9a7d2e4d1ee9a09157ffc9623cd713d50",
+    "evals/PLAN.cross-model.md": "6ce8758868f4982600a6071c7f1e802693f31fd8bc6448a7292f1d9fc754b874",
+    "evals/fixtures/cross-model/approval-granted.json": "71af642e894a89e8bc308a7991e609d82ba1a46f11560d9080c4e9bc55702edd",
+    "evals/fixtures/cross-model/approval-missing.json": "928d26daab192297d08d0b395e6994877af55a88794be70887386bd123defd2b",
+    "evals/fixtures/cross-model/budget-deadline.json": "053b639e7ff2c3604238cf4e725e521cd4f295fce7e946eece2da695178e84e6",
+    "evals/fixtures/cross-model/budget-tokens.json": "429e01d36befe03463c99d5edfcbeba6fa079543455002d13c63425ae8e3c7db",
+    "evals/fixtures/cross-model/budget-tool-calls.json": "6a48a300128c4529a2b06cfd2ce524ea06dad3339894a0cd52f615787b700d17",
+    "evals/fixtures/cross-model/cancel-before-write.json": "e4c189d48578cda0feec4354a8a89481bc1acd14376ece6908e39a4b3d5d77b7",
+    "evals/fixtures/cross-model/duplicate-delivery.json": "c2621880cdad5cea5fdca887cff8368e94e0c2b3386d6a956ddcf5db013011fd",
+    "evals/fixtures/cross-model/lost-write-response.json": "4b21f302ea421898f7c52561dc2aa28ad77dd20d428d57483769a4dcf4e3d135",
+    "evals/fixtures/cross-model/missing-price.json": "69f14b5db5c19828675c2fcbf7b045551c676ffbe850b71462295ef77c95c1cd",
+    "evals/fixtures/cross-model/source-injection.json": "e3ef0fbf3f03a85db1327e523a48b085ce98c0d0bcc8c28f50f80fa4e513f3f7",
+    "evals/fixtures/cross-model/total-basic.json": "d8cb8f5c42e341ef379f7a0df026aeade4f04b3c58e8095e5afa663cb5d82ae9",
+    "evals/fixtures/cross-model/total-decimal.json": "316515472d56b52eb89b6162cb9f6ff0facdfc56e51e5999a6f0bbafbc002e36"
+  },
+  "protected_unchanged": true,
+  "actual_model_runs": 0,
+  "actual_judge_runs": 0,
+  "agent_executed": false,
+  "graded": false,
+  "limits": [
+    "Existing runner only validates row shape, unique IDs and fixture JSON.",
+    "No runtime adapter, fault injection or assertion grading was executed.",
+    "Model success rates, cost and latency remain unknown."
+  ],
+  "validation_exit_code": 0
+}

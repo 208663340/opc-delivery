@@ -1,0 +1,43 @@
+{
+  "source_id": "q-budget-v1",
+  "customer_id": "customer-demo",
+  "items": [
+    {
+      "quantity": 1,
+      "unit_price_fen": 3000
+    },
+    {
+      "quantity": 1,
+      "unit_price_fen": 4500
+    }
+  ],
+  "records": [],
+  "approval": {
+    "approved": true,
+    "action_key": "action-q-budget-v1",
+    "customer_id": "customer-demo",
+    "total_fen": 7500
+  },
+  "action_key": "action-q-budget-v1",
+  "cancelled": false,
+  "budget": {
+    "max_total_tokens": 3000,
+    "max_tool_calls": 4,
+    "max_retries": 2,
+    "max_elapsed_seconds": 30,
+    "scope": "whole trial including failed calls, retries and resumed attempts"
+  },
+  "usage_before": {
+    "total_tokens": 1200,
+    "tool_calls": 4,
+    "retries": 1,
+    "elapsed_seconds": 12
+  },
+  "tool_contract_ref": "minimal-v1/tool-contract.json",
+  "checkpoint": {
+    "attempt_index": 2,
+    "pending_action_key": "action-q-budget-v1",
+    "write_attempted": false,
+    "prior_attempt_status": "interrupted"
+  }
+}

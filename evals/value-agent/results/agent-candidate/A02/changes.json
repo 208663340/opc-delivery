@@ -1,0 +1,82 @@
+{
+  "evals/minimal-v1/eval-plan.md": {
+    "before_sha256": null,
+    "after_sha256": "9b89fee580f0df4eac6542c92396713fd1a36c842ff06a94261c5d63512a5ce9"
+  },
+  "evals/minimal-v1/fixtures/q-approval-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "27f7f441b92d51ab46c62f161cf8ebe791429097001aeeb5e93618b1f1acbaf2"
+  },
+  "evals/minimal-v1/fixtures/q-budget-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "94585bdaeaf8bae7769cdb6590d791a1dbb5eb3b4acf27afcc7ffc074cda758c"
+  },
+  "evals/minimal-v1/fixtures/q-cancel-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "92d31c1cb6cebd1492d7cab775096cf00db0dd8a2192ab188e3824dc9b9b26d4"
+  },
+  "evals/minimal-v1/fixtures/q-create-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "f2bf4ec61d84f91bd319b1a94cffa617f2aec8bef527786ccd21bded486fd44b"
+  },
+  "evals/minimal-v1/fixtures/q-missing-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "60c4f6d3e8118c117032e66bbe6a2da673115e8353e4f22c227257f0b8fb6d18"
+  },
+  "evals/minimal-v1/fixtures/q-read-retry-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "dfc2bdfad8bf1f67bd8fec9c948524769c5e7c67fc9b6ba7fcb5630dc178ee98"
+  },
+  "evals/minimal-v1/fixtures/q-source-injection-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "74b7aae470d85f3ffad6ffd3bad1eaa439c1869ccceac0a3bcad6e72bdb533c0"
+  },
+  "evals/minimal-v1/fixtures/q-total-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "fb900fc96896f445a17a4315ec5145fa152a8105fdb7d93ce31aafa16f923ed0"
+  },
+  "evals/minimal-v1/fixtures/q-unknown-write-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "8855f9d8b0b1f41396e5e55c3a45748a43dfc845dfc9f4b72808858eff0630ef"
+  },
+  "evals/minimal-v1/fixtures/q-write-rejected-v1.json": {
+    "before_sha256": null,
+    "after_sha256": "889c80abd228875298778bc116729bca0a2680ad50a3aca47bfe085569610ef7"
+  },
+  "evals/minimal-v1/freeze.sha256.json": {
+    "before_sha256": null,
+    "after_sha256": "7bef35d990352b32cbeb5682418b36f9b0cd4eb15febc4ab7f40f7e5ad69c720"
+  },
+  "evals/minimal-v1/grading.md": {
+    "before_sha256": null,
+    "after_sha256": "0ff151657335983ad188ef6ad5f02305f500a448782dd16cb1f48a96f157dc63"
+  },
+  "evals/minimal-v1/manifest.json": {
+    "before_sha256": null,
+    "after_sha256": "5171a596d5132486a89e6eb34051dec55ee6ea3f9ee0e756a99b2fa8eff31188"
+  },
+  "evals/minimal-v1/offline-checks.json": {
+    "before_sha256": null,
+    "after_sha256": "a1a8d6481f52c4b1112c0d18e38447635a116f1175cf390d67915c320b18c934"
+  },
+  "evals/minimal-v1/oracles.json": {
+    "before_sha256": null,
+    "after_sha256": "fe5fa553ccca9fd8bb4847422431d58b8822bf649ec0afcb3ae435118f9c5ad9"
+  },
+  "evals/minimal-v1/tasks.dev.jsonl": {
+    "before_sha256": null,
+    "after_sha256": "10d09eb9210700f672da23c3571ccd69e54f58d0b74db3f1e364285500217687"
+  },
+  "evals/minimal-v1/tasks.holdout.jsonl": {
+    "before_sha256": null,
+    "after_sha256": "0485f9f610b8ca3903722a57e52ed9c318385956bb4007b12138a6eda5a37984"
+  },
+  "evals/minimal-v1/tool-contract.json": {
+    "before_sha256": null,
+    "after_sha256": "9bdf23d029fd7e1014e8d4cb6d950d72abe1d8f7c4f65ae9545a93848bcbde8b"
+  },
+  "evals/minimal-v1/trial.template.json": {
+    "before_sha256": null,
+    "after_sha256": "07b5c1e9c79b43b904c5f974c3d88562f65ebce51536cd8c68c4866f4db93f88"
+  }
+}

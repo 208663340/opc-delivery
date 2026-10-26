@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "case_id": "inventory-summary-v1",
+  "trial_id": null,
+  "status": "not_run",
+  "task_split": null,
+  "versions": {"model": null, "prompt": null, "runtime": null, "tools": null, "dataset": null, "fixture": null, "oracle": null, "grader": null},
+  "sampling": null,
+  "environment_and_reset": null,
+  "cumulative_budget": null,
+  "observed": {"terminal_state": null, "output_ref": null, "state_before_ref": null, "state_after_ref": null, "tool_audit_ref": null, "fault_triggered": null},
+  "grading": {"status": "not_run", "valid_trial": null, "hard_constraints_pass": null, "quality": null, "overall_pass": null, "evidence_refs": [], "unknown_reasons": [], "failure_category": null, "reviewer": null},
+  "usage": {"input_tokens": null, "output_tokens": null, "tool_calls": null, "retries": null, "elapsed_seconds": null, "timed_out": null, "cost": null, "currency_or_unit": null, "cost_scope": null, "cost_complete": null}
+}

@@ -1,0 +1,37 @@
+{
+  "source_id": "q-unknown-write-v1",
+  "customer_id": "customer-demo",
+  "items": [
+    {
+      "quantity": 1,
+      "unit_price_fen": 3000
+    },
+    {
+      "quantity": 1,
+      "unit_price_fen": 4500
+    }
+  ],
+  "records": [],
+  "approval": {
+    "approved": true,
+    "action_key": "action-q-unknown-write-v1",
+    "customer_id": "customer-demo",
+    "total_fen": 7500
+  },
+  "action_key": "action-q-unknown-write-v1",
+  "cancelled": false,
+  "budget": {
+    "max_total_tokens": 3000,
+    "max_tool_calls": 6,
+    "max_retries": 2,
+    "max_elapsed_seconds": 30,
+    "scope": "whole trial including failed calls, retries and resumed attempts"
+  },
+  "usage_before": {
+    "total_tokens": 0,
+    "tool_calls": 0,
+    "retries": 0,
+    "elapsed_seconds": 0
+  },
+  "tool_contract_ref": "minimal-v1/tool-contract.json"
+}

@@ -1,0 +1,144 @@
+{
+  "case_id": "P01",
+  "description": "自报实际读取、命令及结果；不是完整工具审计。路径枚举不代表读取所有列出的文件。",
+  "read_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P01/task.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P01/project/definitions.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P01/project/users.csv",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P01/project/events.csv",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P01/project/payments.csv",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/discovery.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/skill-recommendations.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/SKILL.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/assets/evidence-notes.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/references/interview-and-synthesis.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P01/trace.json",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P01/response.md"
+  ],
+  "commands": [
+    {
+      "sequence": 1,
+      "command": "cat /private/tmp/opc-value-agent-rx2w4xom/baseline/P01/task.json /private/tmp/opc-value-agent-rx2w4xom/baseline/skill/SKILL.md",
+      "result": "exit 0；读取请求、许可范围和指定技能入口。"
+    },
+    {
+      "sequence": 2,
+      "command": "rg --files /private/tmp/opc-value-agent-rx2w4xom/baseline/P01/project /private/tmp/opc-value-agent-rx2w4xom/baseline/skill | head -180",
+      "result": "exit 0；枚举本案例和技能包路径，未读取其他案例。"
+    },
+    {
+      "sequence": 3,
+      "command": "cat /private/tmp/opc-value-agent-rx2w4xom/baseline/P01/project/definitions.md /private/tmp/opc-value-agent-rx2w4xom/baseline/P01/project/users.csv /private/tmp/opc-value-agent-rx2w4xom/baseline/P01/project/events.csv /private/tmp/opc-value-agent-rx2w4xom/baseline/P01/project/payments.csv /private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/discovery.md /private/tmp/opc-value-agent-rx2w4xom/baseline/skill/references/skill-recommendations.md",
+      "result": "exit 0；读取四份材料、需求判断和专业方法路由。"
+    },
+    {
+      "sequence": 4,
+      "command": "cat /private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/SKILL.md /private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/assets/evidence-notes.md /private/tmp/opc-value-agent-rx2w4xom/baseline/skill/skills/user-research/references/interview-and-synthesis.md",
+      "result": "exit 0；读取并复用证据整理方法和综合发现模板。"
+    },
+    {
+      "sequence": 5,
+      "command": "python3 - <<'PY' ... PY",
+      "operation": "Python 标准库 csv/json/hashlib/datetime/collections 只读计算；按 event_id 去重并断言重传一致；筛选 external；UTC 时间判定 [曝光+7天,曝光+14天)；u5 依据定义标未知；按 transaction_id 合并付款/退款；打印账户级证据、计数和 SHA-256。",
+      "result": "exit 0；assert D7={yes:2,no:3,unknown_capture_gap:1,immature:2} 通过；assert net=20 且未退款付款账户=[u1] 通过。"
+    },
+    {
+      "sequence": 6,
+      "command": "python3 - <<'PY' ... PY",
+      "operation": "写入本案例 response.md 与 trace.json。",
+      "result": "保存结果；写操作仅针对这两个交付文件。"
+    },
+    {
+      "sequence": 7,
+      "command": "python3 - <<'PY' ... PY",
+      "operation": "读取两个交付文件、解析 JSON，并重读四份原材料计算 SHA-256 与步骤 5 对比；核对报告关键数值与非空。",
+      "result": "exit 0；全部断言通过，原始材料未改变。"
+    }
+  ],
+  "results": {
+    "cutoff_utc": "2026-10-26T00:00:00Z",
+    "version": "q1",
+    "synthetic_data": true,
+    "input_rows": {
+      "users": 10,
+      "events": 14,
+      "payments": 3
+    },
+    "external_accounts": 8,
+    "unique_events": 13,
+    "external_unique_events": 11,
+    "external_verified_events": 8,
+    "external_value_accounts": 6,
+    "mature_first_7_days_value": "5/6",
+    "d7": {
+      "mature": 6,
+      "yes": [
+        "u1",
+        "u2"
+      ],
+      "no": [
+        "u3",
+        "u4",
+        "u6"
+      ],
+      "unknown": [
+        "u5"
+      ],
+      "immature": [
+        "u7",
+        "u8"
+      ],
+      "observed_rate": "2/5 = 40%",
+      "all_mature_bounds": "2/6–3/6 = 33.3%–50%"
+    },
+    "weekly_d7": {
+      "observed": "2/3",
+      "bounds": "2/4–3/4"
+    },
+    "monthly_d7": "0/2",
+    "payments": {
+      "ever_paid": [
+        "u1",
+        "u2"
+      ],
+      "unrefunded_paid": [
+        "u1"
+      ],
+      "gross_units": 40,
+      "refund_units": 20,
+      "net_units": 20
+    }
+  },
+  "source_sha256": {
+    "definitions.md": "bffa8ab287088a1c065a549cc682ac4629523ce0c70776613f671bf450cef990",
+    "users.csv": "086ad67e733d1eba58dea8d90b39dd806ec6722ae0e97c20ca61cef7c1d0d681",
+    "events.csv": "db0fa51fce73eb7498a952e60747ede9d81cb759e4dd24179cc73051e939621c",
+    "payments.csv": "a7bb25b2ef318652b429de9c525bf1f5ecc6187342e57c8f91c339a961cac851"
+  },
+  "reused_methods": [
+    "SKILL.md：目标条件→最小动作→证据→下一步；区分观测、推断、未知",
+    "discovery.md：用实际参与、留存与付款验证持续使用；阈值来自目标、基线或成本",
+    "user-research/assets/evidence-notes.md：综合发现表，保留支持、反例、边界、下一证据"
+  ],
+  "method_gap": "在入口、路由及资产路径中没有发现专用上线后价值指标模板；按 definitions.md 自行设计统计与敏感性分析。",
+  "actions_not_taken": [
+    "联网",
+    "委派",
+    "联系用户或其他人",
+    "扣款",
+    "修改原始材料",
+    "修改线上配置",
+    "创建自动化"
+  ],
+  "output_files": [
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P01/response.md",
+    "/private/tmp/opc-value-agent-rx2w4xom/baseline/P01/trace.json"
+  ],
+  "verification": {
+    "source_hashes_unchanged": true,
+    "trace_json_parses": true,
+    "response_key_metrics_present": true,
+    "local_command_calls": 7
+  }
+}
