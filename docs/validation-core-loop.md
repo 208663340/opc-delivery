@@ -46,4 +46,9 @@
 - CLI 显示 0.4.0；npm publish --dry-run --offline 使用临时可写 cache 成功，未发布 npm registry。
 - 候选行为快照与最终 SKILL.md 正文及 references 一致，只有版本元数据从 0.3.0 改为 0.4.0。C06 自报读取了 delivery-loop；其他新约定的每项分支不能由这 8 例充分证明。
 
-独立评审与远端 CI 结果另随实际完成补记。
+## 独立评审
+
+独立 Agent 只读审查 `65971e8..49c0cee`，结论可合入，Critical / Important / Minor 均无待处理项。它另行核对输入一致性、保存的文件哈希、C02/C05/C07 产物、150 个快照哈希、打包边界和五类 Review Focus。完整报告保存在仓库 evals/core-loop/results/final-review.txt。
+
+评审没有重复全量测试，也不替代真实生产、registry 发布或业务效果验证；远端 CI 与本地更新由后续实际操作核对。未改动工具仅检查保持与集成边界，没有宣称全面重新审计。
+

@@ -1,0 +1,40 @@
+# Final independent review
+
+Review range: 65971e8bfc46418878dde5a417ba48d702ee1798..49c0cee81a4980fd2c6c45ed55eebf50f5fb1538
+Reviewer: core_final_review; read-only, no delegation, no checkout/index/HEAD changes.
+
+## Strengths
+
+- SKILL.md:9–21 and references/delivery-loop.md:5–39 retain the requested task boundary, reuse existing authorization, distinguish unknown outcomes from failures, and preserve unaffected work when premises change. No mandatory PRD, new state store, full-process questionnaire, or stack migration was introduced for small changes.
+- references/specialist-integration.md:29–43 handles imported PRD/worktree/TDD/review/framework requirements explicitly. Incompatible methods may be replaced, but the agent must state what it actually followed and cannot bypass genuine approval or verification gaps. Source snapshots remain intact.
+- docs/validation-core-loop.md:9–13,32–47 accurately limits the evidence: one offline run per arm/case, agent grading, self-reported traces, no measured improvement, no real deployment, no full branch coverage. The main entry point and stage references support the stated behavior without relying solely on optional deep links.
+- I independently verified identical non-skill initial input hashes across arms, C02 exact button-only saved changes, every saved changed-file hash, C05 status→deploy→status→smoke→status logs with one deployment, and C07 artifact digest/size/version. C04/C06/C07/C08 outputs retain the required failure, scope, waiting, and tool-availability boundaries.
+- All 30 companion skills / 150 manifest hashes match. Git diff confirms no changes to skills/, bin/, scripts/, or existing tests. package.json files and the installer payload exclude evals/; evaluation references use repository URLs where those files are deliberately absent from installation. The candidate runtime content at 38ca776 differs from final only in SKILL version metadata.
+
+## Issues
+
+Critical: None.
+Important: None.
+Minor: None warranting a change request.
+
+## Rulings and plan alignment
+
+The two Ruling entries at .superpowers/sdd/2026-10-24-skills-core/progress.md:11–12 are acceptable. Testing the combined final candidate fits the tightly coupled entry/reference changes, and the public report expressly disclaims per-reference attribution. Continuing an approved clarification/design change after an already-passing baseline is reasonable because it is reported as regression evidence, not an invented RED→GREEN improvement. The mistaken historical human-graded output is explicitly corrected at progress.md:18 and in the public report; it is not presented as human evaluation.
+
+The small-task, version/environment, authorization/waiting, changed-premise, and unavailable/inapplicable-skill review focuses have no confirmed substantive regression in the inspected rules and artifacts. Additional reading burden remains possible but is acknowledged, and the new detailed references are conditional rather than universal steps.
+
+## Recommendations
+
+No pre-merge correction required. Continue the already planned Task 4 push/CI/install-backup work, recording actual outcomes without upgrading offline evidence to production or quality-improvement claims. Do not treat this review as execution of those remaining steps.
+
+## Declined to judge
+
+- Actual production deployment, npm registry publication, and real user/business effectiveness: not executed or claimed in this scope; offline fixtures cannot establish them.
+- Final remote CI and local installation backup/update outcome: explicitly scheduled after this review; not an implementation omission at this checkpoint.
+- Exhaustive re-audit of unchanged CLI/Python and upstream skill internals: outside this change; I checked preservation, integration boundaries, and relevant imported requirements rather than claiming a fresh full audit.
+
+## Assessment
+
+Ready to merge: Yes.
+
+The implementation matches the approved scope and makes no unsupported improvement claim. No confirmed correctness, authorization, evidence, or packaging defect was found. Existing full tests were not rerun by this reviewer; this review used targeted read-only artifact/hash checks and the provided test evidence, with the limitations above.
