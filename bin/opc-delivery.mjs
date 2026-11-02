@@ -14,6 +14,7 @@ const help = `OPC Delivery ${metadata.version}
 Usage:
   opc-delivery install [--dir <skills-root>] [--dry-run] [--force]
   opc-delivery list
+  opc-delivery list --json
   opc-delivery --help
   opc-delivery --version
 
@@ -21,6 +22,7 @@ Default destination: CODEX_HOME/skills/opc-delivery, or ~/.codex/skills/opc-deli
 --dir       Install opc-delivery inside this skills root.
 --dry-run   Show the destination without writing files.
 --force     Back up an existing installation before replacing it.
+--json      Print the skill list as a JSON array (list only).
 
 The bundle includes ${companionSkills.length} companion skills. Installation is explicit;
 npm install only installs this CLI. Python tools require Python 3.
@@ -93,12 +95,27 @@ function install(values) {
   console.log('The skill is available to your agent on its next skill refresh or session.');
 }
 
+function list(values) {
+  const options = Object.keys(values);
+  if (options.length === 0) {
+    for (const skill of companionSkills) console.log(`${skill.name}\t${skill.category}\t${skill.role}`);
+    return;
+  }
+  if (options.length === 1 && options[0] === 'json' && values.json) {
+    const skills = companionSkills.map(({ name, category, role }) => ({ name, category, role }));
+    console.log(JSON.stringify(skills));
+    return;
+  }
+  throw new Error('Unknown command or options. Run opc-delivery --help.');
+}
+
 try {
   const { values, positionals } = parseArgs({
     options: {
       dir: { type: 'string' },
       'dry-run': { type: 'boolean' },
       force: { type: 'boolean' },
+      json: { type: 'boolean' },
       help: { type: 'boolean', short: 'h' },
       version: { type: 'boolean', short: 'v' },
     },
@@ -107,10 +124,9 @@ try {
   if (values.help) console.log(help);
   else if (values.version) console.log(metadata.version);
   else if (positionals.length === 0 && Object.keys(values).length === 0) console.log(help);
-  else if (positionals.length === 1 && positionals[0] === 'install') install(values);
-  else if (positionals.length === 1 && positionals[0] === 'list' && Object.keys(values).length === 0) {
-    for (const skill of companionSkills) console.log(`${skill.name}\t${skill.category}\t${skill.role}`);
-  } else throw new Error('Unknown command or options. Run opc-delivery --help.');
+  else if (positionals.length === 1 && positionals[0] === 'install' && Object.keys(values).every(key => ['dir', 'dry-run', 'force'].includes(key))) install(values);
+  else if (positionals.length === 1 && positionals[0] === 'list') list(values);
+  else throw new Error('Unknown command or options. Run opc-delivery --help.');
 } catch (error) {
   console.error(`opc-delivery: ${error.message}`);
   process.exitCode = 1;
