@@ -42,6 +42,7 @@ opc-delivery install
 opc-delivery install --dir .agents/skills
 opc-delivery install --dir .agents/skills --dry-run
 opc-delivery list
+opc-delivery help # 等同于 opc-delivery --help
 ```
 
 目录已存在时默认退出并保留内容。确认要更新时运行 `opc-delivery install --force`；旧目录会完整保存在同一技能根目录下的 `.opc-delivery-backup-*`，成功后输出备份位置。`--dry-run` 不写入任何文件。

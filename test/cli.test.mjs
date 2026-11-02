@@ -135,6 +135,35 @@ test('invalid arguments fail without writing a destination', t => {
   assert.deepEqual(readdirSync(directory), []);
 });
 
+test('help subcommand matches --help and -h without creating files', t => {
+  const directory = sandbox(t);
+  const expected = run(['--help'], directory);
+  assert.equal(expected.status, 0, expected.stderr);
+  assert.equal(expected.stderr, '');
+  assert.match(expected.stdout, /opc-delivery help/);
+  for (const args of [['help'], ['-h']]) {
+    const result = run(args, directory);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(result.stderr, '');
+    assert.equal(result.stdout, expected.stdout);
+  }
+  assert.deepEqual(readdirSync(directory), []);
+});
+
+test('help subcommand rejects extra arguments and install options without creating files', t => {
+  const directory = sandbox(t);
+  for (const extra of [['unexpected'], ['--dir', './target'], ['--dry-run'], ['--force']]) {
+    for (const flags of [[], ['--help'], ['-h'], ['--version']]) {
+      const args = ['help', ...extra, ...flags];
+      const result = run(args, directory);
+      assert.notEqual(result.status, 0, args.join(' '));
+      assert.equal(result.stdout, '');
+      assert.match(result.stderr, /help subcommand does not accept arguments or options/);
+      assert.deepEqual(readdirSync(directory), []);
+    }
+  }
+});
+
 test('does not replace a symlinked install even with force', t => {
   const directory = sandbox(t);
   const original = join(directory, 'my-original');

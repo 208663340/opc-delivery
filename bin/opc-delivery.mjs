@@ -14,6 +14,7 @@ const help = `OPC Delivery ${metadata.version}
 Usage:
   opc-delivery install [--dir <skills-root>] [--dry-run] [--force]
   opc-delivery list
+  opc-delivery help
   opc-delivery --help
   opc-delivery --version
 
@@ -104,7 +105,12 @@ try {
     },
     allowPositionals: true,
   });
-  if (values.help) console.log(help);
+  if (positionals[0] === 'help') {
+    if (positionals.length !== 1 || Object.keys(values).length !== 0) {
+      throw new Error('The help subcommand does not accept arguments or options.');
+    }
+    console.log(help);
+  } else if (values.help) console.log(help);
   else if (values.version) console.log(metadata.version);
   else if (positionals.length === 0 && Object.keys(values).length === 0) console.log(help);
   else if (positionals.length === 1 && positionals[0] === 'install') install(values);
