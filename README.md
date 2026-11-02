@@ -42,7 +42,10 @@ opc-delivery install
 opc-delivery install --dir .agents/skills
 opc-delivery install --dir .agents/skills --dry-run
 opc-delivery list
+opc-delivery list --json
 ```
+
+`opc-delivery list --json` 输出由 `name`、`category`、`role` 三个字段组成的 JSON 数组，便于脚本读取；`--json` 仅适用于 `list`。
 
 目录已存在时默认退出并保留内容。确认要更新时运行 `opc-delivery install --force`；旧目录会完整保存在同一技能根目录下的 `.opc-delivery-backup-*`，成功后输出备份位置。`--dry-run` 不写入任何文件。
 

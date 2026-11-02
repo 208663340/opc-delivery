@@ -126,6 +126,36 @@ test('list, help and version do not install anything', t => {
   assert.deepEqual(readdirSync(directory), []);
 });
 
+test('list prints the manifest name, category and role in tab-separated order', t => {
+  const directory = sandbox(t);
+  const result = run(['list'], directory);
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, bundle.skills.map(({ name, category, role }) => `${name}\t${category}\t${role}`).join('\n') + '\n');
+  assert.deepEqual(readdirSync(directory), []);
+});
+
+test('list --json prints only a parseable JSON array of name, category and role', t => {
+  const directory = sandbox(t);
+  const result = run(['list', '--json'], directory);
+  assert.equal(result.status, 0, result.stderr);
+  const listed = JSON.parse(result.stdout);
+  assert.deepEqual(listed, bundle.skills.map(({ name, category, role }) => ({ name, category, role })));
+  for (const skill of listed) assert.deepEqual(Object.keys(skill), ['name', 'category', 'role']);
+  assert.equal(result.stdout.trim(), JSON.stringify(listed));
+  assert.deepEqual(readdirSync(directory), []);
+});
+
+test('--json outside plain list fails without writing a destination', t => {
+  const directory = sandbox(t);
+  const destination = join(directory, 'skills');
+  for (const args of [['--json'], ['install', '--json'], ['install', '--json', '--dir', destination], ['list', '--json', '--dir', destination], ['list', '--json', '--force']]) {
+    const result = run(args, directory);
+    assert.notEqual(result.status, 0, args.join(' '));
+    assert.match(result.stderr, /Unknown command or options/);
+  }
+  assert.deepEqual(readdirSync(directory), []);
+});
+
 test('invalid arguments fail without writing a destination', t => {
   const directory = sandbox(t);
   for (const args of [['install', '--dir'], ['install', '--dir', ''], ['install', '--wat'], ['delete'], ['list', '--force'], ['install', '--dir', '--force']]) {
